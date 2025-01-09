@@ -1,2 +1,5 @@
 Assets/Animation/Controller/Elf_BattleMage.fbx filter=lfs diff=lfs merge=lfs -text
 Elf_BattleMage.fbx filter=lfs diff=lfs merge=lfs -text
+Assets/_Raiders/Prefabs/KJS/LevelPrefab/Art/Textures/Ground/Ground_Displacement.exr filter=lfs diff=lfs merge=lfs -text
+Assets/_Raiders/Prefabs/KJS/LevelPrefab/Art/Textures/Tree/Tree_Displacement.exr filter=lfs diff=lfs merge=lfs -text
+Assets/_Raiders/Prefabs/KJS/LevelPrefab/Art/Textures/Trim_Sheet/Trim_Sheet_Displacement.exr filter=lfs diff=lfs merge=lfs -text
