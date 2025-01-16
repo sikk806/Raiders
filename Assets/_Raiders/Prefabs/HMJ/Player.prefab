@@ -49,7 +49,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e77cbc480f5c48d41af2d5755e7172ec, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 3.588498
+      value: -3.98
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e77cbc480f5c48d41af2d5755e7172ec, type: 3}
       propertyPath: m_LocalRotation.w
@@ -174,9 +174,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.27530813
-  m_Height: 1.8926957
+  m_Height: 1.8909616
   m_Direction: 1
-  m_Center: {x: -0.008759022, y: 0.9284276, z: 0.0051164627}
+  m_Center: {x: -0.008759022, y: 0.9292946, z: 0.0051164627}
 --- !u!54 &6154007719652967322
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -202,7 +202,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!114 &945013876654104369
 MonoBehaviour:
@@ -223,8 +223,8 @@ MonoBehaviour:
   Power: 100
   AddedPower: 0
   MoveSpeed: 7
-  RollingDistance: 5
-  RollingTime: 0.35
+  RollingDistance: 8.5
+  RollingTime: 0.617
   StopTime: 0
   Barrier: 0
   NoDamageTime: 1

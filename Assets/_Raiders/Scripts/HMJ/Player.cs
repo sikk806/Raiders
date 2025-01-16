@@ -1,5 +1,6 @@
 using System.Collections;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Playables;
 using static Player;
@@ -21,7 +22,7 @@ public enum PlayerState //플레이어 상태
 public class Player : MonoBehaviour
 {
     public static Player Instance;
-    
+
     public float MaxHp = 100; //최대HP
     public float CurrentHp = 100; //현재HP
     public float MaxMp = 1000; //최대MP
@@ -33,16 +34,19 @@ public class Player : MonoBehaviour
     private Vector3 targetPosition; //이동 목표
     private LayerMask stage; //지면 레이어마스크
     public float MoveSpeed = 7f; //이동 속도
-    public float RollingDistance = 5f; //구르는 거리
-    public float RollingTime = 0.35f; //구르는 시간
+    public float RollingDistance = 8.5f; //구르는 거리
+    public float RollingTime = 0.617f; //구르는 시간
 
 
     public float StopTime; //경직 시간
     public float Barrier; //쉴드량
     public float NoDamageTime = 1f; //무적 시간
+    private float movementSpeedRatio = 0;
+
 
     private bool IsRolling = false; //구르기 여부
     private bool IsNoDamaged = false; //무적 여부
+
 
     [SerializeField]
     private GameObject AttackPrefab; //평타 프리팹
@@ -57,12 +61,12 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject attackPosition; //공격 나가는 위치
 
-    private Animator animator; 
+    private Animator animator;
     private InputManager inputManager;
     public PlayerState CurrentState; //현재 상태
 
 
-    void Awake() 
+    void Awake()
     {
         if (Instance == null)
         {
@@ -81,7 +85,8 @@ public class Player : MonoBehaviour
         //스테이지 충돌 레이어 설정
         stage = LayerMask.GetMask("Stage");
     }
-    IEnumerator NoDamage() //무적 부여 코루틴
+
+    IEnumerator NoDamage(float noDamageTime) //무적 부여 코루틴
     {
         //이미 무적 상태라면, 코루틴 종료
         if (IsNoDamaged) yield break;
@@ -90,10 +95,15 @@ public class Player : MonoBehaviour
         IsNoDamaged = true;
 
         //NoDamageTime만큼 무적 상태 유지
-        yield return new WaitForSeconds(NoDamageTime);
-        
+        yield return new WaitForSeconds(noDamageTime);
+
         //무적 상태 해제
         IsNoDamaged = false;
+    }
+
+    public void BarrierReset()
+    {
+        Barrier = 0f;
     }
 
 
@@ -101,18 +111,45 @@ public class Player : MonoBehaviour
     {
         //무적 상태라면 처리하지 않음
         if (IsNoDamaged) { return; }
-
-        //Hp가 데미지만큼 줄어듬
-        CurrentHp -= damage;
-
-        //Hp 음수 방지 처리
-        CurrentHp = Mathf.Clamp(CurrentHp, 0, MaxHp);
-
-        //Hp가 0 이하라면
-        if (CurrentHp <= 0f)
+        else if (Barrier > 0f)
         {
-            //죽음 처리 메서드 호출
-            Die();
+            float lastDamage = damage - Barrier;
+
+            Barrier -= damage;
+            Barrier = Mathf.Clamp(Barrier, 0f, Mathf.Infinity);
+
+            if (lastDamage >= 0f)
+            {
+                damage = lastDamage;
+
+                //Hp가 데미지만큼 줄어듬
+                CurrentHp -= damage;
+
+                //Hp 음수 방지 처리
+                CurrentHp = Mathf.Clamp(CurrentHp, 0, MaxHp);
+
+                //Hp가 0 이하라면
+                if (CurrentHp <= 0f)
+                {
+                    //죽음 처리 메서드 호출
+                    Die();
+                }
+            }
+            else
+            {
+                //Hp가 데미지만큼 줄어듬
+                CurrentHp -= damage;
+
+                //Hp 음수 방지 처리
+                CurrentHp = Mathf.Clamp(CurrentHp, 0, MaxHp);
+
+                //Hp가 0 이하라면
+                if (CurrentHp <= 0f)
+                {
+                    //죽음 처리 메서드 호출
+                    Die();
+                }
+            }
         }
 
     }
@@ -127,9 +164,9 @@ public class Player : MonoBehaviour
 
         //데스카운트 감소
         GameManager.Instance.DeathCountDown();
-        
+
         //Death 애니메이션 재생
-        animator.Play("Death");
+        animator.SetTrigger("Death");
     }
 
     public void Stuned(float stunTime) //스턴 처리
@@ -142,9 +179,9 @@ public class Player : MonoBehaviour
 
         //키액션 구독 해지
         TakeControl();
-        
+
         //Stun 애니메이션 재생
-        animator.Play("Stun");
+        animator.SetTrigger("Stun");
 
         //스턴 시간만큼 기다렸다가, 키액션 재구독
         Invoke("BringBackControl", stunTime);
@@ -154,14 +191,14 @@ public class Player : MonoBehaviour
     public void Resurrection() //부활 처리
     {
         //무적 부여
-        StartCoroutine(NoDamage());
+        StartCoroutine(NoDamage(NoDamageTime));
 
         //키액션 재구독
         BringBackControl();
 
         //최대 Hp 초기화
         MaxHp = 100f;
-        
+
         //최대 Mp 초기화
         MaxMp = 1000f;
 
@@ -191,8 +228,25 @@ public class Player : MonoBehaviour
     }
     void Update()
     {
+
+        /*
+         * 플레이어의 캐릭터 컨트롤 권한을 뺏는 일이 많아, 포션 섭취는 Update에서 처리합니다.
+         */
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            //(Hp포션 개수) > 0f 라면, Hp포션을 섭취
+            //else: 포션을 사용할 수 없습니다.
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            //(Mp포션 개수) > 0f 라면, Mp포션을 섭취
+            //else: 포션을 사용할 수 없습니다.
+        }
+
         //현재 플레이어 상태에 따른 애니메이션 등의 처리
-        switch (CurrentState) 
+        switch (CurrentState)
         {
             case PlayerState.Idle:
                 HandleIdle();
@@ -226,14 +280,20 @@ public class Player : MonoBehaviour
 
     void HandleIdle() //Idle 상태 처리
     {
-        //애니메이션 Idle 재생
-        animator.Play("Idle");
+        movementSpeedRatio = Mathf.Lerp(movementSpeedRatio, 0, MoveSpeed * Time.deltaTime);
+        animator.SetFloat("Move", movementSpeedRatio);
+        //애니메이션 Idle 
+        animator.Play("IdleMove");
     }
 
     void HandleMove() //Move 상태 처리
     {
+        movementSpeedRatio = Mathf.Lerp(movementSpeedRatio, 1, MoveSpeed * Time.deltaTime);
+
+        animator.SetFloat("Move",movementSpeedRatio);
+
         //애니메이션 Move 재생
-        animator.Play("Move");
+        animator.Play("IdleMove");
 
         //바라볼 방향 벡터 계산
         Vector3 direction = (targetPosition - transform.position).normalized;
@@ -258,9 +318,11 @@ public class Player : MonoBehaviour
 
     void HandleRoll() //Roll 상태 처리
     {
-        //애니메이션 Roll 재생
-        animator.Play("Roll");
-
+        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+        if (!stateInfo.IsName("Roll"))
+        {
+            animator.Play("Roll");
+        }
         //목표 위치로 이동
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, (RollingDistance / RollingTime) * Time.deltaTime);
 
@@ -317,26 +379,66 @@ public class Player : MonoBehaviour
             }
         }
     }
-    
+
     void HandleUseW() //UseW 상태 처리
     {
+        //현재 애니메이션 상태를 가져옴
+        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+
+        //현재 애니메이션 상태 이름이 W라면
+        if (stateInfo.IsName("W"))
+        {
+            //애니메이션이 종료되면
+            if (stateInfo.normalizedTime >= 1f)
+            {
+                //키액션 구독
+                BringBackControl();
+
+                //현재 플레이어 상태를 Idle로 변경
+                CurrentState = PlayerState.Idle;
+            }
+        }
 
     }
 
     void HandleUseE() //UseE 상태 처리
     {
+        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+        
+        if(stateInfo.IsName("E"))
+        {
+            if (stateInfo.normalizedTime >= 1f)
+            {
+                CurrentState = PlayerState.Idle;
+            }
+        }
 
     }
 
     void HandleUseR() //UseR 상태 처리
     {
-        
+        //현재 애니메이션 상태를 가져옴
+        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+
+        //현재 애니메이션 상태 이름이 R라면
+        if (stateInfo.IsName("R"))
+        {
+            //애니메이션이 종료되면
+            if (stateInfo.normalizedTime >= 1f)
+            {
+                //키액션 구독
+                BringBackControl();
+
+                //현재 플레이어 상태를 Idle로 변경
+                CurrentState = PlayerState.Idle;
+            }
+        }
     }
 
     void OnMouse() //마우스 입력 처리
     {
         //[Move]
-        //좌클릭 했을 때, 구르기 상태가 아니면
+        //우클릭 했을 때, 구르기 상태가 아니면
         if (Input.GetMouseButton(1) && !IsRolling)
         {
             //마우스 위치 구하기
@@ -351,7 +453,7 @@ public class Player : MonoBehaviour
                 {
                     //목표 위치를 충돌 지점으로 설정
                     targetPosition = hit.point;
-                    
+
                     //목표 위치를 바라봄
                     transform.LookAt(targetPosition);
 
@@ -362,7 +464,7 @@ public class Player : MonoBehaviour
         }
 
         //[Attack]
-        //우클릭 했을 때, 평타 사용 가능이면
+        //좌클릭 했을 때, 평타 사용 가능이면
         if (Input.GetMouseButtonDown(0) && AutoAttack.Instance.IsUsable)
         {
             //현재 플레이어 상태가 Idle 또는 Move라면
@@ -389,7 +491,7 @@ public class Player : MonoBehaviour
 
                     //평타 인스턴스 생성
                     GameObject autoAttack = Instantiate(AttackPrefab, attackPosition.transform);
-                    
+
                     //1초 뒤에 평타 인스턴스 삭제
                     Destroy(autoAttack, 1f);
                 }
@@ -401,42 +503,42 @@ public class Player : MonoBehaviour
     void OnKeyboard() //키보드 입력 처리
     {
         //[Roll]
-        if (Input.GetKey(KeyCode.Space)) 
+        if (Input.GetKeyDown(KeyCode.Space) && !IsRolling)
         {
             //마우스 위치 구하기
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
+            RaycastHit hit;          
 
             //레이가 stage 레이어 오브젝트에 충돌했다면
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, stage))
             {
+                // 마우스 위치에서 현재 플레이어 위치까지의 방향 구하기
+                Vector3 direction = (hit.point - transform.position).normalized;
 
-                //레이가 충돌한 오브젝트 태그가 Stage라면
-                if (hit.collider.tag == "Stage")
-                {
-                    //목표 위치를 충돌 지점으로 설정
-                    targetPosition = hit.point;
+                // 목표 위치를 현재 위치에서 RollingDistance만큼 이동한 지점으로 설정
+                targetPosition = transform.position + direction * RollingDistance;
 
-                    //바라볼 위치 지정
-                    Vector3 lookDirection = new Vector3(targetPosition.x, transform.position.y, targetPosition.z);
-                    
-                    //지정한 위치를 바라봄
-                    transform.LookAt(lookDirection);
+                // 바라볼 위치 지정 (y 값만 현재 플레이어의 y로 고정)
+                Vector3 lookDirection = new Vector3(targetPosition.x, transform.position.y, targetPosition.z);
 
-                    //구르기 상태 활성화
-                    IsRolling = true;
 
-                    //무적 부여
-                    StartCoroutine(NoDamage());
+                //지정한 위치를 바라봄
+                transform.LookAt(lookDirection);
 
-                    //현재 플레이어 상태를 Roll로 변경
-                    CurrentState = PlayerState.Roll;
-                }
+                //구르기 상태 활성화
+                IsRolling = true;
+
+                //무적 부여
+                StartCoroutine(NoDamage(NoDamageTime));
+
+                //현재 플레이어 상태를 Roll로 변경
+                CurrentState = PlayerState.Roll;
+
             }
         }
 
         //[Use Q]
-        if (Input.GetKey(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Q))
         {
             //현재 플레이어 상태가 Idle 또는 Move라면
             if (CurrentState == PlayerState.Idle || CurrentState == PlayerState.Move)
@@ -455,7 +557,7 @@ public class Player : MonoBehaviour
 
                     //Q 인스턴스 생성
                     GameObject q = Instantiate(qPrefab, attackPosition.transform);
-                    
+
                     //키액션 구독 해지
                     TakeControl();
 
@@ -468,7 +570,7 @@ public class Player : MonoBehaviour
                 {
                     Debug.Log("아직 스킬을 쓸 수 없다는 메시지 띄우기");
                 }
-               
+
                 //현재 Mp가 스킬 소모 Mp 미만이라면
                 else if (CurrentMp < Q.Instance.UseMp)
                 {
@@ -477,26 +579,148 @@ public class Player : MonoBehaviour
             }
         }
 
-        if (Input.GetKey(KeyCode.W))
+        //[UseW]
+        if (Input.GetKeyDown(KeyCode.W))
         {
-            W.Instance.UseSkill(); //마나 줄어들고 쿨 돌아가기만 하는 중
-            //바라본 방향으로 스킬을 설치, 범위 내 모든 적에게 대미지 부여
+            //현재 플레이어 상태가 Idle 또는 Move라면
+            if (CurrentState == PlayerState.Idle || CurrentState == PlayerState.Move)
+            {
+                //W 사용 가능이며, 현재 Mp가 스킬 소모 Mp 이상이라면
+                if (W.Instance.IsUsable && CurrentMp >= W.Instance.UseMp)
+                {
+
+                    //W 스킬 사용
+                    W.Instance.UseSkill();
+
+                    //현재 플레이어 상태를 UseW로 변경
+                    CurrentState = PlayerState.UseW;
+
+                    //Q 애니메이션 트리거 설정 
+                    animator.SetTrigger("W");
+                    
+                    //키액션 구독 해지
+                    TakeControl();
+
+                    //스킬 시전 위치 설정
+                    Vector3 wPosition = attackPosition.transform.position + attackPosition.transform.forward * 1f;
+                    wPosition.y = 3f;
+
+                    //W 스킬 설치
+                    GameObject w = Instantiate(wPrefab, wPosition, transform.rotation);
+
+                    //설치된 W 스킬 3초 뒤 삭제 (TEMP)
+                    Destroy(w, 3f);
+
+
+
+                }
+                //W 스킬 사용 불가 상태라면
+                else if (!W.Instance.IsUsable)
+                {
+                    Debug.Log("아직 스킬을 쓸 수 없다는 메시지 띄우기");
+                }
+
+                //현재 Mp가 스킬 소모 Mp 미만이라면
+                else if (CurrentMp < W.Instance.UseMp)
+                {
+                    Debug.Log("MP 부족 메시지 띄우기");
+                }
+            }
         }
 
-        if (Input.GetKey(KeyCode.E))
+        //[UseE]
+        if (Input.GetKeyDown(KeyCode.E))
         {
-            E.Instance.UseSkill();
-            //4초간 지속되는 실드 씌우기, 실드는 Hp보다 우선해서 까지니까 Damaged에서도 작업해줘야함
+            //현재 플레이어 상태가 Idle 또는 Move라면
+            if (CurrentState == PlayerState.Idle || CurrentState == PlayerState.Move)
+            {
+                //E 사용 가능이며, 현재 Mp가 스킬 소모 Mp 이상이라면
+                if (E.Instance.IsUsable && CurrentMp >= E.Instance.UseMp)
+                {
+                    //E 스킬 사용
+                    E.Instance.UseSkill();
+
+                    //현재 플레이어 상태를 UseR로 변경
+                    CurrentState = PlayerState.UseE;
+
+                    //쉴드량 50 부여 (TEMP)
+                    Barrier = 50f;
+
+                    //4초 뒤 쉴드량 0으로 초기화
+                    Invoke("BarrierReset",4f);
+
+                    //E 애니메이션 트리거 설정 
+                    animator.SetTrigger("E");
+
+                    //E 인스턴스 생성
+                    GameObject e = Instantiate(ePrefab, attackPosition.transform);
+
+                    //E 인스턴스 4초 뒤 삭제 (TEMP)
+                    Destroy(e, 4f);
+                }
+
+                //R 스킬 사용 불가 상태라면
+                else if (!R.Instance.IsUsable)
+                {
+                    Debug.Log("아직 스킬을 쓸 수 없다는 메시지 띄우기");
+                }
+
+                //현재 Mp가 스킬 소모 Mp 미만이라면
+                else if (CurrentMp < R.Instance.UseMp)
+                {
+                    Debug.Log("MP 부족 메시지 띄우기");
+                }
+            }
+
         }
 
-        if (Input.GetKey(KeyCode.R))
+        //[UseR]
+        if (Input.GetKeyDown(KeyCode.R))
         {
-            R.Instance.UseSkill();
-            //스킬 범위 내 모든 적에게 대미지 부여, 시전 시간동안 무적 
+            //현재 플레이어 상태가 Idle 또는 Move라면
+            if (CurrentState == PlayerState.Idle || CurrentState == PlayerState.Move)
+            {
+                //R 사용 가능이며, 현재 Mp가 스킬 소모 Mp 이상이라면
+                if (R.Instance.IsUsable && CurrentMp >= R.Instance.UseMp)
+                {
+                    //R 스킬 사용
+                    R.Instance.UseSkill();
 
+                    //현재 플레이어 상태를 UseR로 변경
+                    CurrentState = PlayerState.UseR;
+
+                    //4초간 무적 부여 (TEMP)
+                    NoDamage(4f);
+
+                    //R 애니메이션 트리거 설정 
+                    animator.SetTrigger("R");
+
+                    //R 인스턴스 생성
+                    GameObject r = Instantiate(rPrefab, attackPosition.transform);
+
+                    //키액션 구독 해지
+                    TakeControl();
+
+                    //R 인스턴스 4초 뒤 삭제 (TEMP)
+                    Destroy(r, 4f);
+                }
+
+                //R 스킬 사용 불가 상태라면
+                else if (!R.Instance.IsUsable)
+                {
+                    Debug.Log("아직 스킬을 쓸 수 없다는 메시지 띄우기");
+                }
+
+                //현재 Mp가 스킬 소모 Mp 미만이라면
+                else if (CurrentMp < R.Instance.UseMp)
+                {
+                    Debug.Log("MP 부족 메시지 띄우기");
+                }
+            }
         }
     }
 }
+
 
 
 

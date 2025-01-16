@@ -5,7 +5,7 @@ public class R : MonoBehaviour
     public static R Instance;
     public bool IsUsable = true; //스킬 사용 가능 여부 (쿨타임에 의함)
     public float CoolTime = 60f; //스킬 쿨타임
-    public float SkillDamage = 800f; //스킬 고유 데미지
+    public float SkillDamage = 1000f; //스킬 고유 데미지
     public float CalculatingDamage; //공격력 등과 합산된 데미지
     public float UseMp = 180f; //스킬 소모 Mp
 

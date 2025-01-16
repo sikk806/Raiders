@@ -6,7 +6,7 @@ public class Q : MonoBehaviour
     public static Q Instance;
     public bool IsUsable = true; //스킬 사용 가능 여부 (쿨타임에 의함)
     public float CoolTime = 3f; //스킬 쿨타임
-    public float SkillDamage = 300f; //스킬 고유 데미지
+    public float SkillDamage = 100f; //스킬 고유 데미지
     public float CalculatingDamage; //공격력 등과 합산된 데미지
     public float UseMp = 30f; //스킬 소모 Mp
 

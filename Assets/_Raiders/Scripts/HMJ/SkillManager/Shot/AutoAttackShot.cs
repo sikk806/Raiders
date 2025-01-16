@@ -12,20 +12,12 @@ public class AutoAttackShot : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        //if (other.CompareTag("Enemy"))
-        //{
+        if (other.CompareTag("Enemy"))
+        {
 
-        //    Enemy enemy = other.GetComponent<Enemy>();
-        //    if (enemy != null)
-        //    {
-
-        //        enemy.Instance.CurrentHp -= AutoAttack.Instance.CalculatingDamage;
-        //    }
-        //    else
-        //    {
-        //        Debug.LogWarning("There is No 'Enemy' Script in target");
-        //    }
-        //}
+            Enemy enemy = other.GetComponent<Enemy>();
+            enemy.TakeDamage(AutoAttack.Instance.CalculatingDamage);
+        }
 
     }
 }

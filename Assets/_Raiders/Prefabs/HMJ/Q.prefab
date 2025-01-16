@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2812075283222705889}
   - component: {fileID: 8679402102768658098}
   - component: {fileID: 730691475568479645}
+  - component: {fileID: 3560521002673425576}
   m_Layer: 0
   m_Name: Effect_47_BulletEffects
   m_TagString: Untagged
@@ -33,7 +34,6 @@ Transform:
   m_Children:
   - {fileID: 873582003453723756}
   - {fileID: 2483455048617550614}
-  - {fileID: 6875023005968091265}
   m_Father: {fileID: 9012770354107117330}
   m_LocalEulerAnglesHint: {x: 180, y: 0, z: 0}
 --- !u!198 &8679402102768658098
@@ -3914,14 +3914,14 @@ ParticleSystem:
   CollisionModule:
     enabled: 1
     serializedVersion: 4
-    type: 0
+    type: 1
     collisionMode: 0
     colliderForce: 0
     multiplyColliderForceByParticleSize: 0
     multiplyColliderForceByParticleSpeed: 0
-    multiplyColliderForceByCollisionAngle: 1
+    multiplyColliderForceByCollisionAngle: 0
     m_Planes:
-    - {fileID: 6875023005968091265}
+    - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
@@ -4036,7 +4036,7 @@ ParticleSystem:
     m_EnergyLossOnCollision:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 1
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -4091,11 +4091,11 @@ ParticleSystem:
     radiusScale: 1
     collidesWith:
       serializedVersion: 2
-      m_Bits: 4294967295
+      m_Bits: 8
     maxCollisionShapes: 256
     quality: 0
     voxelSize: 0.5
-    collisionMessages: 0
+    collisionMessages: 1
     collidesWithDynamic: 1
     interiorCollisions: 0
   TriggerModule:
@@ -5153,6 +5153,18 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &3560521002673425576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2254802431611377497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a55bde6be0ee234ea27fd6129a11e66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2370273041406523825
 GameObject:
   m_ObjectHideFlags: 0
@@ -24886,60 +24898,6 @@ MonoBehaviour:
   m_activeObj:
   - {fileID: 2254802431611377497}
   m_delayTime: 1.5
---- !u!1 &7379739988964281202
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6875023005968091265}
-  - component: {fileID: 3121592689983689600}
-  m_Layer: 0
-  m_Name: Effect_47_BulletColider
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6875023005968091265
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7379739988964281202}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0.7132505, y: -0, z: -0, w: -0.70090926}
-  m_LocalPosition: {x: 0, y: 3.4900017, z: -50}
-  m_LocalScale: {x: 10, y: 10, z: 10}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2812075283222705889}
-  m_LocalEulerAnglesHint: {x: -89, y: 0, z: 0}
---- !u!64 &3121592689983689600
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7379739988964281202}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &8717353647722718555
 GameObject:
   m_ObjectHideFlags: 0
@@ -29865,6 +29823,18 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1501411365572167886, guid: 0b8638be49ac6784f94eb307679937c4, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1501411365572167886, guid: 0b8638be49ac6784f94eb307679937c4, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1501411365572167886, guid: 0b8638be49ac6784f94eb307679937c4, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1501411365572167886, guid: 0b8638be49ac6784f94eb307679937c4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -29903,6 +29873,10 @@ PrefabInstance:
     - target: {fileID: 1501411365572167886, guid: 0b8638be49ac6784f94eb307679937c4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1501411365572167886, guid: 0b8638be49ac6784f94eb307679937c4, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2663269868819418990, guid: 0b8638be49ac6784f94eb307679937c4, type: 3}
       propertyPath: m_Name
@@ -29957,14 +29931,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Effect_47_TrailParticle
       objectReference: {fileID: 0}
-    - target: {fileID: 2716654249242860899, guid: 77ed292e37dcf0249b7b4d124e9b7adf, type: 3}
-      propertyPath: m_Materials.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6794768264738867708, guid: 77ed292e37dcf0249b7b4d124e9b7adf, type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6794768264738867708, guid: 77ed292e37dcf0249b7b4d124e9b7adf, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -30003,6 +29969,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6794768264738867708, guid: 77ed292e37dcf0249b7b4d124e9b7adf, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7966346198127114377, guid: 77ed292e37dcf0249b7b4d124e9b7adf, type: 3}
+      propertyPath: CollisionModule.enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

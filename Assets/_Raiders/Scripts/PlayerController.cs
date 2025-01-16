@@ -202,7 +202,7 @@
 
 //            PlayerState beforeState = playerState;
 //            playerState = PlayerState.Roll;
-            
+
 //            animator.CrossFade("Roll", 0.05f);
 //        }
 //    }
