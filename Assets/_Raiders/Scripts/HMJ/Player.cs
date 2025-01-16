@@ -2,6 +2,8 @@ using System.Collections;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
+
 using UnityEngine.Playables;
 using static Player;
 using static UnityEngine.UIElements.UxmlAttributeDescription;
@@ -47,6 +49,10 @@ public class Player : MonoBehaviour
     private bool IsRolling = false; //구르기 여부
     private bool IsNoDamaged = false; //무적 여부
 
+    public Image HpBar;
+    public Image MpBar;
+    public TextMeshProUGUI HpText; //Hp바 텍스트
+    public TextMeshProUGUI MpText; //Mp바 텍스트
 
     [SerializeField]
     private GameObject AttackPrefab; //평타 프리팹
@@ -75,6 +81,9 @@ public class Player : MonoBehaviour
 
         animator = GetComponent<Animator>();
         inputManager = GameManager.Input;
+        HpText.text = CurrentHp + "/" + MaxHp;
+        MpText.text = CurrentMp + "/" + MaxMp;
+
 
         //키액션 구독 해지 (구독 중복 방지용)
         TakeControl();
@@ -84,6 +93,7 @@ public class Player : MonoBehaviour
 
         //스테이지 충돌 레이어 설정
         stage = LayerMask.GetMask("Stage");
+
     }
 
     IEnumerator NoDamage(float noDamageTime) //무적 부여 코루틴
@@ -101,9 +111,16 @@ public class Player : MonoBehaviour
         IsNoDamaged = false;
     }
 
-    public void BarrierReset()
+    public void BarrierSet()
+    {
+        Barrier = 50f;
+        HpText.text = CurrentHp + "(+" + Barrier + ")" + "/" + MaxHp;
+    }
+
+    public void BarrierReset() //쉴드 리셋 (사용시, Invoke 통해서 호출하는 것으로 유지시간 설정)
     {
         Barrier = 0f;
+        HpText.text = CurrentHp + "/" + MaxHp;
     }
 
 
@@ -124,6 +141,8 @@ public class Player : MonoBehaviour
 
                 //Hp가 데미지만큼 줄어듬
                 CurrentHp -= damage;
+                HpBar.fillAmount -= damage;
+                HpText.text = CurrentHp + "/" + MaxHp;
 
                 //Hp 음수 방지 처리
                 CurrentHp = Mathf.Clamp(CurrentHp, 0, MaxHp);
@@ -139,6 +158,7 @@ public class Player : MonoBehaviour
             {
                 //Hp가 데미지만큼 줄어듬
                 CurrentHp -= damage;
+                HpBar.fillAmount = CurrentHp / MaxHp;
 
                 //Hp 음수 방지 처리
                 CurrentHp = Mathf.Clamp(CurrentHp, 0, MaxHp);
@@ -204,9 +224,13 @@ public class Player : MonoBehaviour
 
         //현재 Hp 초기화
         CurrentHp = MaxHp;
+        HpBar.fillAmount = CurrentHp / MaxHp;
+        HpText.text = CurrentHp + "/" + MaxHp;
 
         //현재 Mp 초기화
         CurrentMp = MaxMp;
+        MpBar.fillAmount = CurrentMp / MaxMp;
+        MpText.text = CurrentMp + "/" + MaxMp;
 
         //현재 플레이어 상태를 Idle로 변경
         CurrentState = PlayerState.Idle;
@@ -349,6 +373,8 @@ public class Player : MonoBehaviour
             //애니메이션이 종료되면
             if (stateInfo.normalizedTime >= 1f)
             {
+                //키액션 구독
+                BringBackControl();
                 //현재 플레이어 상태를 Idle로 변경
                 CurrentState = PlayerState.Idle;
             }
@@ -470,6 +496,9 @@ public class Player : MonoBehaviour
             //현재 플레이어 상태가 Idle 또는 Move라면
             if (CurrentState == PlayerState.Idle || CurrentState == PlayerState.Move)
             {
+                //키액션 구독 해제
+                TakeControl();
+
                 //현재 플레이어 상태를 Attack으로 변경
                 CurrentState = PlayerState.Attack;
 
@@ -493,7 +522,7 @@ public class Player : MonoBehaviour
                     GameObject autoAttack = Instantiate(AttackPrefab, attackPosition.transform);
 
                     //1초 뒤에 평타 인스턴스 삭제
-                    Destroy(autoAttack, 1f);
+                    Destroy(autoAttack, 0.85f);
                 }
             }
 
@@ -643,8 +672,7 @@ public class Player : MonoBehaviour
                     //현재 플레이어 상태를 UseR로 변경
                     CurrentState = PlayerState.UseE;
 
-                    //쉴드량 50 부여 (TEMP)
-                    Barrier = 50f;
+                    BarrierSet();
 
                     //4초 뒤 쉴드량 0으로 초기화
                     Invoke("BarrierReset",4f);

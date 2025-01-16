@@ -45,6 +45,8 @@ public class E : MonoBehaviour
     {
         //스킬 소모 Mp만큼 플레이어 Mp 소모
         Player.Instance.CurrentMp -= UseMp;
+        Player.Instance.MpBar.fillAmount = Player.Instance.CurrentMp / Player.Instance.MaxMp;
+        Player.Instance.MpText.text = Player.Instance.CurrentMp + "/" + Player.Instance.MaxMp;
 
         //쿨타임 적용
         StartCoolDown();
