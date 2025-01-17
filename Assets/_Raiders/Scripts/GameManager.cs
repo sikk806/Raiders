@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     InputManager input;
     public static InputManager Input { get { return Instance.input; } }
 
-    private float deathCount = 5; //µ¥½º Ä«¿îÆ®(ÀÓ½Ã »ý¼º)
+    private float deathCount = 5; //ï¿½ï¿½ï¿½ï¿½ Ä«ï¿½ï¿½Æ®(ï¿½Ó½ï¿½ ï¿½ï¿½ï¿½ï¿½)
 
     private void Awake()
     {
@@ -26,20 +26,20 @@ public class GameManager : MonoBehaviour
         input.OnUpdate();
     }
 
-    public void DeathCountDown() //µ¥½ºÄ«¿îÆ® °¨¼Ò Ã³¸®
+    public void DeathCountDown() //ï¿½ï¿½ï¿½ï¿½Ä«ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
     {
-        //µ¥½ºÄ«¿îÆ® 1 °¨¼Ò
+        //ï¿½ï¿½ï¿½ï¿½Ä«ï¿½ï¿½Æ® 1 ï¿½ï¿½ï¿½ï¿½
         deathCount--;
 
-        //µ¥½ºÄ«¿îÆ®°¡ 0 ¹Ì¸¸ÀÌ¸é
+        //ï¿½ï¿½ï¿½ï¿½Ä«ï¿½ï¿½Æ®ï¿½ï¿½ 0 ï¿½Ì¸ï¿½ï¿½Ì¸ï¿½
         if (deathCount < 0 )
         {
-            //°ÔÀÓ Á¾·á
+            //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             Debug.Log("GameOver");
         }
         else
         {
-            //5ÃÊ ÈÄ ºÎÈ° ¾È³» ÆË¾÷ ¶ç¿î ÀÌÈÄ,Ä³¸¯ÅÍ ºÎÈ°
+            //5ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½È° ï¿½È³ï¿½ ï¿½Ë¾ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½,Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È°
             Debug.Log("Resurrection after 5 sec, use popup and call Function (Player.Instance.Resurrection)");
         }
     }

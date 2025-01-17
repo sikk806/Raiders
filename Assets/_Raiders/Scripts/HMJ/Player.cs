@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using UnityEngine.Playables;
 using static Player;
 using static UnityEngine.UIElements.UxmlAttributeDescription;
+using JetBrains.Annotations;
 
 public enum PlayerState //플레이어 상태
 {
@@ -748,7 +749,5 @@ public class Player : MonoBehaviour
         }
     }
 }
-
-
 
 
