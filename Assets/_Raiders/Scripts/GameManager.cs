@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     InputManager input;
     public static InputManager Input { get { return Instance.input; } }
 
-    private float deathCount = 5; //���� ī��Ʈ(�ӽ� ����)
+    private float deathCount = 5; 
 
     private void Awake()
     {

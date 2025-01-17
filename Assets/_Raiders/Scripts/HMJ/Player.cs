@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
@@ -82,6 +82,7 @@ public class Player : MonoBehaviour
 
         animator = GetComponent<Animator>();
         inputManager = GameManager.Input;
+        //UI
         HpText.text = CurrentHp + "/" + MaxHp;
         MpText.text = CurrentMp + "/" + MaxMp;
 
