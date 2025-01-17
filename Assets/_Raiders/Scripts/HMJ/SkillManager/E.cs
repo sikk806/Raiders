@@ -5,8 +5,6 @@ public class E : MonoBehaviour
     public static E Instance;
     public bool IsUsable = true; //스킬 사용 가능 여부 (쿨타임에 의함)
     public float CoolTime = 8f; //스킬 쿨타임
-    public float SkillDamage = 0; //스킬 고유 데미지
-    public float CalculatingDamage; //공격력 등과 합산된 데미지
     public float UseMp = 50f; //스킬 소모 Mp
 
     void Start()
