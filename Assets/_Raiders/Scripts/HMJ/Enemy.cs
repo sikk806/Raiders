@@ -1,4 +1,4 @@
-using UnityEngine;
+Ôªøusing UnityEngine;
 
 //Temp Script
 
@@ -18,6 +18,6 @@ public class Enemy : MonoBehaviour
 
     private void Die()
     {
-        Debug.Log("¿˚ ªÁ∏¡");
+        Debug.Log("Ï†Å ÏÇ¨Îßù");
     }
 }

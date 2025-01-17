@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
@@ -8,7 +8,7 @@ using UnityEngine.Playables;
 using static Player;
 using static UnityEngine.UIElements.UxmlAttributeDescription;
 
-public enum PlayerState //ÇÃ·¹ÀÌ¾î »óÅÂ
+public enum PlayerState //í”Œë ˆì´ì–´ ìƒíƒœ
 {
     Idle,
     Move,
@@ -25,51 +25,51 @@ public class Player : MonoBehaviour
 {
     public static Player Instance;
 
-    public float MaxHp = 100; //ÃÖ´ëHP
-    public float CurrentHp = 100; //ÇöÀçHP
-    public float MaxMp = 1000; //ÃÖ´ëMP
-    public float CurrentMp = 1000; //ÇöÀçMP
+    public float MaxHp = 100; //ìµœëŒ€HP
+    public float CurrentHp = 100; //í˜„ì¬HP
+    public float MaxMp = 1000; //ìµœëŒ€MP
+    public float CurrentMp = 1000; //í˜„ì¬MP
 
-    public float Power = 100; //°ø°İ·Â
-    public float AddedPower = 0; //Ãß°¡ °ø°İ·Â
+    public float Power = 100; //ê³µê²©ë ¥
+    public float AddedPower = 0; //ì¶”ê°€ ê³µê²©ë ¥
 
-    private Vector3 targetPosition; //ÀÌµ¿ ¸ñÇ¥
-    private LayerMask stage; //Áö¸é ·¹ÀÌ¾î¸¶½ºÅ©
-    public float MoveSpeed = 7f; //ÀÌµ¿ ¼Óµµ
-    public float RollingDistance = 8.5f; //±¸¸£´Â °Å¸®
-    public float RollingTime = 0.617f; //±¸¸£´Â ½Ã°£
+    private Vector3 targetPosition; //ì´ë™ ëª©í‘œ
+    private LayerMask stage; //ì§€ë©´ ë ˆì´ì–´ë§ˆìŠ¤í¬
+    public float MoveSpeed = 7f; //ì´ë™ ì†ë„
+    public float RollingDistance = 8.5f; //êµ¬ë¥´ëŠ” ê±°ë¦¬
+    public float RollingTime = 0.617f; //êµ¬ë¥´ëŠ” ì‹œê°„
 
 
-    public float StopTime; //°æÁ÷ ½Ã°£
-    public float Barrier; //½¯µå·®
-    public float NoDamageTime = 1f; //¹«Àû ½Ã°£
+    public float StopTime; //ê²½ì§ ì‹œê°„
+    public float Barrier; //ì‰´ë“œëŸ‰
+    public float NoDamageTime = 1f; //ë¬´ì  ì‹œê°„
     private float movementSpeedRatio = 0;
 
 
-    private bool IsRolling = false; //±¸¸£±â ¿©ºÎ
-    private bool IsNoDamaged = false; //¹«Àû ¿©ºÎ
+    private bool IsRolling = false; //êµ¬ë¥´ê¸° ì—¬ë¶€
+    private bool IsNoDamaged = false; //ë¬´ì  ì—¬ë¶€
 
     public Image HpBar;
     public Image MpBar;
-    public TextMeshProUGUI HpText; //Hp¹Ù ÅØ½ºÆ®
-    public TextMeshProUGUI MpText; //Mp¹Ù ÅØ½ºÆ®
+    public TextMeshProUGUI HpText; //Hpë°” í…ìŠ¤íŠ¸
+    public TextMeshProUGUI MpText; //Mpë°” í…ìŠ¤íŠ¸
 
     [SerializeField]
-    private GameObject AttackPrefab; //ÆòÅ¸ ÇÁ¸®ÆÕ
+    private GameObject AttackPrefab; //í‰íƒ€ í”„ë¦¬íŒ¹
     [SerializeField]
-    private GameObject qPrefab; //Q ½ºÅ³ ÇÁ¸®ÆÕ
+    private GameObject qPrefab; //Q ìŠ¤í‚¬ í”„ë¦¬íŒ¹
     [SerializeField]
-    private GameObject wPrefab; //W ½ºÅ³ ÇÁ¸®ÆÕ
+    private GameObject wPrefab; //W ìŠ¤í‚¬ í”„ë¦¬íŒ¹
     [SerializeField]
-    private GameObject ePrefab; //E ½ºÅ³ ÇÁ¸®ÆÕ
+    private GameObject ePrefab; //E ìŠ¤í‚¬ í”„ë¦¬íŒ¹
     [SerializeField]
-    private GameObject rPrefab; //R ½ºÅ³ ÇÁ¸®ÆÕ
+    private GameObject rPrefab; //R ìŠ¤í‚¬ í”„ë¦¬íŒ¹
     [SerializeField]
-    private GameObject attackPosition; //°ø°İ ³ª°¡´Â À§Ä¡
+    private GameObject attackPosition; //ê³µê²© ë‚˜ê°€ëŠ” ìœ„ì¹˜
 
     private Animator animator;
     private InputManager inputManager;
-    public PlayerState CurrentState; //ÇöÀç »óÅÂ
+    public PlayerState CurrentState; //í˜„ì¬ ìƒíƒœ
 
 
     void Awake()
@@ -85,29 +85,29 @@ public class Player : MonoBehaviour
         MpText.text = CurrentMp + "/" + MaxMp;
 
 
-        //Å°¾×¼Ç ±¸µ¶ ÇØÁö (±¸µ¶ Áßº¹ ¹æÁö¿ë)
+        //í‚¤ì•¡ì…˜ êµ¬ë… í•´ì§€ (êµ¬ë… ì¤‘ë³µ ë°©ì§€ìš©)
         TakeControl();
 
-        //Å°¾×¼Ç ±¸µ¶
+        //í‚¤ì•¡ì…˜ êµ¬ë…
         BringBackControl();
 
-        //½ºÅ×ÀÌÁö Ãæµ¹ ·¹ÀÌ¾î ¼³Á¤
+        //ìŠ¤í…Œì´ì§€ ì¶©ëŒ ë ˆì´ì–´ ì„¤ì •
         stage = LayerMask.GetMask("Stage");
 
     }
 
-    IEnumerator NoDamage(float noDamageTime) //¹«Àû ºÎ¿© ÄÚ·çÆ¾
+    IEnumerator NoDamage(float noDamageTime) //ë¬´ì  ë¶€ì—¬ ì½”ë£¨í‹´
     {
-        //ÀÌ¹Ì ¹«Àû »óÅÂ¶ó¸é, ÄÚ·çÆ¾ Á¾·á
+        //ì´ë¯¸ ë¬´ì  ìƒíƒœë¼ë©´, ì½”ë£¨í‹´ ì¢…ë£Œ
         if (IsNoDamaged) yield break;
 
-        //¹«Àû »óÅÂ·Î º¯°æ
+        //ë¬´ì  ìƒíƒœë¡œ ë³€ê²½
         IsNoDamaged = true;
 
-        //NoDamageTime¸¸Å­ ¹«Àû »óÅÂ À¯Áö
+        //NoDamageTimeë§Œí¼ ë¬´ì  ìƒíƒœ ìœ ì§€
         yield return new WaitForSeconds(noDamageTime);
 
-        //¹«Àû »óÅÂ ÇØÁ¦
+        //ë¬´ì  ìƒíƒœ í•´ì œ
         IsNoDamaged = false;
     }
 
@@ -117,16 +117,16 @@ public class Player : MonoBehaviour
         HpText.text = CurrentHp + "(+" + Barrier + ")" + "/" + MaxHp;
     }
 
-    public void BarrierReset() //½¯µå ¸®¼Â (»ç¿ë½Ã, Invoke ÅëÇØ¼­ È£ÃâÇÏ´Â °ÍÀ¸·Î À¯Áö½Ã°£ ¼³Á¤)
+    public void BarrierReset() //ì‰´ë“œ ë¦¬ì…‹ (ì‚¬ìš©ì‹œ, Invoke í†µí•´ì„œ í˜¸ì¶œí•˜ëŠ” ê²ƒìœ¼ë¡œ ìœ ì§€ì‹œê°„ ì„¤ì •)
     {
         Barrier = 0f;
         HpText.text = CurrentHp + "/" + MaxHp;
     }
 
 
-    public void Damaged(float damage) //¹Ş´Â µ¥¹ÌÁö Ã³¸®
+    public void Damaged(float damage) //ë°›ëŠ” ë°ë¯¸ì§€ ì²˜ë¦¬
     {
-        //¹«Àû »óÅÂ¶ó¸é Ã³¸®ÇÏÁö ¾ÊÀ½
+        //ë¬´ì  ìƒíƒœë¼ë©´ ì²˜ë¦¬í•˜ì§€ ì•ŠìŒ
         if (IsNoDamaged) { return; }
         else if (Barrier > 0f)
         {
@@ -139,34 +139,34 @@ public class Player : MonoBehaviour
             {
                 damage = lastDamage;
 
-                //Hp°¡ µ¥¹ÌÁö¸¸Å­ ÁÙ¾îµë
+                //Hpê°€ ë°ë¯¸ì§€ë§Œí¼ ì¤„ì–´ë“¬
                 CurrentHp -= damage;
                 HpBar.fillAmount -= damage;
                 HpText.text = CurrentHp + "/" + MaxHp;
 
-                //Hp À½¼ö ¹æÁö Ã³¸®
+                //Hp ìŒìˆ˜ ë°©ì§€ ì²˜ë¦¬
                 CurrentHp = Mathf.Clamp(CurrentHp, 0, MaxHp);
 
-                //Hp°¡ 0 ÀÌÇÏ¶ó¸é
+                //Hpê°€ 0 ì´í•˜ë¼ë©´
                 if (CurrentHp <= 0f)
                 {
-                    //Á×À½ Ã³¸® ¸Ş¼­µå È£Ãâ
+                    //ì£½ìŒ ì²˜ë¦¬ ë©”ì„œë“œ í˜¸ì¶œ
                     Die();
                 }
             }
             else
             {
-                //Hp°¡ µ¥¹ÌÁö¸¸Å­ ÁÙ¾îµë
+                //Hpê°€ ë°ë¯¸ì§€ë§Œí¼ ì¤„ì–´ë“¬
                 CurrentHp -= damage;
                 HpBar.fillAmount = CurrentHp / MaxHp;
 
-                //Hp À½¼ö ¹æÁö Ã³¸®
+                //Hp ìŒìˆ˜ ë°©ì§€ ì²˜ë¦¬
                 CurrentHp = Mathf.Clamp(CurrentHp, 0, MaxHp);
 
-                //Hp°¡ 0 ÀÌÇÏ¶ó¸é
+                //Hpê°€ 0 ì´í•˜ë¼ë©´
                 if (CurrentHp <= 0f)
                 {
-                    //Á×À½ Ã³¸® ¸Ş¼­µå È£Ãâ
+                    //ì£½ìŒ ì²˜ë¦¬ ë©”ì„œë“œ í˜¸ì¶œ
                     Die();
                 }
             }
@@ -174,78 +174,78 @@ public class Player : MonoBehaviour
 
     }
 
-    public void Die() //Á×À½ Ã³¸®
+    public void Die() //ì£½ìŒ ì²˜ë¦¬
     {
-        //ÇöÀç ÇÃ·¹ÀÌ¾î »óÅÂ¸¦ Null·Î º¯°æ
+        //í˜„ì¬ í”Œë ˆì´ì–´ ìƒíƒœë¥¼ Nullë¡œ ë³€ê²½
         CurrentState = PlayerState.Null;
 
-        //Å°¾×¼Ç ±¸µ¶ ÇØÁö
+        //í‚¤ì•¡ì…˜ êµ¬ë… í•´ì§€
         TakeControl();
 
-        //µ¥½ºÄ«¿îÆ® °¨¼Ò
+        //ë°ìŠ¤ì¹´ìš´íŠ¸ ê°ì†Œ
         GameManager.Instance.DeathCountDown();
 
-        //Death ¾Ö´Ï¸ŞÀÌ¼Ç Àç»ı
+        //Death ì• ë‹ˆë©”ì´ì…˜ ì¬ìƒ
         animator.SetTrigger("Death");
     }
 
-    public void Stuned(float stunTime) //½ºÅÏ Ã³¸®
+    public void Stuned(float stunTime) //ìŠ¤í„´ ì²˜ë¦¬
     {
-        //¹«Àû »óÅÂ¶ó¸é Ã³¸®ÇÏÁö ¾ÊÀ½
+        //ë¬´ì  ìƒíƒœë¼ë©´ ì²˜ë¦¬í•˜ì§€ ì•ŠìŒ
         if (IsNoDamaged) { return; }
 
-        //ÇöÀç ÇÃ·¹ÀÌ¾î »óÅÂ¸¦ Null·Î º¯°æ
+        //í˜„ì¬ í”Œë ˆì´ì–´ ìƒíƒœë¥¼ Nullë¡œ ë³€ê²½
         CurrentState = PlayerState.Null;
 
-        //Å°¾×¼Ç ±¸µ¶ ÇØÁö
+        //í‚¤ì•¡ì…˜ êµ¬ë… í•´ì§€
         TakeControl();
 
-        //Stun ¾Ö´Ï¸ŞÀÌ¼Ç Àç»ı
+        //Stun ì• ë‹ˆë©”ì´ì…˜ ì¬ìƒ
         animator.SetTrigger("Stun");
 
-        //½ºÅÏ ½Ã°£¸¸Å­ ±â´Ù·È´Ù°¡, Å°¾×¼Ç Àç±¸µ¶
+        //ìŠ¤í„´ ì‹œê°„ë§Œí¼ ê¸°ë‹¤ë ¸ë‹¤ê°€, í‚¤ì•¡ì…˜ ì¬êµ¬ë…
         Invoke("BringBackControl", stunTime);
 
     }
 
-    public void Resurrection() //ºÎÈ° Ã³¸®
+    public void Resurrection() //ë¶€í™œ ì²˜ë¦¬
     {
-        //¹«Àû ºÎ¿©
+        //ë¬´ì  ë¶€ì—¬
         StartCoroutine(NoDamage(NoDamageTime));
 
-        //Å°¾×¼Ç Àç±¸µ¶
+        //í‚¤ì•¡ì…˜ ì¬êµ¬ë…
         BringBackControl();
 
-        //ÃÖ´ë Hp ÃÊ±âÈ­
+        //ìµœëŒ€ Hp ì´ˆê¸°í™”
         MaxHp = 100f;
 
-        //ÃÖ´ë Mp ÃÊ±âÈ­
+        //ìµœëŒ€ Mp ì´ˆê¸°í™”
         MaxMp = 1000f;
 
-        //ÇöÀç Hp ÃÊ±âÈ­
+        //í˜„ì¬ Hp ì´ˆê¸°í™”
         CurrentHp = MaxHp;
         HpBar.fillAmount = CurrentHp / MaxHp;
         HpText.text = CurrentHp + "/" + MaxHp;
 
-        //ÇöÀç Mp ÃÊ±âÈ­
+        //í˜„ì¬ Mp ì´ˆê¸°í™”
         CurrentMp = MaxMp;
         MpBar.fillAmount = CurrentMp / MaxMp;
         MpText.text = CurrentMp + "/" + MaxMp;
 
-        //ÇöÀç ÇÃ·¹ÀÌ¾î »óÅÂ¸¦ Idle·Î º¯°æ
+        //í˜„ì¬ í”Œë ˆì´ì–´ ìƒíƒœë¥¼ Idleë¡œ ë³€ê²½
         CurrentState = PlayerState.Idle;
     }
 
-    void TakeControl() //Ä³¸¯ÅÍ Á¶Á¾ ºÒ°¡ Ã³¸®
+    void TakeControl() //ìºë¦­í„° ì¡°ì¢… ë¶ˆê°€ ì²˜ë¦¬
     {
-        //Å°¾×¼Ç ±¸µ¶ ÇØÁö
+        //í‚¤ì•¡ì…˜ êµ¬ë… í•´ì§€
         GameManager.Input.KeyAction -= OnMouse;
         GameManager.Input.KeyAction -= OnKeyboard;
     }
 
-    void BringBackControl() //Ä³¸¯ÅÍ Á¶Á¾ °¡´É Ã³¸® 
+    void BringBackControl() //ìºë¦­í„° ì¡°ì¢… ê°€ëŠ¥ ì²˜ë¦¬ 
     {
-        //Å°¾×¼Ç ±¸µ¶
+        //í‚¤ì•¡ì…˜ êµ¬ë…
         GameManager.Input.KeyAction += OnMouse;
         GameManager.Input.KeyAction += OnKeyboard;
 
@@ -254,22 +254,22 @@ public class Player : MonoBehaviour
     {
 
         /*
-         * ÇÃ·¹ÀÌ¾îÀÇ Ä³¸¯ÅÍ ÄÁÆ®·Ñ ±ÇÇÑÀ» »¯´Â ÀÏÀÌ ¸¹¾Æ, Æ÷¼Ç ¼·Ãë´Â Update¿¡¼­ Ã³¸®ÇÕ´Ï´Ù.
+         * í”Œë ˆì´ì–´ì˜ ìºë¦­í„° ì»¨íŠ¸ë¡¤ ê¶Œí•œì„ ëºëŠ” ì¼ì´ ë§ì•„, í¬ì…˜ ì„­ì·¨ëŠ” Updateì—ì„œ ì²˜ë¦¬í•©ë‹ˆë‹¤.
          */
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            //(HpÆ÷¼Ç °³¼ö) > 0f ¶ó¸é, HpÆ÷¼ÇÀ» ¼·Ãë
-            //else: Æ÷¼ÇÀ» »ç¿ëÇÒ ¼ö ¾ø½À´Ï´Ù.
+            //(Hpí¬ì…˜ ê°œìˆ˜) > 0f ë¼ë©´, Hpí¬ì…˜ì„ ì„­ì·¨
+            //else: í¬ì…˜ì„ ì‚¬ìš©í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤.
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            //(MpÆ÷¼Ç °³¼ö) > 0f ¶ó¸é, MpÆ÷¼ÇÀ» ¼·Ãë
-            //else: Æ÷¼ÇÀ» »ç¿ëÇÒ ¼ö ¾ø½À´Ï´Ù.
+            //(Mpí¬ì…˜ ê°œìˆ˜) > 0f ë¼ë©´, Mpí¬ì…˜ì„ ì„­ì·¨
+            //else: í¬ì…˜ì„ ì‚¬ìš©í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤.
         }
 
-        //ÇöÀç ÇÃ·¹ÀÌ¾î »óÅÂ¿¡ µû¸¥ ¾Ö´Ï¸ŞÀÌ¼Ç µîÀÇ Ã³¸®
+        //í˜„ì¬ í”Œë ˆì´ì–´ ìƒíƒœì— ë”°ë¥¸ ì• ë‹ˆë©”ì´ì…˜ ë“±ì˜ ì²˜ë¦¬
         switch (CurrentState)
         {
             case PlayerState.Idle:
@@ -302,132 +302,132 @@ public class Player : MonoBehaviour
         }
     }
 
-    void HandleIdle() //Idle »óÅÂ Ã³¸®
+    void HandleIdle() //Idle ìƒíƒœ ì²˜ë¦¬
     {
         movementSpeedRatio = Mathf.Lerp(movementSpeedRatio, 0, MoveSpeed * Time.deltaTime);
         animator.SetFloat("Move", movementSpeedRatio);
-        //¾Ö´Ï¸ŞÀÌ¼Ç Idle 
+        //ì• ë‹ˆë©”ì´ì…˜ Idle 
         animator.Play("IdleMove");
     }
 
-    void HandleMove() //Move »óÅÂ Ã³¸®
+    void HandleMove() //Move ìƒíƒœ ì²˜ë¦¬
     {
         movementSpeedRatio = Mathf.Lerp(movementSpeedRatio, 1, MoveSpeed * Time.deltaTime);
 
         animator.SetFloat("Move",movementSpeedRatio);
 
-        //¾Ö´Ï¸ŞÀÌ¼Ç Move Àç»ı
+        //ì• ë‹ˆë©”ì´ì…˜ Move ì¬ìƒ
         animator.Play("IdleMove");
 
-        //¹Ù¶óº¼ ¹æÇâ º¤ÅÍ °è»ê
+        //ë°”ë¼ë³¼ ë°©í–¥ ë²¡í„° ê³„ì‚°
         Vector3 direction = (targetPosition - transform.position).normalized;
 
-        //¸ñÇ¥ À§Ä¡·Î ÀÌµ¿
+        //ëª©í‘œ ìœ„ì¹˜ë¡œ ì´ë™
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, MoveSpeed * Time.deltaTime);
 
-        //ÇÃ·¹ÀÌ¾î°¡ ¹Ù¶óº¼ ¹æÇâÀ¸·ÎÀÇ È¸Àü Ã³¸®
+        //í”Œë ˆì´ì–´ê°€ ë°”ë¼ë³¼ ë°©í–¥ìœ¼ë¡œì˜ íšŒì „ ì²˜ë¦¬
         if (direction != Vector3.zero)
         {
             Quaternion toRotation = Quaternion.LookRotation(direction);
             transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, MoveSpeed / 2 * Time.deltaTime);
         }
 
-        //ÇÃ·¹ÀÌ¾î°¡ ¸ñÇ¥ ÁöÁ¡¿¡ µµÂøÇÑ´Ù¸é
+        //í”Œë ˆì´ì–´ê°€ ëª©í‘œ ì§€ì ì— ë„ì°©í•œë‹¤ë©´
         if (Vector3.Distance(transform.position, targetPosition) < 0.02f)
         {
-            //ÇöÀç ÇÃ·¹ÀÌ¾î »óÅÂ¸¦ Idle·Î º¯°æ
+            //í˜„ì¬ í”Œë ˆì´ì–´ ìƒíƒœë¥¼ Idleë¡œ ë³€ê²½
             CurrentState = PlayerState.Idle;
         }
     }
 
-    void HandleRoll() //Roll »óÅÂ Ã³¸®
+    void HandleRoll() //Roll ìƒíƒœ ì²˜ë¦¬
     {
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
         if (!stateInfo.IsName("Roll"))
         {
             animator.Play("Roll");
         }
-        //¸ñÇ¥ À§Ä¡·Î ÀÌµ¿
+        //ëª©í‘œ ìœ„ì¹˜ë¡œ ì´ë™
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, (RollingDistance / RollingTime) * Time.deltaTime);
 
-        //ÇÃ·¹ÀÌ¾î°¡ ¸ñÇ¥ ÁöÁ¡¿¡ µµÂøÇÑ´Ù¸é
+        //í”Œë ˆì´ì–´ê°€ ëª©í‘œ ì§€ì ì— ë„ì°©í•œë‹¤ë©´
         if (Vector3.Distance(transform.position, targetPosition) < 0.02f)
         {
-            //±¸¸£±â »óÅÂ ÇØÁ¦
+            //êµ¬ë¥´ê¸° ìƒíƒœ í•´ì œ
             IsRolling = false;
 
-            //ÇöÀç ÇÃ·¹ÀÌ¾î »óÅÂ¸¦ Idle·Î º¯°æ
+            //í˜„ì¬ í”Œë ˆì´ì–´ ìƒíƒœë¥¼ Idleë¡œ ë³€ê²½
             CurrentState = PlayerState.Idle;
         }
 
     }
 
-    void HandleAttack() //Attack »óÅÂ Ã³¸®
+    void HandleAttack() //Attack ìƒíƒœ ì²˜ë¦¬
     {
-        //ÇöÀç ¾Ö´Ï¸ŞÀÌ¼Ç »óÅÂ¸¦ °¡Á®¿È
+        //í˜„ì¬ ì• ë‹ˆë©”ì´ì…˜ ìƒíƒœë¥¼ ê°€ì ¸ì˜´
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
 
-        //ÇöÀç ¾Ö´Ï¸ŞÀÌ¼Ç »óÅÂ ÀÌ¸§ÀÌ AttackÀÌ¸é
+        //í˜„ì¬ ì• ë‹ˆë©”ì´ì…˜ ìƒíƒœ ì´ë¦„ì´ Attackì´ë©´
         if (stateInfo.IsName("Attack"))
         {
-            //¾Ö´Ï¸ŞÀÌ¼ÇÀÌ Á¾·áµÇ¸é
+            //ì• ë‹ˆë©”ì´ì…˜ì´ ì¢…ë£Œë˜ë©´
             if (stateInfo.normalizedTime >= 1f)
             {
-                //Å°¾×¼Ç ±¸µ¶
+                //í‚¤ì•¡ì…˜ êµ¬ë…
                 BringBackControl();
-                //ÇöÀç ÇÃ·¹ÀÌ¾î »óÅÂ¸¦ Idle·Î º¯°æ
+                //í˜„ì¬ í”Œë ˆì´ì–´ ìƒíƒœë¥¼ Idleë¡œ ë³€ê²½
                 CurrentState = PlayerState.Idle;
             }
         }
     }
 
-    void HandleNull() //Null »óÅÂ Ã³¸®
+    void HandleNull() //Null ìƒíƒœ ì²˜ë¦¬
     {
-        //ºñ¾îÀÖÀ½
+        //ë¹„ì–´ìˆìŒ
     }
 
-    void HandleUseQ() //UseQ »óÅÂ Ã³¸® 
+    void HandleUseQ() //UseQ ìƒíƒœ ì²˜ë¦¬ 
     {
-        //ÇöÀç ¾Ö´Ï¸ŞÀÌ¼Ç »óÅÂ¸¦ °¡Á®¿È
+        //í˜„ì¬ ì• ë‹ˆë©”ì´ì…˜ ìƒíƒœë¥¼ ê°€ì ¸ì˜´
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
 
-        //ÇöÀç ¾Ö´Ï¸ŞÀÌ¼Ç »óÅÂ ÀÌ¸§ÀÌ Q¶ó¸é
+        //í˜„ì¬ ì• ë‹ˆë©”ì´ì…˜ ìƒíƒœ ì´ë¦„ì´ Që¼ë©´
         if (stateInfo.IsName("Q"))
         {
-            //¾Ö´Ï¸ŞÀÌ¼ÇÀÌ Á¾·áµÇ¸é
+            //ì• ë‹ˆë©”ì´ì…˜ì´ ì¢…ë£Œë˜ë©´
             if (stateInfo.normalizedTime >= 1f)
             {
-                //Å°¾×¼Ç ±¸µ¶
+                //í‚¤ì•¡ì…˜ êµ¬ë…
                 BringBackControl();
 
-                //ÇöÀç ÇÃ·¹ÀÌ¾î »óÅÂ¸¦ Idle·Î º¯°æ
+                //í˜„ì¬ í”Œë ˆì´ì–´ ìƒíƒœë¥¼ Idleë¡œ ë³€ê²½
                 CurrentState = PlayerState.Idle;
             }
         }
     }
 
-    void HandleUseW() //UseW »óÅÂ Ã³¸®
+    void HandleUseW() //UseW ìƒíƒœ ì²˜ë¦¬
     {
-        //ÇöÀç ¾Ö´Ï¸ŞÀÌ¼Ç »óÅÂ¸¦ °¡Á®¿È
+        //í˜„ì¬ ì• ë‹ˆë©”ì´ì…˜ ìƒíƒœë¥¼ ê°€ì ¸ì˜´
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
 
-        //ÇöÀç ¾Ö´Ï¸ŞÀÌ¼Ç »óÅÂ ÀÌ¸§ÀÌ W¶ó¸é
+        //í˜„ì¬ ì• ë‹ˆë©”ì´ì…˜ ìƒíƒœ ì´ë¦„ì´ Wë¼ë©´
         if (stateInfo.IsName("W"))
         {
-            //¾Ö´Ï¸ŞÀÌ¼ÇÀÌ Á¾·áµÇ¸é
+            //ì• ë‹ˆë©”ì´ì…˜ì´ ì¢…ë£Œë˜ë©´
             if (stateInfo.normalizedTime >= 1f)
             {
-                //Å°¾×¼Ç ±¸µ¶
+                //í‚¤ì•¡ì…˜ êµ¬ë…
                 BringBackControl();
 
-                //ÇöÀç ÇÃ·¹ÀÌ¾î »óÅÂ¸¦ Idle·Î º¯°æ
+                //í˜„ì¬ í”Œë ˆì´ì–´ ìƒíƒœë¥¼ Idleë¡œ ë³€ê²½
                 CurrentState = PlayerState.Idle;
             }
         }
 
     }
 
-    void HandleUseE() //UseE »óÅÂ Ã³¸®
+    void HandleUseE() //UseE ìƒíƒœ ì²˜ë¦¬
     {
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
         
@@ -441,87 +441,87 @@ public class Player : MonoBehaviour
 
     }
 
-    void HandleUseR() //UseR »óÅÂ Ã³¸®
+    void HandleUseR() //UseR ìƒíƒœ ì²˜ë¦¬
     {
-        //ÇöÀç ¾Ö´Ï¸ŞÀÌ¼Ç »óÅÂ¸¦ °¡Á®¿È
+        //í˜„ì¬ ì• ë‹ˆë©”ì´ì…˜ ìƒíƒœë¥¼ ê°€ì ¸ì˜´
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
 
-        //ÇöÀç ¾Ö´Ï¸ŞÀÌ¼Ç »óÅÂ ÀÌ¸§ÀÌ R¶ó¸é
+        //í˜„ì¬ ì• ë‹ˆë©”ì´ì…˜ ìƒíƒœ ì´ë¦„ì´ Rë¼ë©´
         if (stateInfo.IsName("R"))
         {
-            //¾Ö´Ï¸ŞÀÌ¼ÇÀÌ Á¾·áµÇ¸é
+            //ì• ë‹ˆë©”ì´ì…˜ì´ ì¢…ë£Œë˜ë©´
             if (stateInfo.normalizedTime >= 1f)
             {
-                //Å°¾×¼Ç ±¸µ¶
+                //í‚¤ì•¡ì…˜ êµ¬ë…
                 BringBackControl();
 
-                //ÇöÀç ÇÃ·¹ÀÌ¾î »óÅÂ¸¦ Idle·Î º¯°æ
+                //í˜„ì¬ í”Œë ˆì´ì–´ ìƒíƒœë¥¼ Idleë¡œ ë³€ê²½
                 CurrentState = PlayerState.Idle;
             }
         }
     }
 
-    void OnMouse() //¸¶¿ì½º ÀÔ·Â Ã³¸®
+    void OnMouse() //ë§ˆìš°ìŠ¤ ì…ë ¥ ì²˜ë¦¬
     {
         //[Move]
-        //¿ìÅ¬¸¯ ÇßÀ» ¶§, ±¸¸£±â »óÅÂ°¡ ¾Æ´Ï¸é
+        //ìš°í´ë¦­ í–ˆì„ ë•Œ, êµ¬ë¥´ê¸° ìƒíƒœê°€ ì•„ë‹ˆë©´
         if (Input.GetMouseButton(1) && !IsRolling)
         {
-            //¸¶¿ì½º À§Ä¡ ±¸ÇÏ±â
+            //ë§ˆìš°ìŠ¤ ìœ„ì¹˜ êµ¬í•˜ê¸°
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
-            //·¹ÀÌ°¡ stage ·¹ÀÌ¾î ¿ÀºêÁ§Æ®¿¡ Ãæµ¹Çß´Ù¸é
+            //ë ˆì´ê°€ stage ë ˆì´ì–´ ì˜¤ë¸Œì íŠ¸ì— ì¶©ëŒí–ˆë‹¤ë©´
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, stage))
             {
-                //·¹ÀÌ°¡ Ãæµ¹ÇÑ ¿ÀºêÁ§Æ® ÅÂ±×°¡ Stage¶ó¸é
+                //ë ˆì´ê°€ ì¶©ëŒí•œ ì˜¤ë¸Œì íŠ¸ íƒœê·¸ê°€ Stageë¼ë©´
                 if (hit.collider.tag == "Stage")
                 {
-                    //¸ñÇ¥ À§Ä¡¸¦ Ãæµ¹ ÁöÁ¡À¸·Î ¼³Á¤
+                    //ëª©í‘œ ìœ„ì¹˜ë¥¼ ì¶©ëŒ ì§€ì ìœ¼ë¡œ ì„¤ì •
                     targetPosition = hit.point;
 
-                    //¸ñÇ¥ À§Ä¡¸¦ ¹Ù¶óº½
+                    //ëª©í‘œ ìœ„ì¹˜ë¥¼ ë°”ë¼ë´„
                     transform.LookAt(targetPosition);
 
-                    //ÇöÀç ÇÃ·¹ÀÌ¾î »óÅÂ¸¦ Move·Î º¯°æ
+                    //í˜„ì¬ í”Œë ˆì´ì–´ ìƒíƒœë¥¼ Moveë¡œ ë³€ê²½
                     CurrentState = PlayerState.Move;
                 }
             }
         }
 
         //[Attack]
-        //ÁÂÅ¬¸¯ ÇßÀ» ¶§, ÆòÅ¸ »ç¿ë °¡´ÉÀÌ¸é
+        //ì¢Œí´ë¦­ í–ˆì„ ë•Œ, í‰íƒ€ ì‚¬ìš© ê°€ëŠ¥ì´ë©´
         if (Input.GetMouseButtonDown(0) && AutoAttack.Instance.IsUsable)
         {
-            //ÇöÀç ÇÃ·¹ÀÌ¾î »óÅÂ°¡ Idle ¶Ç´Â Move¶ó¸é
+            //í˜„ì¬ í”Œë ˆì´ì–´ ìƒíƒœê°€ Idle ë˜ëŠ” Moveë¼ë©´
             if (CurrentState == PlayerState.Idle || CurrentState == PlayerState.Move)
             {
-                //Å°¾×¼Ç ±¸µ¶ ÇØÁ¦
+                //í‚¤ì•¡ì…˜ êµ¬ë… í•´ì œ
                 TakeControl();
 
-                //ÇöÀç ÇÃ·¹ÀÌ¾î »óÅÂ¸¦ AttackÀ¸·Î º¯°æ
+                //í˜„ì¬ í”Œë ˆì´ì–´ ìƒíƒœë¥¼ Attackìœ¼ë¡œ ë³€ê²½
                 CurrentState = PlayerState.Attack;
 
-                //Attack ¾Ö´Ï¸ŞÀÌ¼Ç Æ®¸®°Å »ı¼º
+                //Attack ì• ë‹ˆë©”ì´ì…˜ íŠ¸ë¦¬ê±° ìƒì„±
                 animator.SetTrigger("Attack");
 
-                //¸¶¿ì½º À§Ä¡ ±¸ÇÏ±â
+                //ë§ˆìš°ìŠ¤ ìœ„ì¹˜ êµ¬í•˜ê¸°
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
 
-                //·¹ÀÌ°¡ stage ·¹ÀÌ¾î ¿ÀºêÁ§Æ®¿¡ Ãæµ¹Çß´Ù¸é
+                //ë ˆì´ê°€ stage ë ˆì´ì–´ ì˜¤ë¸Œì íŠ¸ì— ì¶©ëŒí–ˆë‹¤ë©´
                 if (Physics.Raycast(ray, out hit, Mathf.Infinity, stage))
                 {
-                    //¸ñÇ¥ À§Ä¡¸¦ Ãæµ¹ ÁöÁ¡À¸·Î ¼³Á¤
+                    //ëª©í‘œ ìœ„ì¹˜ë¥¼ ì¶©ëŒ ì§€ì ìœ¼ë¡œ ì„¤ì •
                     targetPosition = hit.point;
 
-                    //¸ñÇ¥ À§Ä¡¸¦ ¹Ù¶óº½
+                    //ëª©í‘œ ìœ„ì¹˜ë¥¼ ë°”ë¼ë´„
                     transform.LookAt(targetPosition);
 
-                    //ÆòÅ¸ ÀÎ½ºÅÏ½º »ı¼º
+                    //í‰íƒ€ ì¸ìŠ¤í„´ìŠ¤ ìƒì„±
                     GameObject autoAttack = Instantiate(AttackPrefab, attackPosition.transform);
 
-                    //1ÃÊ µÚ¿¡ ÆòÅ¸ ÀÎ½ºÅÏ½º »èÁ¦
+                    //1ì´ˆ ë’¤ì— í‰íƒ€ ì¸ìŠ¤í„´ìŠ¤ ì‚­ì œ
                     Destroy(autoAttack, 0.85f);
                 }
             }
@@ -529,38 +529,38 @@ public class Player : MonoBehaviour
         }
     }
 
-    void OnKeyboard() //Å°º¸µå ÀÔ·Â Ã³¸®
+    void OnKeyboard() //í‚¤ë³´ë“œ ì…ë ¥ ì²˜ë¦¬
     {
         //[Roll]
         if (Input.GetKeyDown(KeyCode.Space) && !IsRolling)
         {
-            //¸¶¿ì½º À§Ä¡ ±¸ÇÏ±â
+            //ë§ˆìš°ìŠ¤ ìœ„ì¹˜ êµ¬í•˜ê¸°
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;          
 
-            //·¹ÀÌ°¡ stage ·¹ÀÌ¾î ¿ÀºêÁ§Æ®¿¡ Ãæµ¹Çß´Ù¸é
+            //ë ˆì´ê°€ stage ë ˆì´ì–´ ì˜¤ë¸Œì íŠ¸ì— ì¶©ëŒí–ˆë‹¤ë©´
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, stage))
             {
-                // ¸¶¿ì½º À§Ä¡¿¡¼­ ÇöÀç ÇÃ·¹ÀÌ¾î À§Ä¡±îÁöÀÇ ¹æÇâ ±¸ÇÏ±â
+                // ë§ˆìš°ìŠ¤ ìœ„ì¹˜ì—ì„œ í˜„ì¬ í”Œë ˆì´ì–´ ìœ„ì¹˜ê¹Œì§€ì˜ ë°©í–¥ êµ¬í•˜ê¸°
                 Vector3 direction = (hit.point - transform.position).normalized;
 
-                // ¸ñÇ¥ À§Ä¡¸¦ ÇöÀç À§Ä¡¿¡¼­ RollingDistance¸¸Å­ ÀÌµ¿ÇÑ ÁöÁ¡À¸·Î ¼³Á¤
+                // ëª©í‘œ ìœ„ì¹˜ë¥¼ í˜„ì¬ ìœ„ì¹˜ì—ì„œ RollingDistanceë§Œí¼ ì´ë™í•œ ì§€ì ìœ¼ë¡œ ì„¤ì •
                 targetPosition = transform.position + direction * RollingDistance;
 
-                // ¹Ù¶óº¼ À§Ä¡ ÁöÁ¤ (y °ª¸¸ ÇöÀç ÇÃ·¹ÀÌ¾îÀÇ y·Î °íÁ¤)
+                // ë°”ë¼ë³¼ ìœ„ì¹˜ ì§€ì • (y ê°’ë§Œ í˜„ì¬ í”Œë ˆì´ì–´ì˜ yë¡œ ê³ ì •)
                 Vector3 lookDirection = new Vector3(targetPosition.x, transform.position.y, targetPosition.z);
 
 
-                //ÁöÁ¤ÇÑ À§Ä¡¸¦ ¹Ù¶óº½
+                //ì§€ì •í•œ ìœ„ì¹˜ë¥¼ ë°”ë¼ë´„
                 transform.LookAt(lookDirection);
 
-                //±¸¸£±â »óÅÂ È°¼ºÈ­
+                //êµ¬ë¥´ê¸° ìƒíƒœ í™œì„±í™”
                 IsRolling = true;
 
-                //¹«Àû ºÎ¿©
+                //ë¬´ì  ë¶€ì—¬
                 StartCoroutine(NoDamage(NoDamageTime));
 
-                //ÇöÀç ÇÃ·¹ÀÌ¾î »óÅÂ¸¦ Roll·Î º¯°æ
+                //í˜„ì¬ í”Œë ˆì´ì–´ ìƒíƒœë¥¼ Rollë¡œ ë³€ê²½
                 CurrentState = PlayerState.Roll;
 
             }
@@ -569,41 +569,41 @@ public class Player : MonoBehaviour
         //[Use Q]
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            //ÇöÀç ÇÃ·¹ÀÌ¾î »óÅÂ°¡ Idle ¶Ç´Â Move¶ó¸é
+            //í˜„ì¬ í”Œë ˆì´ì–´ ìƒíƒœê°€ Idle ë˜ëŠ” Moveë¼ë©´
             if (CurrentState == PlayerState.Idle || CurrentState == PlayerState.Move)
             {
-                //Q »ç¿ë °¡´ÉÀÌ¸ç, ÇöÀç Mp°¡ ½ºÅ³ ¼Ò¸ğ Mp ÀÌ»óÀÌ¶ó¸é
+                //Q ì‚¬ìš© ê°€ëŠ¥ì´ë©°, í˜„ì¬ Mpê°€ ìŠ¤í‚¬ ì†Œëª¨ Mp ì´ìƒì´ë¼ë©´
                 if (Q.Instance.IsUsable && CurrentMp >= Q.Instance.UseMp)
                 {
-                    //Q ½ºÅ³ »ç¿ë
+                    //Q ìŠ¤í‚¬ ì‚¬ìš©
                     Q.Instance.UseSkill();
 
-                    //ÇöÀç ÇÃ·¹ÀÌ¾î »óÅÂ¸¦ UseQ·Î º¯°æ
+                    //í˜„ì¬ í”Œë ˆì´ì–´ ìƒíƒœë¥¼ UseQë¡œ ë³€ê²½
                     CurrentState = PlayerState.UseQ;
 
-                    //Q ¾Ö´Ï¸ŞÀÌ¼Ç Æ®¸®°Å ¼³Á¤ 
+                    //Q ì• ë‹ˆë©”ì´ì…˜ íŠ¸ë¦¬ê±° ì„¤ì • 
                     animator.SetTrigger("Q");
 
-                    //Q ÀÎ½ºÅÏ½º »ı¼º
+                    //Q ì¸ìŠ¤í„´ìŠ¤ ìƒì„±
                     GameObject q = Instantiate(qPrefab, attackPosition.transform);
 
-                    //Å°¾×¼Ç ±¸µ¶ ÇØÁö
+                    //í‚¤ì•¡ì…˜ êµ¬ë… í•´ì§€
                     TakeControl();
 
-                    //Q ÀÎ½ºÅÏ½º 2ÃÊ µÚ »èÁ¦
+                    //Q ì¸ìŠ¤í„´ìŠ¤ 2ì´ˆ ë’¤ ì‚­ì œ
                     Destroy(q, 2f);
                 }
 
-                //Q ½ºÅ³ »ç¿ë ºÒ°¡ »óÅÂ¶ó¸é
+                //Q ìŠ¤í‚¬ ì‚¬ìš© ë¶ˆê°€ ìƒíƒœë¼ë©´
                 else if (!Q.Instance.IsUsable)
                 {
-                    Debug.Log("¾ÆÁ÷ ½ºÅ³À» ¾µ ¼ö ¾ø´Ù´Â ¸Ş½ÃÁö ¶ç¿ì±â");
+                    Debug.Log("ì•„ì§ ìŠ¤í‚¬ì„ ì“¸ ìˆ˜ ì—†ë‹¤ëŠ” ë©”ì‹œì§€ ë„ìš°ê¸°");
                 }
 
-                //ÇöÀç Mp°¡ ½ºÅ³ ¼Ò¸ğ Mp ¹Ì¸¸ÀÌ¶ó¸é
+                //í˜„ì¬ Mpê°€ ìŠ¤í‚¬ ì†Œëª¨ Mp ë¯¸ë§Œì´ë¼ë©´
                 else if (CurrentMp < Q.Instance.UseMp)
                 {
-                    Debug.Log("MP ºÎÁ· ¸Ş½ÃÁö ¶ç¿ì±â");
+                    Debug.Log("MP ë¶€ì¡± ë©”ì‹œì§€ ë„ìš°ê¸°");
                 }
             }
         }
@@ -611,48 +611,48 @@ public class Player : MonoBehaviour
         //[UseW]
         if (Input.GetKeyDown(KeyCode.W))
         {
-            //ÇöÀç ÇÃ·¹ÀÌ¾î »óÅÂ°¡ Idle ¶Ç´Â Move¶ó¸é
+            //í˜„ì¬ í”Œë ˆì´ì–´ ìƒíƒœê°€ Idle ë˜ëŠ” Moveë¼ë©´
             if (CurrentState == PlayerState.Idle || CurrentState == PlayerState.Move)
             {
-                //W »ç¿ë °¡´ÉÀÌ¸ç, ÇöÀç Mp°¡ ½ºÅ³ ¼Ò¸ğ Mp ÀÌ»óÀÌ¶ó¸é
+                //W ì‚¬ìš© ê°€ëŠ¥ì´ë©°, í˜„ì¬ Mpê°€ ìŠ¤í‚¬ ì†Œëª¨ Mp ì´ìƒì´ë¼ë©´
                 if (W.Instance.IsUsable && CurrentMp >= W.Instance.UseMp)
                 {
 
-                    //W ½ºÅ³ »ç¿ë
+                    //W ìŠ¤í‚¬ ì‚¬ìš©
                     W.Instance.UseSkill();
 
-                    //ÇöÀç ÇÃ·¹ÀÌ¾î »óÅÂ¸¦ UseW·Î º¯°æ
+                    //í˜„ì¬ í”Œë ˆì´ì–´ ìƒíƒœë¥¼ UseWë¡œ ë³€ê²½
                     CurrentState = PlayerState.UseW;
 
-                    //Q ¾Ö´Ï¸ŞÀÌ¼Ç Æ®¸®°Å ¼³Á¤ 
+                    //Q ì• ë‹ˆë©”ì´ì…˜ íŠ¸ë¦¬ê±° ì„¤ì • 
                     animator.SetTrigger("W");
                     
-                    //Å°¾×¼Ç ±¸µ¶ ÇØÁö
+                    //í‚¤ì•¡ì…˜ êµ¬ë… í•´ì§€
                     TakeControl();
 
-                    //½ºÅ³ ½ÃÀü À§Ä¡ ¼³Á¤
+                    //ìŠ¤í‚¬ ì‹œì „ ìœ„ì¹˜ ì„¤ì •
                     Vector3 wPosition = attackPosition.transform.position + attackPosition.transform.forward * 1f;
                     wPosition.y = 3f;
 
-                    //W ½ºÅ³ ¼³Ä¡
+                    //W ìŠ¤í‚¬ ì„¤ì¹˜
                     GameObject w = Instantiate(wPrefab, wPosition, transform.rotation);
 
-                    //¼³Ä¡µÈ W ½ºÅ³ 3ÃÊ µÚ »èÁ¦ (TEMP)
+                    //ì„¤ì¹˜ëœ W ìŠ¤í‚¬ 3ì´ˆ ë’¤ ì‚­ì œ (TEMP)
                     Destroy(w, 3f);
 
 
 
                 }
-                //W ½ºÅ³ »ç¿ë ºÒ°¡ »óÅÂ¶ó¸é
+                //W ìŠ¤í‚¬ ì‚¬ìš© ë¶ˆê°€ ìƒíƒœë¼ë©´
                 else if (!W.Instance.IsUsable)
                 {
-                    Debug.Log("¾ÆÁ÷ ½ºÅ³À» ¾µ ¼ö ¾ø´Ù´Â ¸Ş½ÃÁö ¶ç¿ì±â");
+                    Debug.Log("ì•„ì§ ìŠ¤í‚¬ì„ ì“¸ ìˆ˜ ì—†ë‹¤ëŠ” ë©”ì‹œì§€ ë„ìš°ê¸°");
                 }
 
-                //ÇöÀç Mp°¡ ½ºÅ³ ¼Ò¸ğ Mp ¹Ì¸¸ÀÌ¶ó¸é
+                //í˜„ì¬ Mpê°€ ìŠ¤í‚¬ ì†Œëª¨ Mp ë¯¸ë§Œì´ë¼ë©´
                 else if (CurrentMp < W.Instance.UseMp)
                 {
-                    Debug.Log("MP ºÎÁ· ¸Ş½ÃÁö ¶ç¿ì±â");
+                    Debug.Log("MP ë¶€ì¡± ë©”ì‹œì§€ ë„ìš°ê¸°");
                 }
             }
         }
@@ -660,43 +660,43 @@ public class Player : MonoBehaviour
         //[UseE]
         if (Input.GetKeyDown(KeyCode.E))
         {
-            //ÇöÀç ÇÃ·¹ÀÌ¾î »óÅÂ°¡ Idle ¶Ç´Â Move¶ó¸é
+            //í˜„ì¬ í”Œë ˆì´ì–´ ìƒíƒœê°€ Idle ë˜ëŠ” Moveë¼ë©´
             if (CurrentState == PlayerState.Idle || CurrentState == PlayerState.Move)
             {
-                //E »ç¿ë °¡´ÉÀÌ¸ç, ÇöÀç Mp°¡ ½ºÅ³ ¼Ò¸ğ Mp ÀÌ»óÀÌ¶ó¸é
+                //E ì‚¬ìš© ê°€ëŠ¥ì´ë©°, í˜„ì¬ Mpê°€ ìŠ¤í‚¬ ì†Œëª¨ Mp ì´ìƒì´ë¼ë©´
                 if (E.Instance.IsUsable && CurrentMp >= E.Instance.UseMp)
                 {
-                    //E ½ºÅ³ »ç¿ë
+                    //E ìŠ¤í‚¬ ì‚¬ìš©
                     E.Instance.UseSkill();
 
-                    //ÇöÀç ÇÃ·¹ÀÌ¾î »óÅÂ¸¦ UseR·Î º¯°æ
+                    //í˜„ì¬ í”Œë ˆì´ì–´ ìƒíƒœë¥¼ UseRë¡œ ë³€ê²½
                     CurrentState = PlayerState.UseE;
 
                     BarrierSet();
 
-                    //4ÃÊ µÚ ½¯µå·® 0À¸·Î ÃÊ±âÈ­
+                    //4ì´ˆ ë’¤ ì‰´ë“œëŸ‰ 0ìœ¼ë¡œ ì´ˆê¸°í™”
                     Invoke("BarrierReset",4f);
 
-                    //E ¾Ö´Ï¸ŞÀÌ¼Ç Æ®¸®°Å ¼³Á¤ 
+                    //E ì• ë‹ˆë©”ì´ì…˜ íŠ¸ë¦¬ê±° ì„¤ì • 
                     animator.SetTrigger("E");
 
-                    //E ÀÎ½ºÅÏ½º »ı¼º
+                    //E ì¸ìŠ¤í„´ìŠ¤ ìƒì„±
                     GameObject e = Instantiate(ePrefab, attackPosition.transform);
 
-                    //E ÀÎ½ºÅÏ½º 4ÃÊ µÚ »èÁ¦ (TEMP)
+                    //E ì¸ìŠ¤í„´ìŠ¤ 4ì´ˆ ë’¤ ì‚­ì œ (TEMP)
                     Destroy(e, 4f);
                 }
 
-                //R ½ºÅ³ »ç¿ë ºÒ°¡ »óÅÂ¶ó¸é
+                //R ìŠ¤í‚¬ ì‚¬ìš© ë¶ˆê°€ ìƒíƒœë¼ë©´
                 else if (!R.Instance.IsUsable)
                 {
-                    Debug.Log("¾ÆÁ÷ ½ºÅ³À» ¾µ ¼ö ¾ø´Ù´Â ¸Ş½ÃÁö ¶ç¿ì±â");
+                    Debug.Log("ì•„ì§ ìŠ¤í‚¬ì„ ì“¸ ìˆ˜ ì—†ë‹¤ëŠ” ë©”ì‹œì§€ ë„ìš°ê¸°");
                 }
 
-                //ÇöÀç Mp°¡ ½ºÅ³ ¼Ò¸ğ Mp ¹Ì¸¸ÀÌ¶ó¸é
+                //í˜„ì¬ Mpê°€ ìŠ¤í‚¬ ì†Œëª¨ Mp ë¯¸ë§Œì´ë¼ë©´
                 else if (CurrentMp < R.Instance.UseMp)
                 {
-                    Debug.Log("MP ºÎÁ· ¸Ş½ÃÁö ¶ç¿ì±â");
+                    Debug.Log("MP ë¶€ì¡± ë©”ì‹œì§€ ë„ìš°ê¸°");
                 }
             }
 
@@ -705,44 +705,44 @@ public class Player : MonoBehaviour
         //[UseR]
         if (Input.GetKeyDown(KeyCode.R))
         {
-            //ÇöÀç ÇÃ·¹ÀÌ¾î »óÅÂ°¡ Idle ¶Ç´Â Move¶ó¸é
+            //í˜„ì¬ í”Œë ˆì´ì–´ ìƒíƒœê°€ Idle ë˜ëŠ” Moveë¼ë©´
             if (CurrentState == PlayerState.Idle || CurrentState == PlayerState.Move)
             {
-                //R »ç¿ë °¡´ÉÀÌ¸ç, ÇöÀç Mp°¡ ½ºÅ³ ¼Ò¸ğ Mp ÀÌ»óÀÌ¶ó¸é
+                //R ì‚¬ìš© ê°€ëŠ¥ì´ë©°, í˜„ì¬ Mpê°€ ìŠ¤í‚¬ ì†Œëª¨ Mp ì´ìƒì´ë¼ë©´
                 if (R.Instance.IsUsable && CurrentMp >= R.Instance.UseMp)
                 {
-                    //R ½ºÅ³ »ç¿ë
+                    //R ìŠ¤í‚¬ ì‚¬ìš©
                     R.Instance.UseSkill();
 
-                    //ÇöÀç ÇÃ·¹ÀÌ¾î »óÅÂ¸¦ UseR·Î º¯°æ
+                    //í˜„ì¬ í”Œë ˆì´ì–´ ìƒíƒœë¥¼ UseRë¡œ ë³€ê²½
                     CurrentState = PlayerState.UseR;
 
-                    //4ÃÊ°£ ¹«Àû ºÎ¿© (TEMP)
+                    //4ì´ˆê°„ ë¬´ì  ë¶€ì—¬ (TEMP)
                     NoDamage(4f);
 
-                    //R ¾Ö´Ï¸ŞÀÌ¼Ç Æ®¸®°Å ¼³Á¤ 
+                    //R ì• ë‹ˆë©”ì´ì…˜ íŠ¸ë¦¬ê±° ì„¤ì • 
                     animator.SetTrigger("R");
 
-                    //R ÀÎ½ºÅÏ½º »ı¼º
+                    //R ì¸ìŠ¤í„´ìŠ¤ ìƒì„±
                     GameObject r = Instantiate(rPrefab, attackPosition.transform);
 
-                    //Å°¾×¼Ç ±¸µ¶ ÇØÁö
+                    //í‚¤ì•¡ì…˜ êµ¬ë… í•´ì§€
                     TakeControl();
 
-                    //R ÀÎ½ºÅÏ½º 4ÃÊ µÚ »èÁ¦ (TEMP)
+                    //R ì¸ìŠ¤í„´ìŠ¤ 4ì´ˆ ë’¤ ì‚­ì œ (TEMP)
                     Destroy(r, 4f);
                 }
 
-                //R ½ºÅ³ »ç¿ë ºÒ°¡ »óÅÂ¶ó¸é
+                //R ìŠ¤í‚¬ ì‚¬ìš© ë¶ˆê°€ ìƒíƒœë¼ë©´
                 else if (!R.Instance.IsUsable)
                 {
-                    Debug.Log("¾ÆÁ÷ ½ºÅ³À» ¾µ ¼ö ¾ø´Ù´Â ¸Ş½ÃÁö ¶ç¿ì±â");
+                    Debug.Log("ì•„ì§ ìŠ¤í‚¬ì„ ì“¸ ìˆ˜ ì—†ë‹¤ëŠ” ë©”ì‹œì§€ ë„ìš°ê¸°");
                 }
 
-                //ÇöÀç Mp°¡ ½ºÅ³ ¼Ò¸ğ Mp ¹Ì¸¸ÀÌ¶ó¸é
+                //í˜„ì¬ Mpê°€ ìŠ¤í‚¬ ì†Œëª¨ Mp ë¯¸ë§Œì´ë¼ë©´
                 else if (CurrentMp < R.Instance.UseMp)
                 {
-                    Debug.Log("MP ºÎÁ· ¸Ş½ÃÁö ¶ç¿ì±â");
+                    Debug.Log("MP ë¶€ì¡± ë©”ì‹œì§€ ë„ìš°ê¸°");
                 }
             }
         }
