@@ -7,14 +7,7 @@ public class Identicator : MonoBehaviour
     
     
     
-    private void OnDisable()
-    {
-        var pattern = FindObjectOfType<Pattern>();
-        if (pattern != null)
-        {
-            pattern.DestroyStatue(gameObject);
-        }
-    }
+
     
   
     

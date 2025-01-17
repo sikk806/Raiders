@@ -139,8 +139,5 @@ public class Pattern : MonoBehaviour
         SpwanStatuePrefabs.Clear();
     }
 
-    public void DestroyStatue(GameObject statue)
-    {
-        if (SpwanStatuePrefabs.Contains(statue)) Debug.Log($"{statue.name} 제거");
-    }
+   
 }
