@@ -12,6 +12,6 @@ public class ActionNode : INode
 
     public NodeState Evaluate()
     {
-        throw new System.NotImplementedException();
+        return onUpdate?. Invoke() ?? NodeState.Failure;
     }
 }

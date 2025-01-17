@@ -5,13 +5,11 @@ TagManager:
   serializedVersion: 3
   tags:
   - Stage
-  - Enemy
-  - PlayerAttack
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Enemy
+  - Player
   - Water
   - UI
   - Stage
