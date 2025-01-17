@@ -1,11 +1,11 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class WShot : MonoBehaviour
 {
     private BoxCollider collider;
-    private List<Enemy> enemiesInRange = new List<Enemy>(); // ¹üÀ§ ³» ¸ó½ºÅÍ ¸ñ·Ï
+    private List<Enemy> enemiesInRange = new List<Enemy>(); // ë²”ìœ„ ë‚´ ëª¬ìŠ¤í„° ëª©ë¡
     private void Start()
     {
         collider = GetComponent<BoxCollider>();
@@ -42,8 +42,8 @@ public class WShot : MonoBehaviour
     {
         while (enemiesInRange.Contains(enemy))
         {
-            enemy.TakeDamage(W.Instance.CalculatingDamage); // µ¥¹ÌÁö Àû¿ë
-            yield return new WaitForSeconds(1f); // ÁöÁ¤µÈ °£°İÀ¸·Î µ¥¹ÌÁö
+            enemy.TakeDamage(W.Instance.CalculatingDamage); // ë°ë¯¸ì§€ ì ìš©
+            yield return new WaitForSeconds(1f); // ì§€ì •ëœ ê°„ê²©ìœ¼ë¡œ ë°ë¯¸ì§€
         }
     }
 }

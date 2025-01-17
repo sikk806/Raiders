@@ -1,13 +1,13 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class R : MonoBehaviour
 {
     public static R Instance;
-    public bool IsUsable = true; //½ºÅ³ »ç¿ë °¡´É ¿©ºÎ (ÄğÅ¸ÀÓ¿¡ ÀÇÇÔ)
-    public float CoolTime = 60f; //½ºÅ³ ÄğÅ¸ÀÓ
-    public float SkillDamage = 1000f; //½ºÅ³ °íÀ¯ µ¥¹ÌÁö
-    public float CalculatingDamage; //°ø°İ·Â µî°ú ÇÕ»êµÈ µ¥¹ÌÁö
-    public float UseMp = 180f; //½ºÅ³ ¼Ò¸ğ Mp
+    public bool IsUsable = true; //ìŠ¤í‚¬ ì‚¬ìš© ê°€ëŠ¥ ì—¬ë¶€ (ì¿¨íƒ€ì„ì— ì˜í•¨)
+    public float CoolTime = 60f; //ìŠ¤í‚¬ ì¿¨íƒ€ì„
+    public float SkillDamage = 1000f; //ìŠ¤í‚¬ ê³ ìœ  ë°ë¯¸ì§€
+    public float CalculatingDamage; //ê³µê²©ë ¥ ë“±ê³¼ í•©ì‚°ëœ ë°ë¯¸ì§€
+    public float UseMp = 180f; //ìŠ¤í‚¬ ì†Œëª¨ Mp
 
     void Start()
     {
@@ -15,49 +15,49 @@ public class R : MonoBehaviour
         {
             Instance = this;
         }
-        //(ÇÕ»ê µ¥¹ÌÁö) = (½ºÅ³ °íÀ¯ µ¥¹ÌÁö) + (ÇÃ·¹ÀÌ¾î °ø°İ·Â) + (ÇÃ·¹ÀÌ¾î Ãß°¡ °ø°İ·Â)
+        //(í•©ì‚° ë°ë¯¸ì§€) = (ìŠ¤í‚¬ ê³ ìœ  ë°ë¯¸ì§€) + (í”Œë ˆì´ì–´ ê³µê²©ë ¥) + (í”Œë ˆì´ì–´ ì¶”ê°€ ê³µê²©ë ¥)
         CalculatingDamage = SkillDamage + Player.Instance.Power + Player.Instance.AddedPower;
 
-        //°ÔÀÓ ½ÃÀÛ ½Ã, ÄğÅ¸ÀÓ ÃÊ±âÈ­
+        //ê²Œì„ ì‹œì‘ ì‹œ, ì¿¨íƒ€ì„ ì´ˆê¸°í™”
         CoolTime = 0;
     }
 
     private void Update()
     {
-        //½ºÅ³ »ç¿ë ºÒ°¡´ÉÀÏ ¶§¸é
+        //ìŠ¤í‚¬ ì‚¬ìš© ë¶ˆê°€ëŠ¥ì¼ ë•Œë©´
         if (!IsUsable)
         {
-            //½Ã°£ µû¶ó ÄğÅ¸ÀÓ µ¼
+            //ì‹œê°„ ë”°ë¼ ì¿¨íƒ€ì„ ë”
             CoolTime -= Time.deltaTime;
 
-            //ÄğÅ¸ÀÓ À½¼ö ¹æÁö Ã³¸®
+            //ì¿¨íƒ€ì„ ìŒìˆ˜ ë°©ì§€ ì²˜ë¦¬
             CoolTime = Mathf.Clamp(CoolTime, 0, Mathf.Infinity);
 
-            //ÄğÅ¸ÀÓ 0 ÀÌÇÏ¸é
+            //ì¿¨íƒ€ì„ 0 ì´í•˜ë©´
             if (CoolTime <= 0)
             {
-                //½ºÅ³ »ç¿ë °¡´É
+                //ìŠ¤í‚¬ ì‚¬ìš© ê°€ëŠ¥
                 IsUsable = true;
             }
         }
     }
-    public void UseSkill() //½ºÅ³ »ç¿ë
+    public void UseSkill() //ìŠ¤í‚¬ ì‚¬ìš©
     {
-        //½ºÅ³ ¼Ò¸ğ Mp¸¸Å­ ÇÃ·¹ÀÌ¾î Mp ¼Ò¸ğ
+        //ìŠ¤í‚¬ ì†Œëª¨ Mpë§Œí¼ í”Œë ˆì´ì–´ Mp ì†Œëª¨
         Player.Instance.CurrentMp -= UseMp;
         Player.Instance.MpBar.fillAmount = Player.Instance.CurrentMp / Player.Instance.MaxMp;
         Player.Instance.MpText.text = Player.Instance.CurrentMp + "/" + Player.Instance.MaxMp;
 
-        //ÄğÅ¸ÀÓ Àû¿ë
+        //ì¿¨íƒ€ì„ ì ìš©
         StartCoolDown();
     }
 
-    private void StartCoolDown() //ÄğÅ¸ÀÓ Àû¿ë
+    private void StartCoolDown() //ì¿¨íƒ€ì„ ì ìš©
     {
-        //½ºÅ³ »ç¿ë ºÒ°¡´É Ã³¸®
+        //ìŠ¤í‚¬ ì‚¬ìš© ë¶ˆê°€ëŠ¥ ì²˜ë¦¬
         IsUsable = false;
 
-        //ÄğÅ¸ÀÓ 60ÃÊ ºÎ¿©
+        //ì¿¨íƒ€ì„ 60ì´ˆ ë¶€ì—¬
         CoolTime = 60f;
     }
 }
