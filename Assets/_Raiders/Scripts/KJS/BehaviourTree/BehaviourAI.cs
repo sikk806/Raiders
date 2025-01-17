@@ -51,6 +51,7 @@ public class BehaviourAI : MonoBehaviour
     }
 
     // Init LocomotionBT
+    // 가까우면 AttackBT로 바꾸고 아니면 플레이어를 향해 쫓아감.
     INode SettingFollowBT()
     {
         INode root = new SelectorNode(
@@ -72,6 +73,9 @@ public class BehaviourAI : MonoBehaviour
     }
 
     // Init AttackBT
+    // 0 ~ 3 번 중 하나의 공격을 한 후에 공격 에니메이션이 끝났다면 다음 공격을 준비.
+    // 4번 이후는 추가 또는 삭제 예정
+    // Attack 종류에 따른 탐색반경 추가 예정
     INode SettingAttackBT()
     {
         INode root = new SelectorNode(
@@ -81,7 +85,6 @@ public class BehaviourAI : MonoBehaviour
                     new List<INode>()
                     {
                         new ActionNode(CheckWithLog),
-                        // 애니메이션을 관리할 떄 이미 patternNumber를 활용해서 애니메이션을 재생한다면?
                         new SelectorNode(
                             new List<INode>()
                             {
@@ -119,7 +122,7 @@ public class BehaviourAI : MonoBehaviour
         return NodeState.Failure;
     }
 
-
+    // AttackBT 로 전환
     NodeState OperateAttackBT()
     {
         switchingClip = false;
@@ -128,6 +131,7 @@ public class BehaviourAI : MonoBehaviour
         return NodeState.Success;
     }
 
+    // 패턴을 사용한 후에 기다리는 코드로 변경 예정
     NodeState Wait()
     {
         movementSpeedRatio = Mathf.Lerp(movementSpeedRatio, 0, movementSpeed * Time.deltaTime);
@@ -135,6 +139,7 @@ public class BehaviourAI : MonoBehaviour
         return NodeState.Success;
     }
 
+    // 플레이어를 따라가는 함수
     NodeState FollowPlayer()
     {
         if (Vector3.Magnitude(TargetPlayer.transform.position - transform.position) < searchBoundary)
@@ -149,12 +154,14 @@ public class BehaviourAI : MonoBehaviour
         return NodeState.Running;
     }
 
+    // 애니메이션이 끝났는지 체크 >> OnAnimationFinished 함수가 각 애니메이션이 붙어있음
     NodeState WaitAnimFinish()
     {
         if (!animFinish) return NodeState.Success;
         return NodeState.Failure;
     }
 
+    // 다음 스킬 사용 번호를 미리 정하고 Locomotion으로 변경
     NodeState SetNextAttack()
     {
         patternNumber = Random.Range(testSkillStart, testSkillEnd);
@@ -166,6 +173,7 @@ public class BehaviourAI : MonoBehaviour
         return NodeState.Success;
     }
 
+    // 장판이 플레이어 바닥에 생기는 기술
     NodeState Attack0()
     {
         if (patternNumber == 0)
@@ -182,6 +190,7 @@ public class BehaviourAI : MonoBehaviour
         return NodeState.Failure;
     }
 
+    // 칼날을 날림
     NodeState Attack1()
     {
         if (patternNumber == 1)
@@ -198,6 +207,7 @@ public class BehaviourAI : MonoBehaviour
         return NodeState.Failure;
     }
 
+    // 몬스터 위치에서 폭발하는 스킬
     NodeState Attack2()
     {
         if (patternNumber == 2)
@@ -214,6 +224,7 @@ public class BehaviourAI : MonoBehaviour
         return NodeState.Failure;
     }
 
+    // 랜덤 위치에 폭발
     NodeState Attack3()
     {
         if (patternNumber == 3)

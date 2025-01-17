@@ -5,20 +5,20 @@ using UnityEngine.Rendering.Universal;
 
 public class BloodBoom : MonoBehaviour
 {
-    [SerializeField] float boomTime; // default 1 seconds;
-    [SerializeField] float destroyTime; // default 3 seconds;
-    [SerializeField] float damage;
+    [SerializeField] float boomTime; // default 1 seconds; 터지는 시간
+    [SerializeField] float destroyTime; // default 3 seconds; // 스킬이 끝나는 시간
+    [SerializeField] float damage; // 스킬 데미지
 
-    [SerializeField] GameObject[] particles;
-    [SerializeField] GameObject decal;
+    [SerializeField] GameObject[] particles; // 스킬 파티클 > 파티클 조정 시간을 위해 사용
+    [SerializeField] GameObject decal; // 미리 표시하는 데칼
 
-    float currentTime;
-    float decalValue;
-    bool doOnce;
+    float currentTime; // 진행 시간 체크
+    float decalValue; // 데칼이 점점 커지는 상황에 사용
+    bool doOnce; // Collider, Particle Active 한번만 하도록 사용하기 위한 변수
 
     Material decalMaterial;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    
     private void OnEnable()
     {
         currentTime = 0f;

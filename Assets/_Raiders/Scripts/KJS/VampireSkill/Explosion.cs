@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class Explosion : MonoBehaviour
 {
-    [SerializeField] float destroyTime; // default 2 seconds;
-    [SerializeField] float damage;
+    [SerializeField] float destroyTime; // default 2 seconds; 스킬이 끝나는 시간
+    [SerializeField] float damage; // 데미지
 
-    float currentTime;
+    float currentTime; // 스킬 실행시간 체크
 
     private void OnEnable()
     {
