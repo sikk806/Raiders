@@ -29,7 +29,7 @@ public class R : MonoBehaviour
         if (!IsUsable)
         {
             //시간 따라 쿨타임 돔
-            CoolTime -= Time.deltaTime;
+            CoolTime -= Time.deltaTime * SkillManager.instance.CoolExcel;
 
             //쿨타임 음수 방지 처리
             CoolTime = Mathf.Clamp(CoolTime, 0, Mathf.Infinity);

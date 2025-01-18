@@ -4,6 +4,7 @@ public class SkillManager : MonoBehaviour
 {
   public static SkillManager instance;
 
+    public float CoolExcel = 1;
 
     private void Start()
     {
@@ -15,6 +16,5 @@ public class SkillManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
     }
 }

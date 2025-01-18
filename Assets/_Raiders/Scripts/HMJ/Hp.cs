@@ -8,6 +8,7 @@ public class Hp : MonoBehaviour
 
     public float Barrier;
     public bool IsNoDamaged;
+    public float Defence; //대미지 감소 (%)
 
     [SerializeField]
     float MaxHp; //최대HP
@@ -34,6 +35,7 @@ public class Hp : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
+        damage *= (1f - Defence);
         //무적 상태라면 처리하지 않음
         if (IsNoDamaged) { return; }
         else if (Barrier > 0f)
