@@ -254,7 +254,7 @@ public class Player : MonoBehaviour
     }
     void Update()
     {
-
+        
         /*
          * 플레이어의 캐릭터 컨트롤 권한을 뺏는 일이 많아, 포션 섭취는 Update에서 처리합니다.
          */
@@ -534,7 +534,7 @@ public class Player : MonoBehaviour
     void OnKeyboard() //키보드 입력 처리
     {
         //[Roll]
-        if (Input.GetKeyDown(KeyCode.Space) && !IsRolling)
+        if (Input.GetKeyDown(KeySetting.keys[KeyAction.Space]) && !IsRolling)
         {
             //마우스 위치 구하기
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -569,7 +569,7 @@ public class Player : MonoBehaviour
         }
 
         //[Use Q]
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeySetting.keys[KeyAction.Q]))
         {
             //현재 플레이어 상태가 Idle 또는 Move라면
             if (CurrentState == PlayerState.Idle || CurrentState == PlayerState.Move)
@@ -611,7 +611,7 @@ public class Player : MonoBehaviour
         }
 
         //[UseW]
-        if (Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKeyDown(KeySetting.keys[KeyAction.W]))
         {
             //현재 플레이어 상태가 Idle 또는 Move라면
             if (CurrentState == PlayerState.Idle || CurrentState == PlayerState.Move)
@@ -660,7 +660,7 @@ public class Player : MonoBehaviour
         }
 
         //[UseE]
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeySetting.keys[KeyAction.E]))
         {
             //현재 플레이어 상태가 Idle 또는 Move라면
             if (CurrentState == PlayerState.Idle || CurrentState == PlayerState.Move)
@@ -705,7 +705,7 @@ public class Player : MonoBehaviour
         }
 
         //[UseR]
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeySetting.keys[KeyAction.R]))
         {
             //현재 플레이어 상태가 Idle 또는 Move라면
             if (CurrentState == PlayerState.Idle || CurrentState == PlayerState.Move)
