@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class Hp : MonoBehaviour
 {
-    //작업하게해주세요.....
     public float Barrier;
     public bool IsNoDamaged;
     public float Defence;
