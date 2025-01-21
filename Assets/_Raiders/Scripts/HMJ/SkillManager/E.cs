@@ -1,8 +1,12 @@
-﻿using UnityEngine;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class E : MonoBehaviour
 {
     public static E Instance;
+    public TextMeshProUGUI ECoolTime;
+    public Image ECool;
     public bool IsUsable = true; //스킬 사용 가능 여부 (쿨타임에 의함)
     public float CoolTime = 8f; //스킬 쿨타임
     public float UseMp = 50f; //스킬 소모 Mp
@@ -16,6 +20,8 @@ public class E : MonoBehaviour
 
         //게임 시작 시, 쿨타임 초기화
         CoolTime = 0;
+        ECoolTime.text = "";
+        ECool.fillAmount = 0;
     }
 
 
@@ -30,11 +36,15 @@ public class E : MonoBehaviour
             //쿨타임 음수 방지 처리
             CoolTime = Mathf.Clamp(CoolTime, 0, Mathf.Infinity);
 
+            ECoolTime.text = ((int)CoolTime).ToString();
+            ECool.fillAmount = CoolTime / 8;
+
             //쿨타임 0 이하면
             if (CoolTime <= 0)
             {
                 //스킬 사용 가능
                 IsUsable = true;
+                ECoolTime.text = "";
             }
         }
     }
@@ -54,6 +64,10 @@ public class E : MonoBehaviour
     {
         //스킬 사용 불가능 처리
         IsUsable = false;
+
+        ECool.fillAmount = 1;
+
+        ECoolTime.text = ((int)CoolTime).ToString();
 
         //쿨타임 8초 부여
         CoolTime = 8f;

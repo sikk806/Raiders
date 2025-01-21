@@ -8,6 +8,8 @@ using UnityEngine.Playables;
 using static Player;
 using static UnityEngine.UIElements.UxmlAttributeDescription;
 using JetBrains.Annotations;
+using Unity.AppUI.UI;
+using static UnityEngine.GridBrushBase;
 
 public enum PlayerState //플레이어 상태
 {
@@ -48,6 +50,8 @@ public class Player : MonoBehaviour
 
     private bool IsRolling = false; //구르기 여부
     private float RollingCoolTime; //구르기 쿨타임
+    public Image RollingCool; //구르기 쿨타임 UI
+    public TextMeshProUGUI RollCoolText; //구르기 쿨타임 시간UI
 
     public Image MpBar;
 
@@ -86,6 +90,12 @@ public class Player : MonoBehaviour
         //구르기 쿨타임 초기화
         RollingCoolTime = 0f;
 
+        //구르기 시간UI 초기화
+        RollCoolText.text = "";
+
+        //구르기 쿨 UI 초기화
+        RollingCool.fillAmount = 0;
+
         //키액션 구독 해지 (구독 중복 방지용)
         TakeControl();
 
@@ -117,6 +127,13 @@ public class Player : MonoBehaviour
 
     }
 
+    public void MpHeal(float heal)
+    {
+        CurrentMp += heal;
+        CurrentMp = Mathf.Clamp(CurrentMp, 0f, MaxMp);
+        MpBar.fillAmount = CurrentMp/MaxMp;
+        MpText.text = CurrentMp + "/" + MaxMp;
+    }
 
     public void TakeControl() //캐릭터 조종 불가 처리
     {
@@ -141,6 +158,17 @@ public class Player : MonoBehaviour
 
             //쿨타임 음수 방지 처리
             RollingCoolTime = Mathf.Clamp(RollingCoolTime, 0, Mathf.Infinity);
+
+            RollCoolText.text = ((int)RollingCoolTime).ToString();
+            RollingCool.fillAmount = RollingCoolTime / 3;
+        }
+        else if (RollingCoolTime <= 0)
+        {
+            //구르기 시간UI 초기화
+            RollCoolText.text = "";
+
+            //구르기 쿨 UI 초기화
+            RollingCool.fillAmount = 0;
         }
 
         /*
@@ -149,14 +177,30 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            //(Hp포션 개수) > 0f 라면, Hp포션을 섭취
-            //else: 포션을 사용할 수 없습니다.
+            if (CurrentState != PlayerState.Null && Potion.Instance.HpPotion > 0f)
+            {
+                PlayerHp.HpHeal(Potion.Instance.HpHeal);
+                Potion.Instance.HpPotion--;
+                Potion.Instance.HpPotionText.text = (Potion.Instance.HpPotion).ToString();
+            }
+            else
+            {
+                Potion.Instance.NoPotion();
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            //(Mp포션 개수) > 0f 라면, Mp포션을 섭취
-            //else: 포션을 사용할 수 없습니다.
+            if (CurrentState != PlayerState.Null && Potion.Instance.MpPotion > 0f)
+            {
+                MpHeal(Potion.Instance.MpHeal);
+                Potion.Instance.MpPotion--;
+                Potion.Instance.MpPotionText.text = (Potion.Instance.MpPotion).ToString();
+            }
+            else
+            {
+                Potion.Instance.NoPotion();
+            }
         }
 
         //현재 플레이어 상태에 따른 애니메이션 등의 처리
@@ -449,6 +493,12 @@ public class Player : MonoBehaviour
 
                 //구르기 쿨타임 적용
                 RollingCoolTime = 3f;
+
+                //구르기 쿨 시간 UI에 쿨타임 표시
+                RollCoolText.text = ((int)RollingCoolTime).ToString();
+
+                //구르기 쿨 UI 활성화
+                RollingCool.fillAmount = 1;
 
                 //무적 부여
                 StartCoroutine(PlayerHp.NoDamage(NoDamageTime));

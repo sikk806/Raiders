@@ -29464,6 +29464,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1003908389128766108}
+  - component: {fileID: 5293093789640175332}
+  - component: {fileID: 7768261649139481209}
   m_Layer: 0
   m_Name: AutoAttack
   m_TagString: PlayerAttack
@@ -29488,6 +29490,34 @@ Transform:
   - {fileID: 1003908389333061505}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5293093789640175332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003908389128766111}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52b686c768a4fb341a0ca3c5098313d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CoolTime: 0.3
+  UseMp: 0
+--- !u!114 &7768261649139481209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003908389128766111}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4690cf3a0ba658449025dfe57aa4966, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CoolTime: 0.3
+  UseMp: 0
 --- !u!1 &1003908389333061504
 GameObject:
   m_ObjectHideFlags: 0
