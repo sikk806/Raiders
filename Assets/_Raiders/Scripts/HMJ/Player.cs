@@ -254,7 +254,7 @@ public class Player : MonoBehaviour
     }
     void Update()
     {
-        
+
         /*
          * 플레이어의 캐릭터 컨트롤 권한을 뺏는 일이 많아, 포션 섭취는 Update에서 처리합니다.
          */
@@ -316,7 +316,7 @@ public class Player : MonoBehaviour
     {
         movementSpeedRatio = Mathf.Lerp(movementSpeedRatio, 1, MoveSpeed * Time.deltaTime);
 
-        animator.SetFloat("Move",movementSpeedRatio);
+        animator.SetFloat("Move", movementSpeedRatio);
 
         //애니메이션 Move 재생
         animator.Play("IdleMove");
@@ -432,8 +432,8 @@ public class Player : MonoBehaviour
     void HandleUseE() //UseE 상태 처리
     {
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-        
-        if(stateInfo.IsName("E"))
+
+        if (stateInfo.IsName("E"))
         {
             if (stateInfo.normalizedTime >= 1f)
             {
@@ -538,7 +538,7 @@ public class Player : MonoBehaviour
         {
             //마우스 위치 구하기
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;          
+            RaycastHit hit;
 
             //레이가 stage 레이어 오브젝트에 충돌했다면
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, stage))
@@ -628,7 +628,7 @@ public class Player : MonoBehaviour
 
                     //Q 애니메이션 트리거 설정 
                     animator.SetTrigger("W");
-                    
+
                     //키액션 구독 해지
                     TakeControl();
 
@@ -677,7 +677,7 @@ public class Player : MonoBehaviour
                     BarrierSet();
 
                     //4초 뒤 쉴드량 0으로 초기화
-                    Invoke("BarrierReset",4f);
+                    Invoke("BarrierReset", 4f);
 
                     //E 애니메이션 트리거 설정 
                     animator.SetTrigger("E");
@@ -750,5 +750,3 @@ public class Player : MonoBehaviour
         }
     }
 }
-
-

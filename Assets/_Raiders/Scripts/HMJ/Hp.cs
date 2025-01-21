@@ -1,20 +1,21 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Playables;
 using UnityEngine.UI;
 
 public class Hp : MonoBehaviour
 {
-
+    //작업하게해주세요.....
     public float Barrier;
     public bool IsNoDamaged;
-    public float Defence; //����� ���� (%)
+    public float Defence;
 
-    
+
     [SerializeField]
-    float MaxHp; //�ִ�HP
+    float MaxHp;
     [SerializeField]
-    float CurrentHp; //����hp
+    float CurrentHp;
     [SerializeField]
     Image HpBar;
     [SerializeField]
@@ -22,21 +23,21 @@ public class Hp : MonoBehaviour
 
     private void Start()
     {
-        if (HpText !=null)
+        if (HpText != null)
         {
             //hptext 인스펙터에서 참조하기 
             HpText.text = CurrentHp + "/" + MaxHp;
         }
-        
+
     }
 
     public void Heal(float heal)
     {
-        if (HpBar ==null)
+        if (HpBar == null)
         {
             return;
         }
-        
+
         CurrentHp += heal;
         CurrentHp = Mathf.Clamp(CurrentHp, 0f, MaxHp);
         HpBar.fillAmount += heal;
@@ -47,7 +48,6 @@ public class Hp : MonoBehaviour
     public void TakeDamage(float damage)
     {
         damage *= (1f - Defence);
-        //���� ���¶�� ó������ ����
         if (IsNoDamaged) { return; }
         else if (Barrier > 0f)
         {
@@ -60,15 +60,12 @@ public class Hp : MonoBehaviour
             {
                 damage = lastDamage;
 
-                //Hp�� ��������ŭ �پ��
                 CurrentHp -= damage;
                 HpBar.fillAmount -= damage;
                 HpText.text = CurrentHp + "/" + MaxHp;
 
-                //Hp ���� ���� ó��
                 CurrentHp = Mathf.Clamp(CurrentHp, 0, MaxHp);
 
-                //Hp�� 0 ���϶��
                 if (CurrentHp <= 0f)
                 {
                     if (CompareTag("Player"))
@@ -85,18 +82,15 @@ public class Hp : MonoBehaviour
                     }
                 }
             }
-           
-            }
+
+        }
         else
         {
-            //Hp�� ��������ŭ �پ��
             CurrentHp -= damage;
             HpBar.fillAmount = CurrentHp / MaxHp;
 
-            //Hp ���� ���� ó��
             CurrentHp = Mathf.Clamp(CurrentHp, 0, MaxHp);
 
-            //Hp�� 0 ���϶��
             if (CurrentHp <= 0f)
             {
                 if (CompareTag("Player"))
@@ -125,7 +119,7 @@ public class Hp : MonoBehaviour
         HpText.text = CurrentHp + "(+" + Barrier + ")" + "/" + MaxHp;
     }
 
-    public void BarrierReset() //���� ���� (����, Invoke ���ؼ� ȣ���ϴ� ������ �����ð� ����)
+    public void BarrierReset()
     {
         Barrier = 0f;
         HpText.text = CurrentHp + "/" + MaxHp;
@@ -142,64 +136,49 @@ public class Hp : MonoBehaviour
     }
 
 
-    public IEnumerator NoDamage(float noDamageTime) //���� �ο� �ڷ�ƾ
+    public IEnumerator NoDamage(float noDamageTime)
     {
-        //�̹� ���� ���¶��, �ڷ�ƾ ����
         if (IsNoDamaged) yield break;
 
-        //���� ���·� ����
         IsNoDamaged = true;
 
-        //NoDamageTime��ŭ ���� ���� ����
         yield return new WaitForSeconds(noDamageTime);
 
-        //���� ���� ����
         IsNoDamaged = false;
     }
 
     public void PlayerDie()
     {
-        //���� �÷��̾� ���¸� Null�� ����
         Player.Instance.CurrentState = PlayerState.Null;
 
-        //Ű�׼� ���� ����
         Player.Instance.TakeControl();
 
-        //����ī��Ʈ ����
         GameManager.Instance.DeathCountDown();
 
-        //Death �ִϸ��̼� ���
         Player.Instance.animator.SetTrigger("Death");
-        
-        
+
+
 
     }
 
-    public void Resurrection() //��Ȱ ó��
+    public void Resurrection()
     {
-        //���� �ο�
         StartCoroutine(NoDamage(Player.Instance.NoDamageTime));
 
-        //Ű�׼� �籸��
         Player.Instance.BringBackControl();
 
-        //�ִ� Hp �ʱ�ȭ
         MaxHp = 100f;
 
-        //�ִ� Mp �ʱ�ȭ
         Player.Instance.MaxMp = 1000f;
 
-        //���� Hp �ʱ�ȭ
         CurrentHp = MaxHp;
         HpBar.fillAmount = CurrentHp / MaxHp;
         HpText.text = CurrentHp + "/" + MaxHp;
 
-        //���� Mp �ʱ�ȭ
         Player.Instance.CurrentMp = Player.Instance.MaxMp;
         Player.Instance.MpBar.fillAmount = Player.Instance.CurrentMp / Player.Instance.MaxMp;
         Player.Instance.MpText.text = Player.Instance.CurrentMp + "/" + Player.Instance.MaxMp;
 
-        //���� �÷��̾� ���¸� Idle�� ����
         Player.Instance.CurrentState = PlayerState.Idle;
     }
 
