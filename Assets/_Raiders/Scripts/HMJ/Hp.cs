@@ -9,7 +9,6 @@ public class Hp : MonoBehaviour
     public float Barrier;
     public bool IsNoDamaged;
     public float Defence; //����� ���� (%)
-
     
     [SerializeField]
     float MaxHp; //�ִ�HP

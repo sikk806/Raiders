@@ -61,19 +61,15 @@ public class UIManager : MonoBehaviour
         // 씬 이름이 null 또는 빈 문자열인지 확인
         if (string.IsNullOrEmpty(sceneName))
         {
-            Debug.LogWarning("Scene name is null");
             return;
         }
         // 씬 이름이 빌드 설정에 포함되어 있는지 확인
         if (!IsSceneInBuild(sceneName))
         {
-            Debug.LogWarning($"Scene '{sceneName}' is not in the build settings");
             return;
         }
         
-    
         SceneManager.LoadScene(sceneName);
-        
     }
     
     
