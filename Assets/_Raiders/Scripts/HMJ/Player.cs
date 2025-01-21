@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
@@ -26,7 +26,8 @@ public class Player : MonoBehaviour
 {
     public static Player Instance;
 
-    public Hp PlayerHp;
+    public float MaxHp = 100; //최대HP
+    public float CurrentHp = 100; //현재HP
     public float MaxMp = 1000; //최대MP
     public float CurrentMp = 1000; //현재MP
 
@@ -41,14 +42,17 @@ public class Player : MonoBehaviour
 
 
     public float StopTime; //경직 시간
+    public float Barrier; //쉴드량
     public float NoDamageTime = 1f; //무적 시간
     private float movementSpeedRatio = 0;
 
 
     private bool IsRolling = false; //구르기 여부
-    private float RollingCoolTime; //구르기 쿨타임
+    private bool IsNoDamaged = false; //무적 여부
 
+    public Image HpBar;
     public Image MpBar;
+    public TextMeshProUGUI HpText; //Hp바 텍스트
     public TextMeshProUGUI MpText; //Mp바 텍스트
 
     [SerializeField]
@@ -64,7 +68,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject attackPosition; //공격 나가는 위치
 
-    public Animator animator;
+    private Animator animator;
     private InputManager inputManager;
     public PlayerState CurrentState; //현재 상태
 
@@ -78,12 +82,11 @@ public class Player : MonoBehaviour
 
         animator = GetComponent<Animator>();
         inputManager = GameManager.Input;
-        PlayerHp = GetComponent<Hp>();
+        //UI
+        HpText.text = CurrentHp + "/" + MaxHp;
         MpText.text = CurrentMp + "/" + MaxMp;
 
-        //구르기 쿨타임 초기화
-        RollingCoolTime = 0f;
-        
+
         //키액션 구독 해지 (구독 중복 방지용)
         TakeControl();
 
@@ -95,10 +98,103 @@ public class Player : MonoBehaviour
 
     }
 
+    IEnumerator NoDamage(float noDamageTime) //무적 부여 코루틴
+    {
+        //이미 무적 상태라면, 코루틴 종료
+        if (IsNoDamaged) yield break;
+
+        //무적 상태로 변경
+        IsNoDamaged = true;
+
+        //NoDamageTime만큼 무적 상태 유지
+        yield return new WaitForSeconds(noDamageTime);
+
+        //무적 상태 해제
+        IsNoDamaged = false;
+    }
+
+    public void BarrierSet()
+    {
+        Barrier = 50f;
+        HpText.text = CurrentHp + "(+" + Barrier + ")" + "/" + MaxHp;
+    }
+
+    public void BarrierReset() //쉴드 리셋 (사용시, Invoke 통해서 호출하는 것으로 유지시간 설정)
+    {
+        Barrier = 0f;
+        HpText.text = CurrentHp + "/" + MaxHp;
+    }
+
+
+    public void Damaged(float damage) //받는 데미지 처리
+    {
+        //무적 상태라면 처리하지 않음
+        if (IsNoDamaged) { return; }
+        else if (Barrier > 0f)
+        {
+            float lastDamage = damage - Barrier;
+
+            Barrier -= damage;
+            Barrier = Mathf.Clamp(Barrier, 0f, Mathf.Infinity);
+
+            if (lastDamage >= 0f)
+            {
+                damage = lastDamage;
+
+                //Hp가 데미지만큼 줄어듬
+                CurrentHp -= damage;
+                HpBar.fillAmount -= damage;
+                HpText.text = CurrentHp + "/" + MaxHp;
+
+                //Hp 음수 방지 처리
+                CurrentHp = Mathf.Clamp(CurrentHp, 0, MaxHp);
+
+                //Hp가 0 이하라면
+                if (CurrentHp <= 0f)
+                {
+                    //죽음 처리 메서드 호출
+                    Die();
+                }
+            }
+            else
+            {
+                //Hp가 데미지만큼 줄어듬
+                CurrentHp -= damage;
+                HpBar.fillAmount = CurrentHp / MaxHp;
+
+                //Hp 음수 방지 처리
+                CurrentHp = Mathf.Clamp(CurrentHp, 0, MaxHp);
+
+                //Hp가 0 이하라면
+                if (CurrentHp <= 0f)
+                {
+                    //죽음 처리 메서드 호출
+                    Die();
+                }
+            }
+        }
+
+    }
+
+    public void Die() //죽음 처리
+    {
+        //현재 플레이어 상태를 Null로 변경
+        CurrentState = PlayerState.Null;
+
+        //키액션 구독 해지
+        TakeControl();
+
+        //데스카운트 감소
+        GameManager.Instance.DeathCountDown();
+
+        //Death 애니메이션 재생
+        animator.SetTrigger("Death");
+    }
+
     public void Stuned(float stunTime) //스턴 처리
     {
         //무적 상태라면 처리하지 않음
-        if (PlayerHp.IsNoDamaged) { return; }
+        if (IsNoDamaged) { return; }
 
         //현재 플레이어 상태를 Null로 변경
         CurrentState = PlayerState.Null;
@@ -114,16 +210,42 @@ public class Player : MonoBehaviour
 
     }
 
-  
+    public void Resurrection() //부활 처리
+    {
+        //무적 부여
+        StartCoroutine(NoDamage(NoDamageTime));
 
-    public void TakeControl() //캐릭터 조종 불가 처리
+        //키액션 재구독
+        BringBackControl();
+
+        //최대 Hp 초기화
+        MaxHp = 100f;
+
+        //최대 Mp 초기화
+        MaxMp = 1000f;
+
+        //현재 Hp 초기화
+        CurrentHp = MaxHp;
+        HpBar.fillAmount = CurrentHp / MaxHp;
+        HpText.text = CurrentHp + "/" + MaxHp;
+
+        //현재 Mp 초기화
+        CurrentMp = MaxMp;
+        MpBar.fillAmount = CurrentMp / MaxMp;
+        MpText.text = CurrentMp + "/" + MaxMp;
+
+        //현재 플레이어 상태를 Idle로 변경
+        CurrentState = PlayerState.Idle;
+    }
+
+    void TakeControl() //캐릭터 조종 불가 처리
     {
         //키액션 구독 해지
         GameManager.Input.KeyAction -= OnMouse;
         GameManager.Input.KeyAction -= OnKeyboard;
     }
 
-    public void BringBackControl() //캐릭터 조종 가능 처리 
+    void BringBackControl() //캐릭터 조종 가능 처리 
     {
         //키액션 구독
         GameManager.Input.KeyAction += OnMouse;
@@ -132,16 +254,7 @@ public class Player : MonoBehaviour
     }
     void Update()
     {
-
-        if (RollingCoolTime > 0)
-        {
-            //시간 따라 쿨타임 돔
-            RollingCoolTime -= Time.deltaTime;
-
-            //쿨타임 음수 방지 처리
-            RollingCoolTime = Mathf.Clamp(RollingCoolTime, 0, Mathf.Infinity);
-        }
-
+        
         /*
          * 플레이어의 캐릭터 컨트롤 권한을 뺏는 일이 많아, 포션 섭취는 Update에서 처리합니다.
          */
@@ -380,7 +493,7 @@ public class Player : MonoBehaviour
 
         //[Attack]
         //좌클릭 했을 때, 평타 사용 가능이면
-        if (Input.GetMouseButtonDown(0) && AutoAttack.IsUsable)
+        if (Input.GetMouseButtonDown(0) && AutoAttack.Instance.IsUsable)
         {
             //현재 플레이어 상태가 Idle 또는 Move라면
             if (CurrentState == PlayerState.Idle || CurrentState == PlayerState.Move)
@@ -421,7 +534,7 @@ public class Player : MonoBehaviour
     void OnKeyboard() //키보드 입력 처리
     {
         //[Roll]
-        if (Input.GetKeyDown(KeyCode.Space) && !IsRolling && RollingCoolTime <= 0)
+        if (Input.GetKeyDown(KeySetting.keys[KeyAction.Space]) && !IsRolling)
         {
             //마우스 위치 구하기
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -446,11 +559,8 @@ public class Player : MonoBehaviour
                 //구르기 상태 활성화
                 IsRolling = true;
 
-                //구르기 쿨타임 적용
-                RollingCoolTime = 3f;
-
                 //무적 부여
-                StartCoroutine(PlayerHp.NoDamage(NoDamageTime));
+                StartCoroutine(NoDamage(NoDamageTime));
 
                 //현재 플레이어 상태를 Roll로 변경
                 CurrentState = PlayerState.Roll;
@@ -459,7 +569,7 @@ public class Player : MonoBehaviour
         }
 
         //[Use Q]
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeySetting.keys[KeyAction.Q]))
         {
             //현재 플레이어 상태가 Idle 또는 Move라면
             if (CurrentState == PlayerState.Idle || CurrentState == PlayerState.Move)
@@ -501,7 +611,7 @@ public class Player : MonoBehaviour
         }
 
         //[UseW]
-        if (Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKeyDown(KeySetting.keys[KeyAction.W]))
         {
             //현재 플레이어 상태가 Idle 또는 Move라면
             if (CurrentState == PlayerState.Idle || CurrentState == PlayerState.Move)
@@ -550,7 +660,7 @@ public class Player : MonoBehaviour
         }
 
         //[UseE]
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeySetting.keys[KeyAction.E]))
         {
             //현재 플레이어 상태가 Idle 또는 Move라면
             if (CurrentState == PlayerState.Idle || CurrentState == PlayerState.Move)
@@ -564,10 +674,10 @@ public class Player : MonoBehaviour
                     //현재 플레이어 상태를 UseR로 변경
                     CurrentState = PlayerState.UseE;
 
-                    PlayerHp.BarrierSet();
+                    BarrierSet();
 
                     //4초 뒤 쉴드량 0으로 초기화
-                    PlayerHp.Invoke("BarrierReset",4f);
+                    Invoke("BarrierReset",4f);
 
                     //E 애니메이션 트리거 설정 
                     animator.SetTrigger("E");
@@ -595,7 +705,7 @@ public class Player : MonoBehaviour
         }
 
         //[UseR]
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeySetting.keys[KeyAction.R]))
         {
             //현재 플레이어 상태가 Idle 또는 Move라면
             if (CurrentState == PlayerState.Idle || CurrentState == PlayerState.Move)
@@ -610,7 +720,7 @@ public class Player : MonoBehaviour
                     CurrentState = PlayerState.UseR;
 
                     //4초간 무적 부여 (TEMP)
-                    PlayerHp.NoDamage(4f);
+                    NoDamage(4f);
 
                     //R 애니메이션 트리거 설정 
                     animator.SetTrigger("R");

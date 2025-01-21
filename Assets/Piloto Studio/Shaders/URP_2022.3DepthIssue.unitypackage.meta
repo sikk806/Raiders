@@ -1,5 +1,10 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Piloto Studio/Shaders/URP_2022.3DepthIssue.unitypackage.meta
 guid: 5cbf1c79a16ec1a45a685d03657e7bc4
+========
+guid: bb8c81ddd7473ba468fdcbed8d2bc0d3
+folderAsset: yes
+>>>>>>>> skw:Assets/GUI_Parts.meta
 DefaultImporter:
   externalObjects: {}
   userData: 
