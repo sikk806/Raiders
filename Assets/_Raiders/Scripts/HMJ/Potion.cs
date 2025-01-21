@@ -8,11 +8,11 @@ public class Potion : MonoBehaviour
     public float MpHeal = 500f; //The amount of Mp recovery
     public int HpPotion; //The number of Hp potion left
     public int MpPotion; //The number of Mp potion left
+    public TextMeshProUGUI HpPotionText; // HpPotion's text UI
+    public TextMeshProUGUI MpPotionText; // MpPotion's text UI
 
     [SerializeField]
-    TextMeshProUGUI HpPotionText; // HpPotion's text UI
-    [SerializeField]
-    TextMeshProUGUI MpPotionText; // MpPotion's text UI
+    GameObject NoPotionWarning;
 
     void Start()
     {
@@ -27,7 +27,13 @@ public class Potion : MonoBehaviour
 
     public void NoPotion()
     {
-        Debug.Log("포션 부족 안내 팝업 띄우기");
+        NoPotionWarning.SetActive(true);
+        Invoke("WarningClose",1.5f);
+    }
+
+    void WarningClose()
+    {
+        NoPotionWarning.SetActive(false);
     }
 
 }

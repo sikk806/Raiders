@@ -122,7 +122,7 @@ public class Player : MonoBehaviour
     {
         CurrentMp += heal;
         CurrentMp = Mathf.Clamp(CurrentMp, 0f, MaxMp);
-        MpBar.fillAmount += CurrentMp/MaxMp;
+        MpBar.fillAmount = CurrentMp/MaxMp;
         MpText.text = CurrentMp + "/" + MaxMp;
     }
 
@@ -161,6 +161,7 @@ public class Player : MonoBehaviour
             {
                 PlayerHp.HpHeal(Potion.Instance.HpHeal);
                 Potion.Instance.HpPotion--;
+                Potion.Instance.HpPotionText.text = (Potion.Instance.HpPotion).ToString();
             }
             else
             {
@@ -174,6 +175,7 @@ public class Player : MonoBehaviour
             {
                 MpHeal(Potion.Instance.MpHeal);
                 Potion.Instance.MpPotion--;
+                Potion.Instance.MpPotionText.text = (Potion.Instance.MpPotion).ToString();
             }
             else
             {

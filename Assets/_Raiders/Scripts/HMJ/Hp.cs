@@ -39,7 +39,7 @@ public class Hp : MonoBehaviour
 
         CurrentHp += heal;
         CurrentHp = Mathf.Clamp(CurrentHp, 0f, MaxHp);
-        HpBar.fillAmount += CurrentHp / MaxHp;
+        HpBar.fillAmount = CurrentHp / MaxHp;
         HpText.text = CurrentHp + "/" + MaxHp;
 
     }
