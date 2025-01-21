@@ -1,9 +1,13 @@
-﻿using System.Collections;
+using System.Collections;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Q : MonoBehaviour
 {
     public static Q Instance;
+    public Image QCool;
+    public TextMeshProUGUI QCoolTime;
     public bool IsUsable = true; //스킬 사용 가능 여부 (쿨타임에 의함)
     public float CoolTime = 3f; //스킬 쿨타임
     public static float SkillDamage = 100f; //스킬 고유 데미지
@@ -17,6 +21,8 @@ public class Q : MonoBehaviour
         }
         //게임 시작 시, 쿨타임 초기화
         CoolTime = 0;
+        QCoolTime.text = "";
+        QCool.fillAmount = 0;
     }
 
     public static float CalculatingDamage()
@@ -29,18 +35,22 @@ public class Q : MonoBehaviour
         //스킬 사용 불가능일 때면
         if (!IsUsable)
         {
+            //쿨타임 0 이하면
+            if (CoolTime <= 0)
+            {
+                //스킬 사용 가능
+                IsUsable = true;
+                QCoolTime.text = "";
+            }
             //시간 따라 쿨타임 돔
             CoolTime -= Time.deltaTime*SkillManager.instance.CoolExcel;
 
             //쿨타임 음수 방지 처리
             CoolTime = Mathf.Clamp(CoolTime, 0, Mathf.Infinity);
 
-            //쿨타임 0 이하면
-            if (CoolTime <= 0)
-            {
-                //스킬 사용 가능
-                IsUsable = true;
-            }
+            QCoolTime.text = CoolTime.ToString();
+            QCool.fillAmount = CoolTime/3;
+
         }
     }
 
@@ -59,7 +69,11 @@ public class Q : MonoBehaviour
     private void StartCoolDown() //쿨타임 적용
     {
         //스킬 사용 불가능 처리
-        IsUsable = false; 
+        IsUsable = false;
+        
+        QCool.fillAmount = 1;
+
+        QCoolTime.text = CoolTime.ToString();
 
         //쿨타임 3초 부여
         CoolTime = 3f;
