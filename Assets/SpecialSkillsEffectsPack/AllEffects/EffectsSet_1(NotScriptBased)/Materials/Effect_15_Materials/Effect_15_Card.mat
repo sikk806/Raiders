@@ -136,7 +136,7 @@ Material:
     - _MixedMove: 0
     - _Mode: 3
     - _NoiseNormalFactor: 1
-    - _NoiseScale: 0
+    - _NoiseScale: 3.72
     - _NormalAnimate: 1
     - _NormalAnimateSpeed: 0.15
     - _NormalDistortion: 1
