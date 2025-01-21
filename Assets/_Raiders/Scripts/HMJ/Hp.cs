@@ -39,7 +39,7 @@ public class Hp : MonoBehaviour
 
         CurrentHp += heal;
         CurrentHp = Mathf.Clamp(CurrentHp, 0f, MaxHp);
-        HpBar.fillAmount += heal;
+        HpBar.fillAmount += CurrentHp / MaxHp;
         HpText.text = CurrentHp + "/" + MaxHp;
 
     }
@@ -60,7 +60,7 @@ public class Hp : MonoBehaviour
                 damage = lastDamage;
 
                 CurrentHp -= damage;
-                HpBar.fillAmount -= damage;
+                HpBar.fillAmount = CurrentHp / MaxHp;
                 HpText.text = CurrentHp + "/" + MaxHp;
 
                 CurrentHp = Mathf.Clamp(CurrentHp, 0, MaxHp);
@@ -166,9 +166,9 @@ public class Hp : MonoBehaviour
 
         Player.Instance.BringBackControl();
 
-        MaxHp = 100f;
+        MaxHp = 100f; //Temp
 
-        Player.Instance.MaxMp = 1000f;
+        Player.Instance.MaxMp = 1000f; //Temp
 
         CurrentHp = MaxHp;
         HpBar.fillAmount = CurrentHp / MaxHp;

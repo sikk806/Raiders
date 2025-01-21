@@ -8,6 +8,7 @@ using UnityEngine.Playables;
 using static Player;
 using static UnityEngine.UIElements.UxmlAttributeDescription;
 using JetBrains.Annotations;
+using Unity.AppUI.UI;
 
 public enum PlayerState //플레이어 상태
 {
@@ -117,6 +118,13 @@ public class Player : MonoBehaviour
 
     }
 
+    public void MpHeal(float heal)
+    {
+        CurrentMp += heal;
+        CurrentMp = Mathf.Clamp(CurrentMp, 0f, MaxMp);
+        MpBar.fillAmount += CurrentMp/MaxMp;
+        MpText.text = CurrentMp + "/" + MaxMp;
+    }
 
     public void TakeControl() //캐릭터 조종 불가 처리
     {
@@ -149,14 +157,28 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            //(Hp포션 개수) > 0f 라면, Hp포션을 섭취
-            //else: 포션을 사용할 수 없습니다.
+            if (CurrentState != PlayerState.Null && Potion.Instance.HpPotion > 0f)
+            {
+                PlayerHp.HpHeal(Potion.Instance.HpHeal);
+                Potion.Instance.HpPotion--;
+            }
+            else
+            {
+                Potion.Instance.NoPotion();
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            //(Mp포션 개수) > 0f 라면, Mp포션을 섭취
-            //else: 포션을 사용할 수 없습니다.
+            if (CurrentState != PlayerState.Null && Potion.Instance.MpPotion > 0f)
+            {
+                MpHeal(Potion.Instance.MpHeal);
+                Potion.Instance.MpPotion--;
+            }
+            else
+            {
+                Potion.Instance.NoPotion();
+            }
         }
 
         //현재 플레이어 상태에 따른 애니메이션 등의 처리
