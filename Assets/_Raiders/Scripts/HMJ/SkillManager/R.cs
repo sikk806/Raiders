@@ -34,21 +34,21 @@ public class R : MonoBehaviour
         //스킬 사용 불가능일 때면
         if (!IsUsable)
         {
-            //쿨타임 0 이하면
-            if (CoolTime <= 0)
-            {
-                //스킬 사용 가능
-                IsUsable = true;
-                RCoolTime.text = "";
-            }
             //시간 따라 쿨타임 돔
             CoolTime -= Time.deltaTime * SkillManager.instance.CoolExcel;
 
             //쿨타임 음수 방지 처리
             CoolTime = Mathf.Clamp(CoolTime, 0, Mathf.Infinity);
 
-            RCoolTime.text = CoolTime.ToString();
+            RCoolTime.text = ((int)CoolTime).ToString();
             RCool.fillAmount = CoolTime / 60;
+
+            //쿨타임 0 이하면
+            if (CoolTime <= 0)
+            {
+                RCoolTime.text = "";
+                IsUsable = true;
+            }
         }
     }
 
@@ -70,7 +70,7 @@ public class R : MonoBehaviour
 
         RCool.fillAmount = 1;
 
-        RCoolTime.text = CoolTime.ToString();
+        RCoolTime.text = ((int)CoolTime).ToString();
 
         //쿨타임 60초 부여
         CoolTime = 60f;

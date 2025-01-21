@@ -159,7 +159,7 @@ public class Player : MonoBehaviour
             //쿨타임 음수 방지 처리
             RollingCoolTime = Mathf.Clamp(RollingCoolTime, 0, Mathf.Infinity);
 
-            RollCoolText.text = RollingCoolTime.ToString();
+            RollCoolText.text = ((int)RollingCoolTime).ToString();
             RollingCool.fillAmount = RollingCoolTime / 3;
         }
         else if (RollingCoolTime <= 0)
@@ -495,7 +495,7 @@ public class Player : MonoBehaviour
                 RollingCoolTime = 3f;
 
                 //구르기 쿨 시간 UI에 쿨타임 표시
-                RollCoolText.text = RollingCoolTime.ToString();
+                RollCoolText.text = ((int)RollingCoolTime).ToString();
 
                 //구르기 쿨 UI 활성화
                 RollingCool.fillAmount = 1;

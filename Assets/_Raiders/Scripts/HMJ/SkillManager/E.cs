@@ -30,6 +30,15 @@ public class E : MonoBehaviour
         //스킬 사용 불가능일 때면
         if (!IsUsable)
         {
+            //시간 따라 쿨타임 돔
+            CoolTime -= Time.deltaTime * SkillManager.instance.CoolExcel;
+
+            //쿨타임 음수 방지 처리
+            CoolTime = Mathf.Clamp(CoolTime, 0, Mathf.Infinity);
+
+            ECoolTime.text = ((int)CoolTime).ToString();
+            ECool.fillAmount = CoolTime / 8;
+
             //쿨타임 0 이하면
             if (CoolTime <= 0)
             {
@@ -37,14 +46,6 @@ public class E : MonoBehaviour
                 IsUsable = true;
                 ECoolTime.text = "";
             }
-            //시간 따라 쿨타임 돔
-            CoolTime -= Time.deltaTime * SkillManager.instance.CoolExcel;
-
-            //쿨타임 음수 방지 처리
-            CoolTime = Mathf.Clamp(CoolTime, 0, Mathf.Infinity);
-
-            ECoolTime.text = CoolTime.ToString();
-            ECool.fillAmount = CoolTime / 8;
         }
     }
 
@@ -66,7 +67,7 @@ public class E : MonoBehaviour
 
         ECool.fillAmount = 1;
 
-        ECoolTime.text = CoolTime.ToString();
+        ECoolTime.text = ((int)CoolTime).ToString();
 
         //쿨타임 8초 부여
         CoolTime = 8f;
