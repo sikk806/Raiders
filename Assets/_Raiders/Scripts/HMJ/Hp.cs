@@ -30,7 +30,7 @@ public class Hp : MonoBehaviour
 
     }
 
-    public void Heal(float heal)
+    public void HpHeal(float heal)
     {
         if (HpBar == null)
         {
