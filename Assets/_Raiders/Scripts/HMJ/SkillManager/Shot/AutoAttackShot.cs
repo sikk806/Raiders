@@ -4,21 +4,14 @@ using UnityEngine.Purchasing;
 
 public class AutoAttackShot : MonoBehaviour
 {
-    private BoxCollider collider;
-    private void Start()
+    public static bool IsUsable = true;
+    public float CoolTime = 0.3f;
+    public static float SkillDamage = 90f;
+    public float UseMp = 0;
+   
+    
+    public static float CalculatingDamage()
     {
-       collider = GetComponent<BoxCollider>();
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Enemy") || other.CompareTag("Boss1") || other.CompareTag("Boss2"))
-        {
-
-            Hp enemy = other.GetComponent<Hp>();
-            enemy.TakeDamage(AutoAttack.CalculatingDamage());
-            print(AutoAttack.CalculatingDamage());
-        }
-
+        return SkillDamage + Player.Instance.Power + Player.Instance.AddedPower;
     }
 }

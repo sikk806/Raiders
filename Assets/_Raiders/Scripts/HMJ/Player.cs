@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
@@ -25,8 +25,8 @@ public enum PlayerState //플레이어 상태
 public class Player : MonoBehaviour
 {
     public static Player Instance;
-
     public Hp PlayerHp;
+
     public float MaxMp = 1000; //최대MP
     public float CurrentMp = 1000; //현재MP
 
@@ -41,6 +41,7 @@ public class Player : MonoBehaviour
 
 
     public float StopTime; //경직 시간
+   
     public float NoDamageTime = 1f; //무적 시간
     private float movementSpeedRatio = 0;
 
@@ -49,6 +50,7 @@ public class Player : MonoBehaviour
     private float RollingCoolTime; //구르기 쿨타임
 
     public Image MpBar;
+
     public TextMeshProUGUI MpText; //Mp바 텍스트
 
     [SerializeField]
@@ -83,7 +85,7 @@ public class Player : MonoBehaviour
 
         //구르기 쿨타임 초기화
         RollingCoolTime = 0f;
-        
+
         //키액션 구독 해지 (구독 중복 방지용)
         TakeControl();
 
@@ -94,6 +96,7 @@ public class Player : MonoBehaviour
         stage = LayerMask.GetMask("Stage");
 
     }
+
 
     public void Stuned(float stunTime) //스턴 처리
     {
@@ -114,7 +117,6 @@ public class Player : MonoBehaviour
 
     }
 
-  
 
     public void TakeControl() //캐릭터 조종 불가 처리
     {
@@ -132,7 +134,6 @@ public class Player : MonoBehaviour
     }
     void Update()
     {
-
         if (RollingCoolTime > 0)
         {
             //시간 따라 쿨타임 돔
@@ -203,7 +204,7 @@ public class Player : MonoBehaviour
     {
         movementSpeedRatio = Mathf.Lerp(movementSpeedRatio, 1, MoveSpeed * Time.deltaTime);
 
-        animator.SetFloat("Move",movementSpeedRatio);
+        animator.SetFloat("Move", movementSpeedRatio);
 
         //애니메이션 Move 재생
         animator.Play("IdleMove");
@@ -319,8 +320,8 @@ public class Player : MonoBehaviour
     void HandleUseE() //UseE 상태 처리
     {
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-        
-        if(stateInfo.IsName("E"))
+
+        if (stateInfo.IsName("E"))
         {
             if (stateInfo.normalizedTime >= 1f)
             {
@@ -421,11 +422,11 @@ public class Player : MonoBehaviour
     void OnKeyboard() //키보드 입력 처리
     {
         //[Roll]
-        if (Input.GetKeyDown(KeyCode.Space) && !IsRolling && RollingCoolTime <= 0)
+        if (Input.GetKeyDown(KeySetting.keys[KeyAction.Space]) && !IsRolling && RollingCoolTime <= 0)
         {
             //마우스 위치 구하기
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;          
+            RaycastHit hit;
 
             //레이가 stage 레이어 오브젝트에 충돌했다면
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, stage))
@@ -459,7 +460,7 @@ public class Player : MonoBehaviour
         }
 
         //[Use Q]
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeySetting.keys[KeyAction.Q]))
         {
             //현재 플레이어 상태가 Idle 또는 Move라면
             if (CurrentState == PlayerState.Idle || CurrentState == PlayerState.Move)
@@ -501,7 +502,7 @@ public class Player : MonoBehaviour
         }
 
         //[UseW]
-        if (Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKeyDown(KeySetting.keys[KeyAction.W]))
         {
             //현재 플레이어 상태가 Idle 또는 Move라면
             if (CurrentState == PlayerState.Idle || CurrentState == PlayerState.Move)
@@ -518,7 +519,7 @@ public class Player : MonoBehaviour
 
                     //Q 애니메이션 트리거 설정 
                     animator.SetTrigger("W");
-                    
+
                     //키액션 구독 해지
                     TakeControl();
 
@@ -550,7 +551,7 @@ public class Player : MonoBehaviour
         }
 
         //[UseE]
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeySetting.keys[KeyAction.E]))
         {
             //현재 플레이어 상태가 Idle 또는 Move라면
             if (CurrentState == PlayerState.Idle || CurrentState == PlayerState.Move)
@@ -567,7 +568,7 @@ public class Player : MonoBehaviour
                     PlayerHp.BarrierSet();
 
                     //4초 뒤 쉴드량 0으로 초기화
-                    PlayerHp.Invoke("BarrierReset",4f);
+                    PlayerHp.Invoke("BarrierReset", 4f);
 
                     //E 애니메이션 트리거 설정 
                     animator.SetTrigger("E");
@@ -595,7 +596,7 @@ public class Player : MonoBehaviour
         }
 
         //[UseR]
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeySetting.keys[KeyAction.R]))
         {
             //현재 플레이어 상태가 Idle 또는 Move라면
             if (CurrentState == PlayerState.Idle || CurrentState == PlayerState.Move)
@@ -640,5 +641,3 @@ public class Player : MonoBehaviour
         }
     }
 }
-
-
