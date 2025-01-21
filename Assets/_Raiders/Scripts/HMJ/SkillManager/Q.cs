@@ -6,8 +6,7 @@ public class Q : MonoBehaviour
     public static Q Instance;
     public bool IsUsable = true; //스킬 사용 가능 여부 (쿨타임에 의함)
     public float CoolTime = 3f; //스킬 쿨타임
-    public float SkillDamage = 100f; //스킬 고유 데미지
-    public float CalculatingDamage; //공격력 등과 합산된 데미지
+    public static float SkillDamage = 100f; //스킬 고유 데미지
     public float UseMp = 30f; //스킬 소모 Mp
 
     void Start()
@@ -16,12 +15,13 @@ public class Q : MonoBehaviour
         {
             Instance = this;
         }
-        
-        //(합산 데미지) = (스킬 고유 데미지) + (플레이어 공격력) + (플레이어 추가 공격력)
-        CalculatingDamage = SkillDamage + Player.Instance.Power + Player.Instance.AddedPower;
-        
         //게임 시작 시, 쿨타임 초기화
         CoolTime = 0;
+    }
+
+    public static float CalculatingDamage()
+    {
+        return SkillDamage + Player.Instance.Power + Player.Instance.AddedPower;
     }
 
     private void Update()
@@ -30,7 +30,7 @@ public class Q : MonoBehaviour
         if (!IsUsable)
         {
             //시간 따라 쿨타임 돔
-            CoolTime -= Time.deltaTime;
+            CoolTime -= Time.deltaTime*SkillManager.instance.CoolExcel;
 
             //쿨타임 음수 방지 처리
             CoolTime = Mathf.Clamp(CoolTime, 0, Mathf.Infinity);
@@ -43,6 +43,8 @@ public class Q : MonoBehaviour
             }
         }
     }
+
+
     public void UseSkill() //스킬 사용
     {
         //스킬 소모 Mp만큼 플레이어 Mp 소모

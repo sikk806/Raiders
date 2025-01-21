@@ -8,12 +8,16 @@ public class GameManager : MonoBehaviour
 
     InputManager input;
     public static InputManager Input { get { return Instance.input; } }
+    SkillManager skill;
+    public static SkillManager Skill { get { return Instance.skill; } }
 
-    private float deathCount = 5; //���� ī��Ʈ(�ӽ� ����)
+    private float deathCount = 5;
 
     private void Awake()
     {
         input = new InputManager();
+        skill = FindAnyObjectByType<SkillManager>();
+    
     }
 
     void Start()
@@ -26,20 +30,16 @@ public class GameManager : MonoBehaviour
         input.OnUpdate();
     }
 
-    public void DeathCountDown() //����ī��Ʈ ���� ó��
+    public void DeathCountDown()
     {
-        //����ī��Ʈ 1 ����
         deathCount--;
 
-        //����ī��Ʈ�� 0 �̸��̸�
         if (deathCount < 0 )
         {
-            //���� ����
             Debug.Log("GameOver");
         }
         else
         {
-            //5�� �� ��Ȱ �ȳ� �˾� ��� ����,ĳ���� ��Ȱ
             Debug.Log("Resurrection after 5 sec, use popup and call Function (Player.Instance.Resurrection)");
         }
     }

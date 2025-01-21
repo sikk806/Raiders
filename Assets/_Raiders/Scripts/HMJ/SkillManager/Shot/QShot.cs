@@ -6,11 +6,11 @@ public class QShot : MonoBehaviour
 {
     private void OnParticleCollision(GameObject other)
     {
-        if (other.CompareTag("Enemy"))
+        if (other.CompareTag("Enemy") || other.CompareTag("Boss1") || other.CompareTag("Boss2"))
         {
 
-            Enemy enemy = other.GetComponent<Enemy>();
-            enemy.TakeDamage(Q.Instance.CalculatingDamage);
+            Hp enemy = other.GetComponent<Hp>();
+            enemy.TakeDamage(Q.CalculatingDamage());
         }
 
     }

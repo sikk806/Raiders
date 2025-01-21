@@ -12,11 +12,12 @@ public class AutoAttackShot : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy"))
+        if (other.CompareTag("Enemy") || other.CompareTag("Boss1") || other.CompareTag("Boss2"))
         {
 
-            Enemy enemy = other.GetComponent<Enemy>();
-            enemy.TakeDamage(AutoAttack.Instance.CalculatingDamage);
+            Hp enemy = other.GetComponent<Hp>();
+            enemy.TakeDamage(AutoAttack.CalculatingDamage());
+            print(AutoAttack.CalculatingDamage());
         }
 
     }
