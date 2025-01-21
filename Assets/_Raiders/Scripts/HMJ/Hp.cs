@@ -8,12 +8,13 @@ public class Hp : MonoBehaviour
 
     public float Barrier;
     public bool IsNoDamaged;
-    public float Defence; //´ë¹ÌÁö °¨¼Ò (%)
+    public float Defence; //ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (%)
 
+    
     [SerializeField]
-    float MaxHp; //ÃÖ´ëHP
+    float MaxHp; //ï¿½Ö´ï¿½HP
     [SerializeField]
-    float CurrentHp; //ÇöÀçhp
+    float CurrentHp; //ï¿½ï¿½ï¿½ï¿½hp
     [SerializeField]
     Image HpBar;
     [SerializeField]
@@ -21,11 +22,21 @@ public class Hp : MonoBehaviour
 
     private void Start()
     {
-        HpText.text = CurrentHp + "/" + MaxHp;
+        if (HpText !=null)
+        {
+            //hptext ì¸ìŠ¤íŽ™í„°ì—ì„œ ì°¸ì¡°í•˜ê¸° 
+            HpText.text = CurrentHp + "/" + MaxHp;
+        }
+        
     }
 
     public void Heal(float heal)
     {
+        if (HpBar ==null)
+        {
+            return;
+        }
+        
         CurrentHp += heal;
         CurrentHp = Mathf.Clamp(CurrentHp, 0f, MaxHp);
         HpBar.fillAmount += heal;
@@ -36,7 +47,7 @@ public class Hp : MonoBehaviour
     public void TakeDamage(float damage)
     {
         damage *= (1f - Defence);
-        //¹«Àû »óÅÂ¶ó¸é Ã³¸®ÇÏÁö ¾ÊÀ½
+        //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â¶ï¿½ï¿½ Ã³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (IsNoDamaged) { return; }
         else if (Barrier > 0f)
         {
@@ -49,15 +60,15 @@ public class Hp : MonoBehaviour
             {
                 damage = lastDamage;
 
-                //Hp°¡ µ¥¹ÌÁö¸¸Å­ ÁÙ¾îµë
+                //Hpï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å­ ï¿½Ù¾ï¿½ï¿½
                 CurrentHp -= damage;
                 HpBar.fillAmount -= damage;
                 HpText.text = CurrentHp + "/" + MaxHp;
 
-                //Hp À½¼ö ¹æÁö Ã³¸®
+                //Hp ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
                 CurrentHp = Mathf.Clamp(CurrentHp, 0, MaxHp);
 
-                //Hp°¡ 0 ÀÌÇÏ¶ó¸é
+                //Hpï¿½ï¿½ 0 ï¿½ï¿½ï¿½Ï¶ï¿½ï¿½
                 if (CurrentHp <= 0f)
                 {
                     if (CompareTag("Player"))
@@ -78,14 +89,14 @@ public class Hp : MonoBehaviour
             }
         else
         {
-            //Hp°¡ µ¥¹ÌÁö¸¸Å­ ÁÙ¾îµë
+            //Hpï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å­ ï¿½Ù¾ï¿½ï¿½
             CurrentHp -= damage;
             HpBar.fillAmount = CurrentHp / MaxHp;
 
-            //Hp À½¼ö ¹æÁö Ã³¸®
+            //Hp ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
             CurrentHp = Mathf.Clamp(CurrentHp, 0, MaxHp);
 
-            //Hp°¡ 0 ÀÌÇÏ¶ó¸é
+            //Hpï¿½ï¿½ 0 ï¿½ï¿½ï¿½Ï¶ï¿½ï¿½
             if (CurrentHp <= 0f)
             {
                 if (CompareTag("Player"))
@@ -114,7 +125,7 @@ public class Hp : MonoBehaviour
         HpText.text = CurrentHp + "(+" + Barrier + ")" + "/" + MaxHp;
     }
 
-    public void BarrierReset() //½¯µå ¸®¼Â (»ç¿ë½Ã, Invoke ÅëÇØ¼­ È£ÃâÇÏ´Â °ÍÀ¸·Î À¯Áö½Ã°£ ¼³Á¤)
+    public void BarrierReset() //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½, Invoke ï¿½ï¿½ï¿½Ø¼ï¿½ È£ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ã°ï¿½ ï¿½ï¿½ï¿½ï¿½)
     {
         Barrier = 0f;
         HpText.text = CurrentHp + "/" + MaxHp;
@@ -131,62 +142,64 @@ public class Hp : MonoBehaviour
     }
 
 
-    public IEnumerator NoDamage(float noDamageTime) //¹«Àû ºÎ¿© ÄÚ·çÆ¾
+    public IEnumerator NoDamage(float noDamageTime) //ï¿½ï¿½ï¿½ï¿½ ï¿½Î¿ï¿½ ï¿½Ú·ï¿½Æ¾
     {
-        //ÀÌ¹Ì ¹«Àû »óÅÂ¶ó¸é, ÄÚ·çÆ¾ Á¾·á
+        //ï¿½Ì¹ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â¶ï¿½ï¿½, ï¿½Ú·ï¿½Æ¾ ï¿½ï¿½ï¿½ï¿½
         if (IsNoDamaged) yield break;
 
-        //¹«Àû »óÅÂ·Î º¯°æ
+        //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â·ï¿½ ï¿½ï¿½ï¿½ï¿½
         IsNoDamaged = true;
 
-        //NoDamageTime¸¸Å­ ¹«Àû »óÅÂ À¯Áö
+        //NoDamageTimeï¿½ï¿½Å­ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         yield return new WaitForSeconds(noDamageTime);
 
-        //¹«Àû »óÅÂ ÇØÁ¦
+        //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         IsNoDamaged = false;
     }
 
     public void PlayerDie()
     {
-        //ÇöÀç ÇÃ·¹ÀÌ¾î »óÅÂ¸¦ Null·Î º¯°æ
+        //ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½Â¸ï¿½ Nullï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Player.Instance.CurrentState = PlayerState.Null;
 
-        //Å°¾×¼Ç ±¸µ¶ ÇØÁö
+        //Å°ï¿½×¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Player.Instance.TakeControl();
 
-        //µ¥½ºÄ«¿îÆ® °¨¼Ò
+        //ï¿½ï¿½ï¿½ï¿½Ä«ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
         GameManager.Instance.DeathCountDown();
 
-        //Death ¾Ö´Ï¸ÞÀÌ¼Ç Àç»ý
+        //Death ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½
         Player.Instance.animator.SetTrigger("Death");
+        
+        
 
     }
 
-    public void Resurrection() //ºÎÈ° Ã³¸®
+    public void Resurrection() //ï¿½ï¿½È° Ã³ï¿½ï¿½
     {
-        //¹«Àû ºÎ¿©
+        //ï¿½ï¿½ï¿½ï¿½ ï¿½Î¿ï¿½
         StartCoroutine(NoDamage(Player.Instance.NoDamageTime));
 
-        //Å°¾×¼Ç Àç±¸µ¶
+        //Å°ï¿½×¼ï¿½ ï¿½ç±¸ï¿½ï¿½
         Player.Instance.BringBackControl();
 
-        //ÃÖ´ë Hp ÃÊ±âÈ­
+        //ï¿½Ö´ï¿½ Hp ï¿½Ê±ï¿½È­
         MaxHp = 100f;
 
-        //ÃÖ´ë Mp ÃÊ±âÈ­
+        //ï¿½Ö´ï¿½ Mp ï¿½Ê±ï¿½È­
         Player.Instance.MaxMp = 1000f;
 
-        //ÇöÀç Hp ÃÊ±âÈ­
+        //ï¿½ï¿½ï¿½ï¿½ Hp ï¿½Ê±ï¿½È­
         CurrentHp = MaxHp;
         HpBar.fillAmount = CurrentHp / MaxHp;
         HpText.text = CurrentHp + "/" + MaxHp;
 
-        //ÇöÀç Mp ÃÊ±âÈ­
+        //ï¿½ï¿½ï¿½ï¿½ Mp ï¿½Ê±ï¿½È­
         Player.Instance.CurrentMp = Player.Instance.MaxMp;
         Player.Instance.MpBar.fillAmount = Player.Instance.CurrentMp / Player.Instance.MaxMp;
         Player.Instance.MpText.text = Player.Instance.CurrentMp + "/" + Player.Instance.MaxMp;
 
-        //ÇöÀç ÇÃ·¹ÀÌ¾î »óÅÂ¸¦ Idle·Î º¯°æ
+        //ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½Â¸ï¿½ Idleï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Player.Instance.CurrentState = PlayerState.Idle;
     }
 

@@ -68,7 +68,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject attackPosition; //공격 나가는 위치
 
-    private Animator animator;
+    public Animator animator;
     private InputManager inputManager;
     public PlayerState CurrentState; //현재 상태
 
@@ -238,14 +238,14 @@ public class Player : MonoBehaviour
         CurrentState = PlayerState.Idle;
     }
 
-    void TakeControl() //캐릭터 조종 불가 처리
+    public void TakeControl() //캐릭터 조종 불가 처리
     {
         //키액션 구독 해지
         GameManager.Input.KeyAction -= OnMouse;
         GameManager.Input.KeyAction -= OnKeyboard;
     }
 
-    void BringBackControl() //캐릭터 조종 가능 처리 
+    public void BringBackControl() //캐릭터 조종 가능 처리 
     {
         //키액션 구독
         GameManager.Input.KeyAction += OnMouse;
@@ -493,7 +493,7 @@ public class Player : MonoBehaviour
 
         //[Attack]
         //좌클릭 했을 때, 평타 사용 가능이면
-        if (Input.GetMouseButtonDown(0) && AutoAttack.Instance.IsUsable)
+        if (Input.GetMouseButtonDown(0) && AutoAttack.IsUsable)
         {
             //현재 플레이어 상태가 Idle 또는 Move라면
             if (CurrentState == PlayerState.Idle || CurrentState == PlayerState.Move)
