@@ -29,7 +29,7 @@ public class UIManager : MonoBehaviour
         // 이 오브젝트를 씬 전환 시에도 유지
         DontDestroyOnLoad(gameObject);
         DontDestroyOnLoad(PauseMenu);
-        DontDestroyOnLoad(OptionsMenu);
+        // DontDestroyOnLoad(OptionsMenu);
 
         // 현재 씬 안에 로드된 모든 객체(Canvas) 확인 setacitv false true건 찾는다.
     }
@@ -61,19 +61,15 @@ public class UIManager : MonoBehaviour
         // 씬 이름이 null 또는 빈 문자열인지 확인
         if (string.IsNullOrEmpty(sceneName))
         {
-            Debug.LogWarning("Scene name is null");
             return;
         }
         // 씬 이름이 빌드 설정에 포함되어 있는지 확인
         if (!IsSceneInBuild(sceneName))
         {
-            Debug.LogWarning($"Scene '{sceneName}' is not in the build settings");
             return;
         }
         
-    
         SceneManager.LoadScene(sceneName);
-        
     }
     
     
@@ -83,11 +79,17 @@ public class UIManager : MonoBehaviour
         Application.Quit();
     }
 
-    public void StartGame()
+    //현재 MainMenu는 UI씬으로 테스트중
+    public void ReturnToMainMenu()
     {
-        
+        //메인씬 이동 후
+        //타임스케일 정상화
+        SceneManager.LoadScene(0);
+        ResetTimeScale();
     }
 
+    //일시정지를 위한 코드 
+    //근데 이걸 메인메뉴에서부터 싱글턴으로 가져갈 이유가 있을까 ?
     public void PauseGame()
     {
         Scene currentScene = SceneManager.GetActiveScene();
@@ -127,8 +129,13 @@ public class UIManager : MonoBehaviour
     {
         Time.timeScale = 1;
     }
- 
-   
+
+    public void OpenOptionsMenu()
+    {
+        OptionsMenu.SetActive(true);
+    }
+
+
 
 
 }

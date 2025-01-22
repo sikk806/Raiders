@@ -11,7 +11,7 @@ public class Test : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
         for (int i = 0; i < text.Length; i++) {
