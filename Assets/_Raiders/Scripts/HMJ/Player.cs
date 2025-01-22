@@ -82,10 +82,12 @@ public class Player : MonoBehaviour
             Instance = this;
         }
 
+        StartCoroutine(MpNaturalRestoration());
         animator = GetComponent<Animator>();
         inputManager = GameManager.Input;
         PlayerHp = GetComponent<Hp>();
         MpText.text = CurrentMp + "/" + MaxMp;
+
 
         //구르기 쿨타임 초기화
         RollingCoolTime = 0f;
@@ -107,6 +109,22 @@ public class Player : MonoBehaviour
 
     }
 
+    IEnumerator MpNaturalRestoration()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(1f);
+            if (CurrentMp < MaxMp)
+            {
+                CurrentMp += 1f;
+                CurrentMp = Mathf.Clamp(CurrentMp, 0f, MaxMp);
+                MpBar.fillAmount = CurrentMp / MaxMp;
+                MpText.text = CurrentMp + "/" + MaxMp;
+            }
+        }
+        
+
+    }
 
     public void Stuned(float stunTime) //스턴 처리
     {
@@ -149,6 +167,7 @@ public class Player : MonoBehaviour
         GameManager.Input.KeyAction += OnKeyboard;
 
     }
+    
     void Update()
     {
         if (RollingCoolTime > 0)
