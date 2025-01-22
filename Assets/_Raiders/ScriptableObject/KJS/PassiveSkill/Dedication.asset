@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64d8ce8779f560840afee875f1f2435c, type: 3}
   m_Name: Dedication
   m_EditorClassIdentifier: 
-  statusEffectName: Dedication
+  statusEffectName: "\uC77C\uC0DD\uC77C\uC0AC"
   statusType: 2
   sprite: {fileID: 21300000, guid: 3bfc512a5ed372545a6e398ff69be1c0, type: 3}
   material: {fileID: 2100000, guid: d144d4e4ee2888942a4af971f1b42505, type: 2}
+  info: "\u2606\u2606\u2606 | \uBD80\uD65C \uD69F\uC218\uAC00 1\uD68C\uB85C \uAC10\uC18C\uD558\uC9C0\uB9CC
+    \uAE30\uBCF8 \uACF5\uACA9\uB825\uC774 N% \uC0C1\uC2B9\uD55C\uB2E4."

@@ -452,7 +452,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 1, g: 1, b: 1, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -498,6 +498,5 @@ MonoBehaviour:
   CardFront: {fileID: 21300000, guid: 6c2c8df3ec5538a4fa921f7aec698b12, type: 3}
   CardBack: {fileID: 21300000, guid: c768badc148496943bd23b0f79c8feec, type: 3}
   CardImage: {fileID: 7174877942032183883}
-  CardButton: {fileID: 0}
   CardName: {fileID: 7597922468628986813}
   CardInfo: {fileID: 422965874614653390}

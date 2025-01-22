@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64d8ce8779f560840afee875f1f2435c, type: 3}
+  m_Name: OneMore
+  m_EditorClassIdentifier: 
+  statusEffectName: "\uCC10\uB9C9_\uCD5C\uC885_\uC9C4\uC9DC\uCD5C\uC885_\uCC10\uCC10\uB9C9_\uC544\uC9C4\uC9DC\uB9C8\uC9C0\uB9C9"
+  statusType: 2
+  sprite: {fileID: 21300000, guid: 5ad2d925219dc364082a389d2f69a1d9, type: 3}
+  material: {fileID: 0}
+  info: "\u2606 | \uBD80\uD65C 1\uD68C \uCD94\uAC00 (\uB2E8, \uC77C\uC0DD\uC77C\uC0AC
+    \uD328\uC2DC\uBE0C \uD65C\uC131\uD654 \uC2DC \uBD80\uD65C\uC740 \uBB34\uC2DC\uB41C\uB2E4.)"

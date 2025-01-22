@@ -65,7 +65,6 @@ public class CardSelect : MonoBehaviour
     {
         if (openLeft)
         {
-            Debug.Log(leftCard.transform.rotation);
             leftCard.transform.rotation = Quaternion.Lerp(leftCard.transform.rotation, Quaternion.identity, Time.deltaTime);
             if (leftCard.transform.rotation.y >= -0.7f && !onceL)
             {

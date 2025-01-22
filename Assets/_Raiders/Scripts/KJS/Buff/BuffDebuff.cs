@@ -151,4 +151,49 @@ public class BuffDebuff : MonoBehaviour
         originPower = GetComponent<Player>().Power;
         GetComponent<Player>().Power *= 1.5f;
     }
+
+    // 흡혈 - 타격 시 체력 회복
+    public void DrainHp()
+    {
+        // 스킬에 함수 추가가 필요.
+    }
+
+    public void CoolDown()
+    {
+        // Skill static을 뺄 것.
+        //GameManager.Instance.Skill.CoolExcel = amount;
+    }
+
+    public void RollingCool()
+    {
+        // 플레이어의 구르기 쿨타임이 필요함.
+    }
+
+    // 기본 공격력 증가
+    public void PowerUp()
+    {
+        originPower = GetComponent<Player>().Power;
+        GetComponent<Player>().Power *= 1.1f;
+    }
+
+    public void SpeedUp()
+    {
+        GetComponent<Player>().MoveSpeed *= 1.1f;
+    }
+
+    public void HealthUp()
+    {
+        GetComponent<Player>().MaxHp *= 300f;
+        GetComponent<Player>().CurrentHp = GetComponent<Player>().MaxHp;
+    }
+
+    public void AddPotion()
+    {
+        // 포션 갯수가 어딨지
+    }
+
+    public void OneMore()
+    {
+        // GameManager private 바꿀 것.
+    }
 }

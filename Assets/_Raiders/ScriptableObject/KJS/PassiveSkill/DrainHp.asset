@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64d8ce8779f560840afee875f1f2435c, type: 3}
   m_Name: DrainHp
   m_EditorClassIdentifier: 
-  statusEffectName: DrainHp
+  statusEffectName: "\uD761\uD608"
   statusType: 2
   sprite: {fileID: 21300000, guid: 3d6735cfc081e7749a670568e9efce77, type: 3}
   material: {fileID: 2100000, guid: d144d4e4ee2888942a4af971f1b42505, type: 2}
+  info: "\u2606\u2606\u2606 | \uC801\uC744 \uD0C0\uACA9 \uC2DC \uC77C\uC815\uB7C9
+    \uCCB4\uB825 \uD68C\uBCF5"

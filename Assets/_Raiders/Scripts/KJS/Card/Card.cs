@@ -48,7 +48,7 @@ public class Card : MonoBehaviour
         CardImage.GetComponent<Image>().sprite = statusEffect.Sprite;
         CardImage.GetComponent<Image>().color = new Color(1, 1, 1, 1);
         CardName.text = statusEffect.StatusEffectName;
-        CardInfo.text = "응애 나 아기.";
+        CardInfo.text = statusEffect.Info;
         GetComponent<Button>().interactable = true;
     }
 

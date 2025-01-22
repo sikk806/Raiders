@@ -10,9 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 64d8ce8779f560840afee875f1f2435c, type: 3}
-  m_Name: Status Effect Data 7
+  m_Name: AddPotion
   m_EditorClassIdentifier: 
-  statusEffectName: 
-  statusType: 1
-  sprite: {fileID: 0}
+  statusEffectName: "\uBE44\uC0C1\uC2DD\uB7C9"
+  statusType: 2
+  sprite: {fileID: 21300000, guid: d26a5a5b0326b764087504cec5a5d37a, type: 3}
   material: {fileID: 0}
+  info: "\u2606 | \uCCB4\uB825, \uB9C8\uB098 \uD3EC\uC158 \uCD5C\uB300 \uAC2F\uC218
+    1\uAC1C \uCD94\uAC00"
