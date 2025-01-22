@@ -204,7 +204,7 @@ public class Player : MonoBehaviour
             }
             else
             {
-                Potion.Instance.NoPotion();
+                WarningMessage.Instance.NoPotion();
             }
         }
 
@@ -218,7 +218,7 @@ public class Player : MonoBehaviour
             }
             else
             {
-                Potion.Instance.NoPotion();
+                WarningMessage.Instance.NoPotion();
             }
         }
 
@@ -485,46 +485,52 @@ public class Player : MonoBehaviour
     void OnKeyboard() //키보드 입력 처리
     {
         //[Roll]
-        if (Input.GetKeyDown(KeySetting.keys[KeyAction.Space]) && !IsRolling && RollingCoolTime <= 0)
+        if (Input.GetKeyDown(KeySetting.keys[KeyAction.Space]))
         {
+            if(!IsRolling && RollingCoolTime <= 0)
+            { 
             //마우스 위치 구하기
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
-            //레이가 stage 레이어 오브젝트에 충돌했다면
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, stage))
+                //레이가 stage 레이어 오브젝트에 충돌했다면
+                if (Physics.Raycast(ray, out hit, Mathf.Infinity, stage))
+                {
+                    // 마우스 위치에서 현재 플레이어 위치까지의 방향 구하기
+                    Vector3 direction = (hit.point - transform.position).normalized;
+
+                    // 목표 위치를 현재 위치에서 RollingDistance만큼 이동한 지점으로 설정
+                    targetPosition = transform.position + direction * RollingDistance;
+
+                    // 바라볼 위치 지정 (y 값만 현재 플레이어의 y로 고정)
+                    Vector3 lookDirection = new Vector3(targetPosition.x, transform.position.y, targetPosition.z);
+
+
+                    //지정한 위치를 바라봄
+                    transform.LookAt(lookDirection);
+
+                    //구르기 상태 활성화
+                    IsRolling = true;
+
+                    //구르기 쿨타임 적용
+                    RollingCoolTime = 3f;
+
+                    //구르기 쿨 시간 UI에 쿨타임 표시
+                    RollCoolText.text = ((int)RollingCoolTime).ToString();
+
+                    //구르기 쿨 UI 활성화
+                    RollingCool.fillAmount = 1;
+
+                    //무적 부여
+                    StartCoroutine(PlayerHp.NoDamage(NoDamageTime));
+
+                    //현재 플레이어 상태를 Roll로 변경
+                    CurrentState = PlayerState.Roll;
+                }
+            }
+            else if (RollingCoolTime > 0f)
             {
-                // 마우스 위치에서 현재 플레이어 위치까지의 방향 구하기
-                Vector3 direction = (hit.point - transform.position).normalized;
-
-                // 목표 위치를 현재 위치에서 RollingDistance만큼 이동한 지점으로 설정
-                targetPosition = transform.position + direction * RollingDistance;
-
-                // 바라볼 위치 지정 (y 값만 현재 플레이어의 y로 고정)
-                Vector3 lookDirection = new Vector3(targetPosition.x, transform.position.y, targetPosition.z);
-
-
-                //지정한 위치를 바라봄
-                transform.LookAt(lookDirection);
-
-                //구르기 상태 활성화
-                IsRolling = true;
-
-                //구르기 쿨타임 적용
-                RollingCoolTime = 3f;
-
-                //구르기 쿨 시간 UI에 쿨타임 표시
-                RollCoolText.text = ((int)RollingCoolTime).ToString();
-
-                //구르기 쿨 UI 활성화
-                RollingCool.fillAmount = 1;
-
-                //무적 부여
-                StartCoroutine(PlayerHp.NoDamage(NoDamageTime));
-
-                //현재 플레이어 상태를 Roll로 변경
-                CurrentState = PlayerState.Roll;
-
+                WarningMessage.Instance.SkillCooling();
             }
         }
 
@@ -559,13 +565,13 @@ public class Player : MonoBehaviour
                 //Q 스킬 사용 불가 상태라면
                 else if (!Q.Instance.IsUsable)
                 {
-                    Debug.Log("아직 스킬을 쓸 수 없다는 메시지 띄우기");
+                    WarningMessage.Instance.SkillCooling();
                 }
 
                 //현재 Mp가 스킬 소모 Mp 미만이라면
                 else if (CurrentMp < Q.Instance.UseMp)
                 {
-                    Debug.Log("MP 부족 메시지 띄우기");
+                    WarningMessage.Instance.NoMp();
                 }
             }
         }
@@ -608,13 +614,13 @@ public class Player : MonoBehaviour
                 //W 스킬 사용 불가 상태라면
                 else if (!W.Instance.IsUsable)
                 {
-                    Debug.Log("아직 스킬을 쓸 수 없다는 메시지 띄우기");
+                    WarningMessage.Instance.SkillCooling();
                 }
 
                 //현재 Mp가 스킬 소모 Mp 미만이라면
                 else if (CurrentMp < W.Instance.UseMp)
                 {
-                    Debug.Log("MP 부족 메시지 띄우기");
+                    WarningMessage.Instance.NoMp();
                 }
             }
         }
@@ -652,13 +658,13 @@ public class Player : MonoBehaviour
                 //R 스킬 사용 불가 상태라면
                 else if (!R.Instance.IsUsable)
                 {
-                    Debug.Log("아직 스킬을 쓸 수 없다는 메시지 띄우기");
+                    WarningMessage.Instance.SkillCooling();
                 }
 
                 //현재 Mp가 스킬 소모 Mp 미만이라면
                 else if (CurrentMp < R.Instance.UseMp)
                 {
-                    Debug.Log("MP 부족 메시지 띄우기");
+                    WarningMessage.Instance.NoMp();
                 }
             }
 
@@ -698,13 +704,13 @@ public class Player : MonoBehaviour
                 //R 스킬 사용 불가 상태라면
                 else if (!R.Instance.IsUsable)
                 {
-                    Debug.Log("아직 스킬을 쓸 수 없다는 메시지 띄우기");
+                    WarningMessage.Instance.SkillCooling();
                 }
 
                 //현재 Mp가 스킬 소모 Mp 미만이라면
                 else if (CurrentMp < R.Instance.UseMp)
                 {
-                    Debug.Log("MP 부족 메시지 띄우기");
+                    WarningMessage.Instance.NoMp();
                 }
             }
         }

@@ -14,13 +14,13 @@ public class RollingUI : MonoBehaviour
 
     private void Start()
     {
-        //skillKey.text = $"{KeySetting.keys[KeyAction.Space]}";
-        
+        skillKey.text = $"{KeySetting.keys[KeyAction.Space]}";
+
     }
     public void PointerEnter()
     {
         explane.SetActive(true);
-        //skillKey.text = $"{KeySetting.keys[KeyAction.Space]}";
+        skillKey.text = $"{KeySetting.keys[KeyAction.Space]}";
         name.text = $"구르기 (쿨타임 3초)";
         description.text = $"마우스 커서 방향으로 재빠르게 굴러 이동한다. \n시전 중 무적.";
     }
