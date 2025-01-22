@@ -24,5 +24,6 @@ public class StatusEffect : ScriptableObject
     {
         Buff,
         Debuff,
+        Passive,
     }
 }
