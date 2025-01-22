@@ -5,8 +5,19 @@ using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+
+public enum SceneType
+{
+    UIScene,
+    PlayerTest,
+    SKW,
+    Other
+}
+
 public class AudioMixerController : MonoBehaviour
 {
+    
+    
     
     public static AudioMixerController Instance { get; private set; }
     
@@ -46,12 +57,10 @@ public class AudioMixerController : MonoBehaviour
         musicBGMSlider.onValueChanged.AddListener(SetMusicVolume);
         musicBoss1Slider.onValueChanged.AddListener(SetBoss1Volume);
         
+        //메인 메뉴에 해당하는 사운드 딕셔너리
+        //PLAYERTEST에 해당하는 딕셔너리 
         mClipsDictionary = new Dictionary<string, AudioClip>();
         pClipsDictionary = new Dictionary<string, AudioClip>();
-        // foreach (AudioClip clip in PlayerTestClips)
-        // {
-        //     pClipsDictionary.Add(clip.name, clip);
-        // }
         AddClip(MainMenuClips,mClipsDictionary);
         AddClip(PlayerTestClips,pClipsDictionary);
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -71,21 +80,38 @@ public class AudioMixerController : MonoBehaviour
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
     
+    
+    private SceneType GetSceneType(string sceneName)
+    {
+        return sceneName switch
+        {
+            "UIScene" => SceneType.UIScene,
+            "PlayerTest" => SceneType.PlayerTest,
+            "SKW" => SceneType.SKW,
+            _ => SceneType.Other,
+        };
+    }
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         Debug.Log($"씬 이름: {scene.name}, 로드 모드: {mode}");
-        
-        // 실행할 코드 추가
-        if (scene.name == "UIScene")
+
+        SceneType sceneType = GetSceneType(scene.name);
+
+        switch (sceneType)
         {
-            mAudioSource.Stop();
-            StartClip(mClipsDictionary,"Funky Chill 2 loop");
-        }else if (scene.name == "PlayerTest")
-        {
-            mAudioSource.Stop();
-            // StopClip("Funky Chill 2 loop");
-            StartClip(pClipsDictionary,"FA_Win_Jingle_Loop");
-            mAudioSource.loop = true;
+            case SceneType.UIScene:
+                mAudioSource.Stop();
+                StartClip(mClipsDictionary, "Funky Chill 2 loop");
+                break;
+
+            case SceneType.PlayerTest:
+                mAudioSource.Stop();
+                StartClip(pClipsDictionary, "FA_Win_Jingle_Loop");
+                mAudioSource.loop = true;
+                break;
+            case SceneType.Other:
+                // 다른 씬에 대한 처리
+                break;
         }
     }
 
@@ -110,18 +136,10 @@ public class AudioMixerController : MonoBehaviour
         mAudioSource.clip = clip;
         mAudioSource.Play();
     }
-
-    // public void StopClip(string clipName)
-    // {
-    //     AudioClip clip = GetClip(clipName);
-    //     if (clip == null) { return; }
-    //     mAudioSource.clip = clip;
-    //     mAudioSource.Stop();
-    // }
-
+    
     public void SetVolume(string musicname, float volume)
     {
-        audioMixer.SetFloat(musicname, Mathf.Log10(volume) * 20);
+        audioMixer.SetFloat(musicname, Mathf.Log10(volume) * 25);
         Debug.Log(musicname);
     }
     

@@ -25,6 +25,7 @@ AudioMixerGroupController:
   m_GroupID: 61f7f005a3f41344cb7383d5080fe215
   m_Children:
   - {fileID: -6504397312820506803}
+  - {fileID: 6759052943159751109}
   m_Volume: 2ce6fe748b2beb843a7c2eb284ba922c
   m_Pitch: 55da8bfaf1e1ccf4bb634bad9ead6d50
   m_Send: 00000000000000000000000000000000
@@ -100,6 +101,20 @@ AudioMixerEffectController:
   m_SendTarget: {fileID: 0}
   m_EnableWetMix: 0
   m_Bypass: 0
+--- !u!244 &-1249057561632953626
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: 1fe6cc6376a1e0e46b890585267bc18f
+  m_EffectName: Attenuation
+  m_MixLevel: 96aea6756aa4f034c931379ebe727d2c
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
 --- !u!241 &24100000
 AudioMixerController:
   m_ObjectHideFlags: 0
@@ -134,6 +149,7 @@ AudioMixerController:
     - 1f8b5b40d4156794a85b369a0c1ca695
     - 314d68825335c074982939b17be17c00
     - cffabe246a91b904a86dc7eb4d0a9d3a
+    - 6d60a5b6e31cef543bbb3bb5fc44effa
     name: View
   m_CurrentViewIndex: 0
   m_TargetSnapshot: {fileID: 24500006}
@@ -184,9 +200,12 @@ AudioMixerSnapshotController:
   m_AudioMixer: {fileID: 24100000}
   m_SnapshotID: 0d825ab15a479e242a95a4e7d7cb370f
   m_FloatValues:
-    2ce6fe748b2beb843a7c2eb284ba922c: 0
+    2ce6fe748b2beb843a7c2eb284ba922c: 0.22567981
+    ce745765a0972a345a0d5dbf5ba4ee3e: 0.13552584
+    b98fb8f63e6f95d4589026cf7f131994: 1
+    35e708171d3977349a1af42b4cc459ba: 0.44032478
     4944dda7de89c2e4f9016fb657e7e9a2: 0.025578512
-    6f09beef38be0d144b6718bb373465b6: 0.025578514
+    6f09beef38be0d144b6718bb373465b6: -0.037667945
   m_TransitionOverrides: {}
 --- !u!244 &3977534322756531168
 AudioMixerEffectController:
@@ -202,6 +221,25 @@ AudioMixerEffectController:
   m_SendTarget: {fileID: 0}
   m_EnableWetMix: 0
   m_Bypass: 0
+--- !u!243 &6759052943159751109
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: HorseShake
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: 6d60a5b6e31cef543bbb3bb5fc44effa
+  m_Children: []
+  m_Volume: 35e708171d3977349a1af42b4cc459ba
+  m_Pitch: 4ccf09f104e25d040ad27d39ffda7ead
+  m_Send: 00000000000000000000000000000000
+  m_Effects:
+  - {fileID: -1249057561632953626}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
 --- !u!243 &8404717900619131645
 AudioMixerGroupController:
   m_ObjectHideFlags: 0

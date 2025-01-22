@@ -6,9 +6,13 @@ public class LobbySceneManager : MonoBehaviour
 {
 
     
+    /*
+     * 1:SKW
+     * 2:PLAYERTEST
+     */
     public void StartGame()
     {
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(1);
     }
 
     public void OpenOption()
