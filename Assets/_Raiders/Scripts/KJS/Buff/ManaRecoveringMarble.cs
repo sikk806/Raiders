@@ -14,7 +14,7 @@ public class ManaRecoveringMarble : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            //other.GetComponent<BuffDebuff>().ManaRecovering(mamaRecoveringAmount, 5f);
+            other.GetComponent<BuffDebuff>().ManaRecovering(mamaRecoveringAmount, 100f);
             other.GetComponent<BuffDebuff>().EffectOn(gameObject);
             StopAllCoroutines();
             gameObject.SetActive(false);

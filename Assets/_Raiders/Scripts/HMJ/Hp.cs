@@ -10,9 +10,9 @@ public class Hp : MonoBehaviour
     public bool IsNoDamaged;
     public float Defence;
 
-
     [SerializeField]
     float MaxHp;
+
     [SerializeField]
     float CurrentHp;
     [SerializeField]
@@ -27,7 +27,6 @@ public class Hp : MonoBehaviour
             //hptext 인스펙터에서 참조하기 
             HpText.text = CurrentHp + "/" + MaxHp;
         }
-
     }
 
     public void HpHeal(float heal)
@@ -181,5 +180,11 @@ public class Hp : MonoBehaviour
         Player.Instance.CurrentState = PlayerState.Idle;
     }
 
-
+        // 2025-01-23
+    public void HealthPassiveOn(float amount)
+    {
+        MaxHp *= amount;
+        CurrentHp = MaxHp;
+        HpText.text = CurrentHp + "/" + MaxHp;
+    }
 }

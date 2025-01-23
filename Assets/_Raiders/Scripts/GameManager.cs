@@ -9,9 +9,11 @@ public class GameManager : MonoBehaviour
     InputManager input;
     public static InputManager Input { get { return Instance.input; } }
     SkillManager skill;
-    public static SkillManager Skill { get { return Instance.skill; } }
+    // 2025-01-23 static 제거
+    public SkillManager Skill { get { return Instance.skill; } }
 
     private float deathCount = 5;
+    public float DeathCount { get { return deathCount; } set { deathCount = value; }}
 
     private void Awake()
     {
