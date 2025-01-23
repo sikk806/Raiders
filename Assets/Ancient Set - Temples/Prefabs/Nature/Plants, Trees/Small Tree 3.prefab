@@ -149,13 +149,13 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Optimized Leaf Material
-  m_Shader: {fileID: -6465566751694194690, guid: 9920c1f1781549a46ba081a2a15a16ec, type: 3}
+  m_Shader: {fileID: 10605, guid: 0000000000000000f000000000000000, type: 0}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
+  m_ValidKeywords: []
+  m_InvalidKeywords:
   - BACKFACE_NORMAL_MODE_MIRROR
   - _WINDQUALITY_BEST
-  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -330,13 +330,13 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Optimized Bark Material
-  m_Shader: {fileID: -6465566751694194690, guid: 9920c1f1781549a46ba081a2a15a16ec, type: 3}
+  m_Shader: {fileID: 10604, guid: 0000000000000000f000000000000000, type: 0}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
+  m_ValidKeywords: []
+  m_InvalidKeywords:
   - BACKFACE_NORMAL_MODE_MIRROR
   - _WINDQUALITY_BEST
-  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -612,7 +612,7 @@ MonoBehaviour:
   m_Name: Tree Data
   m_EditorClassIdentifier: 
   _uniqueID: 916
-  materialHash: 40e19721c1c17e899179a10db5b38bdc6291456
+  materialHash: e6834485e7d80e0b4b6d9294c898e8d56291456
   root:
     _uniqueID: 1
     seed: 1234
@@ -718,13 +718,13 @@ MonoBehaviour:
       e01: 0
       e02: 0
       e03: 0
-      e10: -0
-      e11: 0.9975877
-      e12: 0.06941808
+      e10: 0
+      e11: 1
+      e12: 0
       e13: 0
       e20: 0
-      e21: -0.06941808
-      e22: 0.9975877
+      e21: 0
+      e22: 1
       e23: 0
       e30: 0
       e31: 0
@@ -1330,13 +1330,13 @@ MonoBehaviour:
       e01: 0
       e02: 0
       e03: 0
-      e10: -0
-      e11: 0.9975877
-      e12: 0.06941808
+      e10: 0
+      e11: 1
+      e12: 0
       e13: 0
       e20: 0
-      e21: -0.06941808
-      e22: 0.9975877
+      e21: 0
+      e22: 1
       e23: 0
       e30: 0
       e31: 0

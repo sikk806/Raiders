@@ -11,9 +11,6 @@ public class Potion : MonoBehaviour
     public TextMeshProUGUI HpPotionText; // HpPotion's text UI
     public TextMeshProUGUI MpPotionText; // MpPotion's text UI
 
-    [SerializeField]
-    GameObject NoPotionWarning;
-
     void Start()
     {
         Instance = this;
@@ -23,17 +20,6 @@ public class Potion : MonoBehaviour
 
         HpPotionText.text = HpPotion.ToString();
         MpPotionText.text = MpPotion.ToString();
-    }
-
-    public void NoPotion()
-    {
-        NoPotionWarning.SetActive(true);
-        Invoke("WarningClose",1.5f);
-    }
-
-    void WarningClose()
-    {
-        NoPotionWarning.SetActive(false);
     }
 
 }
