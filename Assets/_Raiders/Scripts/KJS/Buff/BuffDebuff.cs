@@ -111,35 +111,21 @@ public class BuffDebuff : MonoBehaviour
         GetComponent<Hp>().Defence = 1f;
     }
 
-    // Card Section
-    public void SelectCard(string cardName)
-    {
-        switch (cardName)
-        {
-            case "Berserker":
-                break;
-            case "Dedication":
-                break;
-            default:
-                Debug.Log("No name.");
-                break;
-        }
-    }
-
     public void PassiveOn(StatusEffect statusEffect)
     {
         GameObject go = new GameObject();
         go = Instantiate(passiveEffectUI, passiveParent);
         statusUI = go.GetComponent<Image>();
         statusUI.sprite = statusEffect.Sprite;
+        SendMessage(statusEffect.name);
     }
 
     // 광전사 - 받는 데미지 증가하지만 공격력 n% 증가
     public void Berserker()
     {
         originPower = GetComponent<Player>().Power;
-        GetComponent<Player>().Power *= 1.3f;
-        GetComponent<Hp>().Defence = 0.6f;
+        //GetComponent<Player>().Power *= 1.3f;
+        //GetComponent<Hp>().Defence = 0.6f;
     }
 
     // 일생일사 - 부활 1회로 변경하고 기본 공격력 n% 증가
@@ -158,40 +144,46 @@ public class BuffDebuff : MonoBehaviour
         // 스킬에 함수 추가가 필요.
     }
 
-    public void CoolDown()
+    // 쿨타임 감소
+    public void ReduceCoolTime()
     {
         // Skill static을 뺄 것.
         //GameManager.Instance.Skill.CoolExcel = amount;
     }
 
+    // 구르기 쿨타임 감소
     public void RollingCool()
     {
         // 플레이어의 구르기 쿨타임이 필요함.
     }
 
     // 기본 공격력 증가
-    public void PowerUp()
+    public void BasePowerUp()
     {
         originPower = GetComponent<Player>().Power;
         GetComponent<Player>().Power *= 1.1f;
     }
 
-    public void SpeedUp()
+    // 이속 증가
+    public void MoveSpeedUp()
     {
         GetComponent<Player>().MoveSpeed *= 1.1f;
     }
 
+    // 최대 체력 증가
     public void HealthUp()
     {
-        GetComponent<Player>().MaxHp *= 300f;
+        GetComponent<Player>().MaxHp *= 1.3f;
         GetComponent<Player>().CurrentHp = GetComponent<Player>().MaxHp;
     }
 
+    // 포션 개수 증가
     public void AddPotion()
     {
         // 포션 갯수가 어딨지
     }
 
+    // 1회 부활 추가
     public void OneMore()
     {
         // GameManager private 바꿀 것.

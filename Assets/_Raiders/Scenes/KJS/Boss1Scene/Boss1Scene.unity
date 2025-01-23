@@ -7253,6 +7253,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardParent: {fileID: 1989203392}
+  cardSelectPanel: {fileID: 1684273627}
   cardPrefab: {fileID: 8757512196525789808, guid: edf77bf00bb3c0747b664ffda20b7351, type: 3}
   cardEffects:
   - {fileID: 11400000, guid: ffcb7b9404f517d44992908f2701f392, type: 2}
@@ -7265,6 +7266,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fdb0b6b4a65c2ca41b64baf6806b080c, type: 2}
   - {fileID: 11400000, guid: 2896300d319d2e74fab2886b3dafc611, type: 2}
   - {fileID: 11400000, guid: dd1b568de60706749a4d27482f285d49, type: 2}
+  cardSelectCnt: 0
   onceL: 0
 --- !u!1 &968377019
 GameObject:
