@@ -16678,8 +16678,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HpHeal: 50
   MpHeal: 500
-  HpPotion: 0
-  MpPotion: 0
+  HpPotion: 5
+  MpPotion: 5
   HpPotionText: {fileID: 192697749}
   MpPotionText: {fileID: 83799225}
 --- !u!1 &2114317670

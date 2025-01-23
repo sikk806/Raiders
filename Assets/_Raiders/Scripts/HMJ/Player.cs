@@ -31,9 +31,12 @@ public class Player : MonoBehaviour
 
     public float MaxMp = 1000; //최대MP
     public float CurrentMp = 1000; //현재MP
+    public float ManaExcel = 1; // MP 가속
 
     public float Power = 100; //공격력
     public float AddedPower = 0; //추가 공격력
+
+    public bool IsDrainHp = false;
 
     private Vector3 targetPosition; //이동 목표
     private LayerMask stage; //지면 레이어마스크
@@ -49,7 +52,7 @@ public class Player : MonoBehaviour
 
 
     private bool IsRolling = false; //구르기 여부
-    private float RollingCoolTime; //구르기 쿨타임
+    public float RollingCoolTime; //구르기 쿨타임
     public Image RollingCool; //구르기 쿨타임 UI
     public TextMeshProUGUI RollCoolText; //구르기 쿨타임 시간UI
 
@@ -116,7 +119,7 @@ public class Player : MonoBehaviour
             yield return new WaitForSeconds(1f);
             if (CurrentMp < MaxMp)
             {
-                CurrentMp += 1f;
+                CurrentMp += 1f * ManaExcel;
                 CurrentMp = Mathf.Clamp(CurrentMp, 0f, MaxMp);
                 MpBar.fillAmount = CurrentMp / MaxMp;
                 MpText.text = CurrentMp + "/" + MaxMp;
@@ -713,6 +716,14 @@ public class Player : MonoBehaviour
                     WarningMessage.Instance.NoMp();
                 }
             }
+        }
+    }
+
+    public void DrainHp()
+    {
+        if(IsDrainHp)
+        {
+            GetComponent<Hp>().HpHeal(1f);
         }
     }
 }

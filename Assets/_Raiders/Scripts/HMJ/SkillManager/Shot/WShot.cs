@@ -42,6 +42,7 @@ public class WShot : MonoBehaviour
     {
         while (enemiesInRange.Contains(enemy))
         {
+            Player.Instance.DrainHp();
             enemy.TakeDamage(W.CalculatingDamage()); // 데미지 적용
             yield return new WaitForSeconds(1f); // 지정된 간격으로 데미지
         }

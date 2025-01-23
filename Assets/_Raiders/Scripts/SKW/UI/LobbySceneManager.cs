@@ -7,8 +7,10 @@ public class LobbySceneManager : MonoBehaviour
 
     
     /*
-     * 1:SKW
-     * 2:PLAYERTEST
+        0. MainScene
+        1. LobbyScene
+        2. Boss1Scene
+        3. Boss2Scene
      */
     public void StartGame()
     {

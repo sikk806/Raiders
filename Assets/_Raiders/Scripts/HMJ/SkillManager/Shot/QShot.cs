@@ -9,7 +9,7 @@ public class QShot : MonoBehaviour
         Debug.Log(other.name);
         if (other.CompareTag("Enemy") || other.CompareTag("Boss1") || other.CompareTag("Boss2"))
         {
-
+            Player.Instance.DrainHp();
             Hp enemy = other.GetComponent<Hp>();
             enemy.TakeDamage(Q.CalculatingDamage());
         }

@@ -14,7 +14,7 @@ public class AutoAttackShot : MonoBehaviour
     {
         if (other.CompareTag("Enemy") || other.CompareTag("Boss1") || other.CompareTag("Boss2"))
         {
-
+            Player.Instance.DrainHp();
             Hp enemy = other.GetComponent<Hp>();
             enemy.TakeDamage(AutoAttack.CalculatingDamage());
         }
