@@ -20,9 +20,14 @@ public class StatusEffect : ScriptableObject
     private Material material;
     public Material Material { get { return material; }}
 
+    [SerializeField]
+    private string info;
+    public string Info { get { return info; }}
+
     public enum StatusTypes
     {
         Buff,
         Debuff,
+        Passive,
     }
 }

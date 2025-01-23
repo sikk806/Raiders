@@ -6,21 +6,32 @@ using UnityEngine.UI;
 public class BuffDebuff : MonoBehaviour
 {
     [SerializeField] Transform buffParent;
+    [SerializeField] Transform debuffParent;
+    [SerializeField] Transform passiveParent;
     [SerializeField] GameObject statusEffectUI;
+    [SerializeField] GameObject passiveEffectUI;
     Image statusUI;
-    Color matUI;
 
+    float originPower;
     float amountPowerUp = 0f;
     float originMoveSpeed;
 
     // StatusEffect UI
-    public void EffectOn(GameObject Marble)
+    public void EffectOn(GameObject SE)
     {
-        GameObject go = Instantiate(statusEffectUI, buffParent);
-        matUI = go.transform.Find("MatUI").GetComponent<Image>().color;
+        GameObject go = new GameObject();
+        if (SE.GetComponent<Marble>().statusEffect.StatusType == StatusEffect.StatusTypes.Buff)
+        {
+            go = Instantiate(statusEffectUI, buffParent);
+            go.transform.Find("MatUI").GetComponent<Image>().color = Color.green;
+        }
+        else if (SE.GetComponent<Marble>().statusEffect.StatusType == StatusEffect.StatusTypes.Debuff)
+        {
+            go = Instantiate(statusEffectUI, debuffParent);
+            go.transform.Find("MatUI").GetComponent<Image>().color = Color.red;
+        }
         statusUI = go.GetComponent<Image>();
-        statusUI.sprite = Marble.GetComponent<Marble>().statusEffect.Sprite;
-        matUI = Color.blue;
+        statusUI.sprite = SE.GetComponent<Marble>().statusEffect.Sprite;
 
         StartCoroutine("EffectOff", go);
     }
@@ -63,14 +74,14 @@ public class BuffDebuff : MonoBehaviour
     // Mana Recovering Scetion
     public void ManaRecovering(float amount, float buffTime)
     {
-        //GetComponent<MP>().ManaExcel = amount;
+        //GetComponent<Mp>().ManaExcel = amount;
         StartCoroutine("DeactiveManaRecovering", buffTime);
     }
 
     IEnumerator DeactiveManaRecovering(float buffTime)
     {
         yield return new WaitForSeconds(buffTime);
-        //GetComponent<MP>().ManaExcel = 1f;
+        //GetComponent<Mp>().ManaExcel = 1f;
     }
 
     // Speed Up Section
@@ -90,13 +101,91 @@ public class BuffDebuff : MonoBehaviour
     // Defence Section
     public void Defence(float amount, float buffTime)
     {
-        //GetComponent<HP>().Defence = amount;
+        GetComponent<Hp>().Defence = amount;
         StartCoroutine("DeactiveDefence", buffTime);
     }
 
     IEnumerator DeactiveDefence(float buffTime)
     {
         yield return new WaitForSeconds(buffTime);
-        //GetComponent<HP>().Defence = 1f;
+        GetComponent<Hp>().Defence = 1f;
+    }
+
+    public void PassiveOn(StatusEffect statusEffect)
+    {
+        GameObject go = new GameObject();
+        go = Instantiate(passiveEffectUI, passiveParent);
+        statusUI = go.GetComponent<Image>();
+        statusUI.sprite = statusEffect.Sprite;
+        SendMessage(statusEffect.name);
+    }
+
+    // 광전사 - 받는 데미지 증가하지만 공격력 n% 증가
+    public void Berserker()
+    {
+        originPower = GetComponent<Player>().Power;
+        //GetComponent<Player>().Power *= 1.3f;
+        //GetComponent<Hp>().Defence = 0.6f;
+    }
+
+    // 일생일사 - 부활 1회로 변경하고 기본 공격력 n% 증가
+    // GameManager 수정 안되었을 때 작업할 것.
+    // 1. GameManager 에서 부활 횟수를 1회로 줄이기 위해 public 을 만들어야한다.
+    public void Dedication()
+    {
+        // GameManger.Instance.deathCount = 1;
+        originPower = GetComponent<Player>().Power;
+        GetComponent<Player>().Power *= 1.5f;
+    }
+
+    // 흡혈 - 타격 시 체력 회복
+    public void DrainHp()
+    {
+        // 스킬에 함수 추가가 필요.
+    }
+
+    // 쿨타임 감소
+    public void ReduceCoolTime()
+    {
+        // Skill static을 뺄 것.
+        //GameManager.Instance.Skill.CoolExcel = amount;
+    }
+
+    // 구르기 쿨타임 감소
+    public void RollingCool()
+    {
+        // 플레이어의 구르기 쿨타임이 필요함.
+    }
+
+    // 기본 공격력 증가
+    public void BasePowerUp()
+    {
+        originPower = GetComponent<Player>().Power;
+        GetComponent<Player>().Power *= 1.1f;
+    }
+
+    // 이속 증가
+    public void MoveSpeedUp()
+    {
+        GetComponent<Player>().MoveSpeed *= 1.1f;
+    }
+
+    // 최대 체력 증가
+    public void HealthUp()
+    {
+        GetComponent<Player>().MaxHp *= 1.3f;
+        GetComponent<Player>().CurrentHp = GetComponent<Player>().MaxHp;
+    }
+
+    // 포션 개수 증가
+    public void AddPotion()
+    {
+        // 포션 갯수가 어딨지
+    }
+
+    // 1회 부활 추가
+    public void OneMore()
+    {
+        // GameManager private 바꿀 것.
     }
 }
