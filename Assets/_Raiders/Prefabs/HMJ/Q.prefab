@@ -4091,7 +4091,7 @@ ParticleSystem:
     radiusScale: 1
     collidesWith:
       serializedVersion: 2
-      m_Bits: 1024
+      m_Bits: 3328
     maxCollisionShapes: 256
     quality: 0
     voxelSize: 0.5
@@ -29972,9 +29972,21 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7966346198127114377, guid: 77ed292e37dcf0249b7b4d124e9b7adf, type: 3}
+      propertyPath: TriggerModule.enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7966346198127114377, guid: 77ed292e37dcf0249b7b4d124e9b7adf, type: 3}
       propertyPath: CollisionModule.enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7966346198127114377, guid: 77ed292e37dcf0249b7b4d124e9b7adf, type: 3}
+      propertyPath: CollisionModule.collidesWith.m_Bits
+      value: 3328
+      objectReference: {fileID: 0}
+    - target: {fileID: 7966346198127114377, guid: 77ed292e37dcf0249b7b4d124e9b7adf, type: 3}
+      propertyPath: 'TriggerModule.primitives.Array.data[0]'
+      value: 
+      objectReference: {fileID: 873582003453723756}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
