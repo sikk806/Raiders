@@ -10611,25 +10611,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6146818866889056191, guid: b70768d832f23824b80d8374e9f4a6dd, type: 3}
   m_PrefabInstance: {fileID: 1601557481}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1356170854
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1356170853}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ef210064a14eca4eafcc78bcb982901, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Barrier: 0
-  IsNoDamaged: 0
-  Defence: 0
-  MaxHp: 100
-  CurrentHp: 100
-  HpBar: {fileID: 1280863120}
-  HpText: {fileID: 1657252916}
 --- !u!1 &1357339577
 GameObject:
   m_ObjectHideFlags: 0
@@ -12967,25 +12948,13 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 945013876654104369, guid: b70768d832f23824b80d8374e9f4a6dd, type: 3}
-      propertyPath: HpBar
-      value: 
-      objectReference: {fileID: 1280863120}
-    - target: {fileID: 945013876654104369, guid: b70768d832f23824b80d8374e9f4a6dd, type: 3}
       propertyPath: MpBar
       value: 
       objectReference: {fileID: 1314079214}
     - target: {fileID: 945013876654104369, guid: b70768d832f23824b80d8374e9f4a6dd, type: 3}
-      propertyPath: HpText
-      value: 
-      objectReference: {fileID: 1657252916}
-    - target: {fileID: 945013876654104369, guid: b70768d832f23824b80d8374e9f4a6dd, type: 3}
       propertyPath: MpText
       value: 
       objectReference: {fileID: 1135084618}
-    - target: {fileID: 945013876654104369, guid: b70768d832f23824b80d8374e9f4a6dd, type: 3}
-      propertyPath: animator
-      value: 
-      objectReference: {fileID: 1601557482}
     - target: {fileID: 945013876654104369, guid: b70768d832f23824b80d8374e9f4a6dd, type: 3}
       propertyPath: RollingCool
       value: 
@@ -13038,19 +13007,19 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6784531472658220272, guid: b70768d832f23824b80d8374e9f4a6dd, type: 3}
+      propertyPath: HpBar
+      value: 
+      objectReference: {fileID: 1280863120}
+    - target: {fileID: 6784531472658220272, guid: b70768d832f23824b80d8374e9f4a6dd, type: 3}
+      propertyPath: HpText
+      value: 
+      objectReference: {fileID: 1657252916}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 6146818866889056191, guid: b70768d832f23824b80d8374e9f4a6dd, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1356170854}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b70768d832f23824b80d8374e9f4a6dd, type: 3}
---- !u!95 &1601557482 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 641234396084100991, guid: b70768d832f23824b80d8374e9f4a6dd, type: 3}
-  m_PrefabInstance: {fileID: 1601557481}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1601769400
 GameObject:
   m_ObjectHideFlags: 0
