@@ -8,16 +8,15 @@ using UnityEngine.UI;
 
 public enum SceneType
 {
-    UIScene,
-    PlayerTest,
-    SKW,
+    MainScene,
+    LobbyScene,
+    Boss1Scene,
+    Boss2Scene,
     Other
 }
 
 public class AudioMixerController : MonoBehaviour
 {
-    
-    
     
     public static AudioMixerController Instance { get; private set; }
     
@@ -85,9 +84,10 @@ public class AudioMixerController : MonoBehaviour
     {
         return sceneName switch
         {
-            "UIScene" => SceneType.UIScene,
-            "PlayerTest" => SceneType.PlayerTest,
-            "SKW" => SceneType.SKW,
+            "MainScene" => SceneType.MainScene,
+            "LobbyScene" => SceneType.LobbyScene,
+            "Boss1Scene" => SceneType.Boss1Scene,
+            "Boss2Scene" => SceneType.Boss2Scene,
             _ => SceneType.Other,
         };
     }
@@ -99,18 +99,23 @@ public class AudioMixerController : MonoBehaviour
 
         switch (sceneType)
         {
-            case SceneType.UIScene:
+            case SceneType.MainScene:
                 mAudioSource.Stop();
                 StartClip(mClipsDictionary, "Funky Chill 2 loop");
                 break;
 
-            case SceneType.PlayerTest:
+            case SceneType.LobbyScene:
+                Debug.Log("소리 넣을꺼 확인");
+                break;
+            case SceneType.Boss1Scene:
                 mAudioSource.Stop();
                 StartClip(pClipsDictionary, "FA_Win_Jingle_Loop");
                 mAudioSource.loop = true;
-                break;
-            case SceneType.Other:
                 // 다른 씬에 대한 처리
+                break;
+            case SceneType.Boss2Scene:
+                // 다른 씬에 대한 처리
+                Debug.Log("소리 넣을꺼 확인");
                 break;
         }
     }

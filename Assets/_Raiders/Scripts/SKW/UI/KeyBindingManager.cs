@@ -22,9 +22,10 @@ public static class KeySetting
 
 public class KeyBindingManager : MonoBehaviour
 {
+    //싱글턴 만들기
     public static KeyBindingManager Instance { get; private set; }
-    
-    
+    public Action<string> OnDuplicateKeyAlert;
+    //기보니 정의
     private KeyCode[] defaultKeys = new KeyCode[]
         { KeyCode.Q, KeyCode.W, KeyCode.E, KeyCode.R,KeyCode.Space, };
 
@@ -51,15 +52,42 @@ public class KeyBindingManager : MonoBehaviour
     //키 입력 등의 이벤트가 발생할 때 호출됨
     private void OnGUI()
     {
-        Event KeyEvent = Event.current;
+        if (key == -1) return;
 
-        //눌렸는지 안눌렸는 지 확인법
-        if (KeyEvent.isKey)
+        Event keyEvent = Event.current;
+
+        if (keyEvent.isKey)
         {
-            KeySetting.keys[(KeyAction)key] = KeyEvent.keyCode;
+            KeyCode newKey = keyEvent.keyCode;
+
+            // 키 중복 확인
+            if (IsDuplicateKey(newKey))
+            {
+                OnDuplicateKeyAlert?.Invoke($"키 '{newKey}'는 이미 사용 중입니다!"); // 중복 알림
+                key = -1;
+                return;
+            }
+
+            // 키 변경 처리
+            KeySetting.keys[(KeyAction)key] = newKey;
+            OnDuplicateKeyAlert?.Invoke($"키 '{newKey}'로 변경 완료!"); // 변경 성공 메시지
             key = -1;
         }
     }
+    
+    // 키 중복 여부 확인
+    private bool IsDuplicateKey(KeyCode keyCode)
+    {
+        foreach (var key in KeySetting.keys.Values)
+        {
+            if (key == keyCode)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     private int key = -1;
     public void ChageKeys(int num)
