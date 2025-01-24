@@ -8,9 +8,14 @@ public class Beam : MonoBehaviour
         StartCoroutine("Deactive");
     }
 
+    void OnDisable()
+    {
+        gameObject.SetActive(false);
+    }
+
     IEnumerator Deactive()
     {
-        yield return new WaitForSeconds(1.9f);
+        yield return new WaitForSeconds(1.75f);
         gameObject.SetActive(false);
     }
 
@@ -18,7 +23,7 @@ public class Beam : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            Debug.Log("Damaged");
+            other.GetComponent<Hp>().TakeDamage(0.1f);
         }
     }
 }
