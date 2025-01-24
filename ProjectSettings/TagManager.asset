@@ -10,6 +10,8 @@ TagManager:
   - PlayerAttack
   - Boss1
   - Boss2
+  - Barrier
+  - Sphere
   layers:
   - Default
   - TransparentFX

@@ -45,6 +45,7 @@ public class Hp : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
+        //1이 100퍼   0이 되면 데미지가 x
         damage *= (1f - Defence);
         if (IsNoDamaged) { return; }
         else if (Barrier > 0f)
