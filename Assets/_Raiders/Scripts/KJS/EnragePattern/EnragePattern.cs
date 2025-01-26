@@ -14,6 +14,7 @@ public class EnragePattern : MonoBehaviour
 
     public GameObject Beams;
     public GameObject Shelter;
+    public bool IsSafe;
 
     float currentTime;
     float decalValue;
@@ -26,9 +27,13 @@ public class EnragePattern : MonoBehaviour
     List<GameObject> beams2;
     List<GameObject> beams3;
     List<GameObject> beams4;
+    List<GameObject> beams5;
+    List<GameObject> beams6;
+
+    List<GameObject> Shelters;
 
 
-    void OnEnable()
+    private void Start()
     {
         currentTime = 0f;
         decalValue = 0f;
@@ -37,30 +42,32 @@ public class EnragePattern : MonoBehaviour
         beams2 = new List<GameObject>();
         beams3 = new List<GameObject>();
         beams4 = new List<GameObject>();
+        beams5 = new List<GameObject>();
+        beams6 = new List<GameObject>();
 
-        for (int i = 0; i < 4; i++)
+
+        for (int i = 0; i < 6; i++)
         {
             float angle = 7.5f * i;
 
-            for (int j = 0; j < 12; j++)
+            for (int j = 0; j < 8; j++)
             {
                 GameObject ob = Instantiate(Beams, transform);
-                angle += 30;
-                float angleRad = angle * Mathf.Deg2Rad;
+                angle += 45;
 
                 Quaternion rotation = Quaternion.Euler(0, angle, 0);
                 ob.transform.rotation = rotation;
-                ob.transform.position += ob.transform.forward;
 
                 ob.SetActive(false);
                 if (i == 0) beams1.Add(ob);
                 else if (i == 1) beams2.Add(ob);
                 else if (i == 2) beams3.Add(ob);
                 else if (i == 3) beams4.Add(ob);
+                else if (i == 4) beams5.Add(ob);
+                else if (i == 5) beams6.Add(ob);
             }
         }
 
-        //for(int i = 0; i < 6; i++)
 
         var projector = decal.GetComponent<DecalProjector>();
         decalMaterial = new Material(projector.material);
@@ -70,9 +77,25 @@ public class EnragePattern : MonoBehaviour
         impact.GetComponent<SphereCollider>().enabled = false;
         doOnce = false;
         decalOn = false;
+        IsSafe = false;
 
+        impact.GetComponent<SphereCollider>().enabled = false;
         impact.SetActive(false);
 
+        for (int i = 0; i < 8; i++)
+        {
+            GameObject ob = Instantiate(Shelter, transform);
+            float angle = (45 * i) + 22.5f;
+
+            Quaternion rotation = Quaternion.Euler(0, angle, 0);
+            ob.transform.rotation = rotation;
+            ob.transform.position = transform.position - ob.transform.forward * 12f;
+            //ob.SetActive(false);
+        }
+    }
+
+    void OnEnable()
+    {
         StartCoroutine("LaserBeam");
         StartCoroutine("Impact");
     }
@@ -80,7 +103,7 @@ public class EnragePattern : MonoBehaviour
     void Update()
     {
         currentTime += Time.deltaTime;
-        if(decalOn)
+        if (decalOn)
         {
             decalValue = Mathf.Lerp(0.01f, 0.5f, currentTime);
             decalValue = Mathf.Clamp(decalValue, 0.01f, 0.5f);
@@ -97,30 +120,44 @@ public class EnragePattern : MonoBehaviour
         while (cnt < 16)
         {
             yield return new WaitForSeconds(1f);
-            if (cnt % 4 == 0)
+            if (cnt % 6 == 0)
             {
                 foreach (GameObject go in beams1)
                 {
                     go.SetActive(true);
                 }
             }
-            else if (cnt % 4 == 1)
+            else if (cnt % 6 == 1)
             {
                 foreach (GameObject go in beams2)
                 {
                     go.SetActive(true);
                 }
             }
-            else if (cnt % 4 == 2)
+            else if (cnt % 6 == 2)
             {
                 foreach (GameObject go in beams3)
                 {
                     go.SetActive(true);
                 }
             }
-            else if (cnt % 4 == 3)
+            else if (cnt % 6 == 3)
             {
                 foreach (GameObject go in beams4)
+                {
+                    go.SetActive(true);
+                }
+            }
+            else if (cnt % 6 == 4)
+            {
+                foreach (GameObject go in beams5)
+                {
+                    go.SetActive(true);
+                }
+            }
+            else if (cnt % 6 == 5)
+            {
+                foreach (GameObject go in beams6)
                 {
                     go.SetActive(true);
                 }
@@ -148,9 +185,16 @@ public class EnragePattern : MonoBehaviour
             // decal이 비활성화 되면
             decalMaterial.SetFloat("_DecalRad", 0.01f);
             decal.SetActive(false);
-
-            // 데미지가 들어오고
             impact.SetActive(true);
+            if (!IsSafe)
+            {
+                // 데미지가 들어오고
+                impact.GetComponent<SphereCollider>().enabled = true;
+            }
+            else
+            {
+                impact.GetComponent<SphereCollider>().enabled = false;
+            }
             yield return new WaitForSeconds(1f);
 
             // 1초 후에 데미지가 꺼지고
@@ -160,5 +204,6 @@ public class EnragePattern : MonoBehaviour
             cnt++;
         }
         decalOn = false;
+        gameObject.SetActive(false);
     }
 }
