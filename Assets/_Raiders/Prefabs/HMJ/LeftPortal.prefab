@@ -44005,8 +44005,9 @@ GameObject:
   - component: {fileID: 798731400473974015}
   - component: {fileID: 6986975804177667599}
   - component: {fileID: 3474889800716758004}
+  - component: {fileID: 7228404214881500510}
   m_Layer: 0
-  m_Name: Boss1Portal
+  m_Name: LeftPortal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48847,6 +48848,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6434a96d1b47cce4299e732718fa06a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Popup: {fileID: 0}
+  PopupText: {fileID: 0}
+--- !u!65 &7228404214881500510
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5936862908135114226}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.9482403, y: 2.0988002, z: 1.2043133}
+  m_Center: {x: -0.055649757, y: 1.0493901, z: 0.027091026}
 --- !u!1 &5953152646389396236
 GameObject:
   m_ObjectHideFlags: 0
