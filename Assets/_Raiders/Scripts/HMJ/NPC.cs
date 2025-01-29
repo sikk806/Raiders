@@ -29,13 +29,24 @@ public class NPC : MonoBehaviour
         {
             isTriggered = false;
         }
+
     }
 
     private void Update()
     {
         if (isTriggered && !messageBox.activeSelf && Input.GetKeyDown(KeyCode.F))
         {
-            StartCoroutine(ShowMessageSequence());
+            if (CardSelect.instance.cardSelectCnt != 0)
+            {
+                StartCoroutine(ShowMessageSequence());
+            }
+        }
+
+        if (CardSelect.instance.cardSelectCnt == 0)
+        {
+            Player.Instance.BringBackControl();
+            messageBox.SetActive(false);
+
         }
     }
 
@@ -53,5 +64,4 @@ public class NPC : MonoBehaviour
         messageText.text = "카드를 선택해주세요.";
         cardSelect.SetActive(true);
     }
-
 }

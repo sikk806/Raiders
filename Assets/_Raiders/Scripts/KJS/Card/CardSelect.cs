@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class CardSelect : MonoBehaviour
 {
+    public static CardSelect instance;
+
     [SerializeField] Transform cardParent;
     [SerializeField] GameObject cardSelectPanel;
     [SerializeField] GameObject cardPrefab;
@@ -38,6 +40,7 @@ public class CardSelect : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        instance = this;
         usableCardSets = new List<StatusEffect>();
 
         cardSelectCnt = 3;

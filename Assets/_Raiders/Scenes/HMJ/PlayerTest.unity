@@ -13445,7 +13445,9 @@ PrefabInstance:
       propertyPath: HpText
       value: 
       objectReference: {fileID: 1657252916}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1615058756330260283, guid: b70768d832f23824b80d8374e9f4a6dd, type: 3}
+    - {fileID: 79379219803383918, guid: b70768d832f23824b80d8374e9f4a6dd, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
