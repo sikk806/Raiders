@@ -238,5 +238,16 @@ public class CardSelect : MonoBehaviour
         middleCard.GetComponent<Card>().ButtonDisable();
         rightCard.GetComponent<Card>().ButtonDisable();
         GetComponent<BuffDebuff>().PassiveOn(statusEffect);
+        if(statusEffect.name == "Berserker" || statusEffect.name == "Dedication" || statusEffect.name == "DrainHp")
+        {
+            foreach(var usableCard in usableCardSets)
+            {
+                if(usableCard.name == statusEffect.name)
+                {
+                    usableCardSets.Remove(usableCard);
+                    return;
+                }
+            }
+        }
     }
 }
