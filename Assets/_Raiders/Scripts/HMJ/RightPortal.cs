@@ -9,9 +9,11 @@ public class RightPortal : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Popup.SetActive(true);
-        Player.Instance.TakeControl();
-    
+        if (other.CompareTag("Player"))
+        {
+            Popup.SetActive(true);
+            Player.Instance.TakeControl();
+        }
     }
     public void OnButtonPressed()
     {
