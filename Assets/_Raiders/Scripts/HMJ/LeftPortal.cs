@@ -15,8 +15,7 @@ public class LeftPortal : MonoBehaviour
 
     public void OnEnterPressed()
     {
-        Debug.Log("Please check scene name");
-        SceneManager.LoadScene("");
+        SceneManager.LoadScene("Boss1Scene");
     }
 
     public void OnExitPressed()
