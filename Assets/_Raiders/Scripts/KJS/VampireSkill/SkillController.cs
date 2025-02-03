@@ -50,4 +50,19 @@ public class SkillController : MonoBehaviour
 
         }
     }
+
+    public void StartEnragePattern()
+    {
+        StartCoroutine("EnragePattern");
+    }
+
+    IEnumerator EnragePattern()
+    {
+        GameObject EP = SkillObjectPool.GetObject("EnragePattern");
+        EP.transform.position = new Vector3(-1.57f, 2f, -2.19f);
+
+        yield return new WaitForSeconds(23.0f);
+        GetComponent<Animator>().SetTrigger("CastingEnd");
+
+    }
 }

@@ -10,11 +10,15 @@ public class Hp : MonoBehaviour
     public bool IsNoDamaged;
     public float Defence;
 
+    // 처음에 대문자로 변수가 적혀있어서 public을 소문자로 함. (VSC에서는 명명 규칙 위반이라지만 내맴)
     [SerializeField]
-    float MaxHp;
+    private float MaxHp;
+    public float maxHp { get { return MaxHp; } set { MaxHp = value; }}
 
     [SerializeField]
     float CurrentHp;
+    public float currentHp { get { return CurrentHp; } set { CurrentHp = value; }}
+
     [SerializeField]
     Image HpBar;
     [SerializeField]

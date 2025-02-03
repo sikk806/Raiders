@@ -24,11 +24,13 @@ public class BehaviourAI : MonoBehaviour
     BehaviourTreeRunner locomotionBT; // For Locomotion
     BehaviourTreeRunner attackBT; // For Attack
     Animator animator;
+    Vector3 OriginPosition;
 
     float movementSpeedRatio;
     int patternNumber;
     bool animFinish;
     bool switchingClip;
+    bool pattern1Done;
 
     void Start()
     {
@@ -40,6 +42,9 @@ public class BehaviourAI : MonoBehaviour
         patternNumber = Random.Range(testSkillStart, testSkillEnd);
         animFinish = false;
         switchingClip = false;
+        pattern1Done = false;
+
+        OriginPosition = transform.position;
     }
 
     void Update()
@@ -88,6 +93,7 @@ public class BehaviourAI : MonoBehaviour
                         new SelectorNode(
                             new List<INode>()
                             {
+                                new ActionNode(EnragePattern),
                                 new ActionNode(Attack0),
                                 new ActionNode(Attack1),
                                 new ActionNode(Attack2),
@@ -171,6 +177,28 @@ public class BehaviourAI : MonoBehaviour
         animator.SetTrigger("IdleWalk");
 
         return NodeState.Success;
+    }
+
+    // 히든 패턴1
+    NodeState EnragePattern()
+    {
+        float HP = GetComponent<Hp>().currentHp;
+        float MaxHP = GetComponent<Hp>().maxHp;
+
+        if (HP / MaxHP * 100 < 50 && !pattern1Done)
+        {
+            if (!switchingClip)
+            {
+                pattern1Done = true;
+                switchingClip = true;
+                transform.position = OriginPosition;
+                transform.rotation = Quaternion.identity;
+                animator.SetTrigger("Casting");
+            }
+
+            return NodeState.Success;
+        }
+        return NodeState.Failure;
     }
 
     // 장판이 플레이어 바닥에 생기는 기술
@@ -264,7 +292,6 @@ public class BehaviourAI : MonoBehaviour
             Debug.Log("Attack5");
             return NodeState.Success;
         }
-
         return NodeState.Failure;
     }
 

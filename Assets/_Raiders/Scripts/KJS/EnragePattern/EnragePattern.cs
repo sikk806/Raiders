@@ -98,6 +98,7 @@ public class EnragePattern : MonoBehaviour
     {
         StartCoroutine("LaserBeam");
         StartCoroutine("Impact");
+        
     }
 
     void Update()
