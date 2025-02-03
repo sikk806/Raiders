@@ -8,6 +8,7 @@ public class EnragePattern : MonoBehaviour
 {
     [SerializeField] float impactTime;
     [SerializeField] float damage;
+    public float Damage { get { return damage; } set { damage = value; }}
 
     [SerializeField] GameObject impact;
     [SerializeField] GameObject decal;

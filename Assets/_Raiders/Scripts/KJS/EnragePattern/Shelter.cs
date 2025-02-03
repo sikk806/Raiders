@@ -3,10 +3,13 @@ using UnityEngine;
 
 public class Shelter : MonoBehaviour
 {
+    float OriginDamage = 0;
+    EnragePattern EP;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        EP = GetComponentInParent<EnragePattern>();
+        OriginDamage = EP.Damage;
     }
 
     // Update is called once per frame
@@ -19,11 +22,10 @@ public class Shelter : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            EnragePattern ep = GetComponentInParent<EnragePattern>();
-            if (ep != null)
+            if (EP != null)
             {
                 Debug.Log("Safe..!!!");
-                ep.IsSafe = true;
+                EP.Damage = 0f;
             }
             else
             {
@@ -35,10 +37,9 @@ public class Shelter : MonoBehaviour
     {
         if(other.gameObject.tag == "Player")
         {
-            EnragePattern ep = GetComponentInParent<EnragePattern>();
-            if (ep != null)
+            if (EP != null)
             {
-                ep.IsSafe = false;
+                EP.Damage = OriginDamage;
             }
             else
             {

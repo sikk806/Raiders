@@ -14834,7 +14834,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   impactTime: 0
-  damage: 0
+  damage: 50000
   impact: {fileID: 2378823269373696629}
   decal: {fileID: 4531636774679629590}
   Beams: {fileID: 6988836244476611451, guid: e3e93164212e64949b6fab709d77f690, type: 3}

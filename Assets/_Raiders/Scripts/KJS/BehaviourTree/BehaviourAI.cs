@@ -1,8 +1,11 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.Design.Serialization;
+using TMPro;
 using UnityEditor.Experimental.GraphView;
 using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class BehaviourAI : MonoBehaviour
 {
@@ -10,6 +13,9 @@ public class BehaviourAI : MonoBehaviour
     {
         Locomotion,
         Attack,
+        Gimmik,
+        Death,
+        Clear
     }
 
     public GameObject TargetPlayer;
@@ -18,14 +24,18 @@ public class BehaviourAI : MonoBehaviour
     [SerializeField] float searchBoundary; // 탐색 반경
     [SerializeField] BossState bossState;
 
+    [SerializeField] TMP_Text alertText;
+    [SerializeField] GameObject alertObject;
+
     [SerializeField] int testSkillStart;
     [SerializeField] int testSkillEnd;
 
+    Animator animator;
     BehaviourTreeRunner locomotionBT; // For Locomotion
     BehaviourTreeRunner attackBT; // For Attack
-    Animator animator;
     Vector3 OriginPosition;
 
+    float patternHeight;
     float movementSpeedRatio;
     int patternNumber;
     bool animFinish;
@@ -45,6 +55,9 @@ public class BehaviourAI : MonoBehaviour
         pattern1Done = false;
 
         OriginPosition = transform.position;
+        patternHeight = OriginPosition.y + 6f;
+
+        alertObject.SetActive(false);
     }
 
     void Update()
@@ -53,6 +66,11 @@ public class BehaviourAI : MonoBehaviour
             locomotionBT.Operate();
         else if (bossState == BossState.Attack)
             attackBT.Operate();
+        else if (bossState == BossState.Gimmik) { }
+        else if (bossState == BossState.Death)
+        {
+            // 시간 느리게...
+        }
     }
 
     // Init LocomotionBT
@@ -89,7 +107,6 @@ public class BehaviourAI : MonoBehaviour
                 new SelectorNode(
                     new List<INode>()
                     {
-                        new ActionNode(CheckWithLog),
                         new SelectorNode(
                             new List<INode>()
                             {
@@ -112,9 +129,12 @@ public class BehaviourAI : MonoBehaviour
         return root;
     }
 
-    NodeState CheckWithLog()
+    NodeState CheckPattern()
     {
-
+        // if (patternNumber == -1)
+        // {
+        //     patternNumber = Random.Range(0, 5);
+        // }
         return NodeState.Failure;
     }
 
@@ -189,11 +209,15 @@ public class BehaviourAI : MonoBehaviour
         {
             if (!switchingClip)
             {
+                alertText.text = "곧 마기방출이 시작됩니다.\n폭발에 대비하세요.";
+                alertObject.SetActive(true);
+                StartCoroutine("AlertOff");
+                StartCoroutine("StartPattern");
+                GetComponent<Hp>().Defence = 1f;
                 pattern1Done = true;
                 switchingClip = true;
-                transform.position = OriginPosition;
-                transform.rotation = Quaternion.identity;
                 animator.SetTrigger("Casting");
+                bossState = BossState.Gimmik;
             }
 
             return NodeState.Success;
@@ -295,12 +319,52 @@ public class BehaviourAI : MonoBehaviour
         return NodeState.Failure;
     }
 
+    IEnumerator AlertOff()
+    {
+        yield return new WaitForSeconds(3f);
+        alertObject.SetActive(false);
+    }
+
     // 애니메이션이 끝나는 순간 애니메이션 컨트롤러의 웨이트를 바꿔주기 위한 함수
     public void OnAnimationFinished()
     {
         animFinish = true;
         switchingClip = false;
         patternNumber = -1;
+    }
+
+    IEnumerator StartPattern()
+    {
+        // 패턴 시작 전 공중으로 상승
+        float targetHeight = transform.position.y + 20f;
+        while (transform.position.y < targetHeight - 5f)
+        {
+            transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x, targetHeight, transform.position.z), 0.01f);
+            yield return null;
+        }
+
+        // 일정 시간 대기
+        yield return new WaitForSeconds(2f);
+
+
+        // 패턴 위치로 하강
+        transform.rotation = Quaternion.identity;
+        while (Vector3.Distance(transform.position, OriginPosition) > 1f)
+        {
+            transform.position = Vector3.Lerp(transform.position, OriginPosition, 0.05f);
+            yield return null;
+        }
+
+        transform.position = OriginPosition;
+        // 패턴 실행 (예제: CastingStart 애니메이션 실행)
+        animator.SetTrigger("CastingStart");
+    }
+
+    public void FinishPattern()
+    {
+        GetComponent<Hp>().Defence = 0f;
+        bossState = BossState.Locomotion;
+        animator.SetTrigger("IdleWalk");
     }
 
     private void OnDrawGizmos()

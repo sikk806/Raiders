@@ -130,7 +130,8 @@ public class Hp : MonoBehaviour
 
     public void Boss1Die()
     {
-
+        GetComponent<Animator>().SetTrigger("Death");
+        Player.Instance.GetComponent<Hp>().Defence = 1f;
     }
 
     public void Boss2Die()

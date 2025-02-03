@@ -14758,7 +14758,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06082827077127c49b3c6cc8b9afa420, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DamagePerTick: 0.1
+  DamagePerTick: 10
   decal: {fileID: 3078761173582650139}
   particles:
   - {fileID: 3772850701532426970}
