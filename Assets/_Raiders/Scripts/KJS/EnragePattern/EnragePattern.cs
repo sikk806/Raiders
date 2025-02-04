@@ -39,6 +39,8 @@ public class EnragePattern : MonoBehaviour
         currentTime = 0f;
         decalValue = 0f;
 
+        GetComponent<SphereCollider>().enabled = false;
+
         beams1 = new List<GameObject>();
         beams2 = new List<GameObject>();
         beams3 = new List<GameObject>();
@@ -99,7 +101,7 @@ public class EnragePattern : MonoBehaviour
     {
         StartCoroutine("LaserBeam");
         StartCoroutine("Impact");
-        
+        StartCoroutine("DamageOn");
     }
 
     void Update()
@@ -111,6 +113,12 @@ public class EnragePattern : MonoBehaviour
             decalValue = Mathf.Clamp(decalValue, 0.01f, 0.5f);
             decalMaterial.SetFloat("_DecalRad", decalValue);
         }
+    }
+
+    IEnumerator DamageOn()
+    {
+        yield return new WaitForSeconds(3f);
+        GetComponent<SphereCollider>().enabled = true;
     }
 
     // 3 + 4n cycle
@@ -207,5 +215,12 @@ public class EnragePattern : MonoBehaviour
         }
         decalOn = false;
         gameObject.SetActive(false);
+    }
+
+    private void OnTriggerStay(Collider other) {
+        if(other.gameObject.tag == "Player")
+        {
+            other.GetComponent<Hp>().TakeDamage(damage);
+        }
     }
 }
