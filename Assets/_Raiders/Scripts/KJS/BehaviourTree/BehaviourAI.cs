@@ -46,6 +46,7 @@ public class BehaviourAI : MonoBehaviour
 
     void Start()
     {
+        TargetPlayer = GameObject.FindWithTag("Player");
         locomotionBT = new BehaviourTreeRunner(SettingFollowBT());
         attackBT = new BehaviourTreeRunner(SettingAttackBT());
 

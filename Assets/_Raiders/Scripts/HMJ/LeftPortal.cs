@@ -18,7 +18,9 @@ public class LeftPortal : MonoBehaviour
 
     public void OnEnterPressed()
     {
-        SceneManager.LoadScene("Boss1Scene");
+        Player.Instance.BringBackControl();
+        //SceneManager.LoadScene("Boss1Scene");
+        SceneLoader.Instance.LoadNewScene("Boss1Scene");
     }
 
     public void OnExitPressed()

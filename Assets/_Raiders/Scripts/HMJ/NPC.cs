@@ -42,10 +42,10 @@ public class NPC : MonoBehaviour
             }
         }
 
-        if (CardSelect.instance.cardSelectCnt == 0)
+        if (CardSelect.instance.cardSelectCnt == 0 && messageBox.activeSelf)
         {
-            Player.Instance.BringBackControl();
             messageBox.SetActive(false);
+            Player.Instance.BringBackControl();
 
         }
     }
