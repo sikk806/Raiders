@@ -83,6 +83,7 @@ public class Player : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
 
         StartCoroutine(MpNaturalRestoration());

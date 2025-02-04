@@ -1,11 +1,20 @@
 using System;
 using UnityEngine;
 
-public class InputManager
+public class InputManager : MonoBehaviour 
 {
+    static InputManager instance;
     public Action KeyAction = null; // InputDelegate
 
-    // Update is called once per frame
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+    }
+
     public void OnUpdate()
     {
         if(Input.anyKey == false)
