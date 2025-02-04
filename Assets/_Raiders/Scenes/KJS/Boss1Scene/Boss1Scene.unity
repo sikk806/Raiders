@@ -6177,8 +6177,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SkillObjectPool: {fileID: 917631287}
-  audioMixer: {fileID: 0}
-  audioClip: {fileID: 0}
 --- !u!114 &556820522
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9684,7 +9682,6 @@ MonoBehaviour:
   BarrierPrefabs:
   - {fileID: 1770819240117370869, guid: 2e8181f13757b3d408077973ae1fdddf, type: 3}
   - {fileID: 9192617763148241788, guid: 136c7ccdbe0494742a9611764ea81649, type: 3}
-  - {fileID: 5194196323203036017, guid: 149f09e204211314a920f43fd1b354b1, type: 3}
 --- !u!4 &917631288
 Transform:
   m_ObjectHideFlags: 0
