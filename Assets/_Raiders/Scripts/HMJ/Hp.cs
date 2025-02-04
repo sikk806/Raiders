@@ -93,7 +93,7 @@ public class Hp : MonoBehaviour
 
             CurrentHp -= damage;
             HpBar.fillAmount = CurrentHp / MaxHp;
-
+            HpText.text = CurrentHp + "/" + MaxHp;
             CurrentHp = Mathf.Clamp(CurrentHp, 0, MaxHp);
 
             if (CurrentHp <= 0f)
@@ -168,6 +168,8 @@ public class Hp : MonoBehaviour
     {
         Player.Instance.CurrentState = PlayerState.Null;
 
+        IsNoDamaged = true;
+
         Player.Instance.TakeControl();
 
         GameManager.Instance.DeathCountDown();
@@ -180,6 +182,8 @@ public class Hp : MonoBehaviour
 
     public void Resurrection()
     {
+        IsNoDamaged = false;
+
         StartCoroutine(NoDamage(Player.Instance.NoDamageTime));
 
         Player.Instance.BringBackControl();
