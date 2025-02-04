@@ -132,7 +132,6 @@ public class PatternSc : MonoBehaviour
 
     void PatternCleared()
     {
-        
             dissolveValue -= dissolveSpeed * Time.deltaTime;
             dissolveValue = Mathf.Max(dissolveValue, 0f); // 최소값 0으로 고정
             material.SetFloat("_Dissolve",dissolveValue);
@@ -142,8 +141,8 @@ public class PatternSc : MonoBehaviour
                 isCleared = true;
                 var behaviourAI = GameObject.FindGameObjectWithTag("Boss1").GetComponent<BehaviourAI>();
                 hp.Defence = 0f;
-                behaviourAI.OnAnimationFinished();
                 gameObject.SetActive(false);
+                behaviourAI.OnAnimationFinished();
             }
             Debug.Log("베리어다깨짐");
     }
