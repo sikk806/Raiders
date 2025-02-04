@@ -44,7 +44,7 @@ public class GroundScratchingSkill : MonoBehaviour
         {
             if (canHit)
             {
-                // 데미지 주는 코드 추가해야함.
+                other.GetComponent<Hp>().TakeDamage(damage);
                 canHit = false;
                 GetComponent<BoxCollider>().enabled = false;
             }

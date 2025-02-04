@@ -8,16 +8,16 @@ public class Hp : MonoBehaviour
 {
     public float Barrier;
     public bool IsNoDamaged;
-    public float  Defence;
+    public float Defence;
 
     // 처음에 대문자로 변수가 적혀있어서 public을 소문자로 함. (VSC에서는 명명 규칙 위반이라지만 내맴)
     [SerializeField]
     private float MaxHp;
-    public float maxHp { get { return MaxHp; } set { MaxHp = value; }}
+    public float maxHp { get { return MaxHp; } set { MaxHp = value; } }
 
     [SerializeField]
     float CurrentHp;
-    public float currentHp { get { return CurrentHp; } set { CurrentHp = value; }}
+    public float currentHp { get { return CurrentHp; } set { CurrentHp = value; } }
 
     [SerializeField]
     Image HpBar;
@@ -49,7 +49,7 @@ public class Hp : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-      
+
         //1이 100퍼   0이 되면 데미지가 x
         damage *= (1f - Defence);
         if (IsNoDamaged) { return; }
@@ -90,7 +90,7 @@ public class Hp : MonoBehaviour
         }
         else
         {
-            
+
             CurrentHp -= damage;
             HpBar.fillAmount = CurrentHp / MaxHp;
 
@@ -116,7 +116,7 @@ public class Hp : MonoBehaviour
         }
     }
 
-    
+
     /*
      * 수정필요 매개변수 필요함
      */
@@ -145,7 +145,6 @@ public class Hp : MonoBehaviour
         {
             return;
         }
-
     }
 
     public void Boss2Die()
@@ -200,7 +199,7 @@ public class Hp : MonoBehaviour
         Player.Instance.CurrentState = PlayerState.Idle;
     }
 
-        // 2025-01-23
+    // 2025-01-23
     public void HealthPassiveOn(float amount)
     {
         MaxHp *= amount;

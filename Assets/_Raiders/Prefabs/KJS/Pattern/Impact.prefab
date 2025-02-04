@@ -84,11 +84,11 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5
+  m_Radius: 23
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2932280504696574503
 MonoBehaviour:
@@ -104,10 +104,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   impactTime: 0
   damage: 0
-  impactParticle: {fileID: 7467225231947979109}
-  impact: {fileID: 0}
+  impact: {fileID: 7467225231947979109}
   decal: {fileID: 5448774186828465917}
   Beams: {fileID: 6988836244476611451, guid: e3e93164212e64949b6fab709d77f690, type: 3}
+  Shelter: {fileID: 3272084805281049252, guid: 9da2fcc3dffc17f47abe4e88a93ca3b3, type: 3}
+  IsSafe: 0
 --- !u!1 &5798535277276118593
 GameObject:
   m_ObjectHideFlags: 0
@@ -9942,8 +9943,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6183629892896227046}
+  - component: {fileID: 4769802874575916519}
   - component: {fileID: 8367322094205964299}
   - component: {fileID: 736800662956608547}
+  - component: {fileID: 6824699549909137769}
   m_Layer: 0
   m_Name: Effect_40_Ring
   m_TagString: Untagged
@@ -9961,11 +9964,32 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2130220243621950211}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!135 &4769802874575916519
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7467225231947979109}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 23
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!198 &8367322094205964299
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -14836,6 +14860,18 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &6824699549909137769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7467225231947979109}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac686f64ab6c9704b837196e90f6cbd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3525692271952540366
 PrefabInstance:
   m_ObjectHideFlags: 0

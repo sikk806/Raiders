@@ -51,7 +51,6 @@ public class SkillController : MonoBehaviour
         }
     }
     
-    
     //이게 보스 주위에있는베리어
     public void Barrier()
     {
@@ -59,8 +58,18 @@ public class SkillController : MonoBehaviour
         BB.transform.position = new Vector3(transform.position.x, 1f, transform.position.z);
     }
 
- 
-    
-    
+    public void StartEnragePattern()
+    {
+        StartCoroutine("EnragePattern");
+    }
 
+    IEnumerator EnragePattern()
+    {
+        GameObject EP = SkillObjectPool.GetObject("EnragePattern");
+        EP.transform.position = new Vector3(-1.57f, 2f, -2.19f);
+
+        yield return new WaitForSeconds(23.0f);
+        GetComponent<Animator>().SetTrigger("CastingEnd");
+
+    }
 }
