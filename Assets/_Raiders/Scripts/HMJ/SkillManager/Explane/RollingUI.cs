@@ -19,7 +19,7 @@ public class RollingUI : MonoBehaviour
     
     private void OnGUI()
     {
-        skillKey.text = $"{KeySetting.keys[KeyAction.E]}";
+        skillKey.text = $"{KeySetting.keys[KeyAction.Space]}";
     }
     
     public void PointerEnter()

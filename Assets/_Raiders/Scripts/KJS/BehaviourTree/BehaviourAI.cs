@@ -42,6 +42,7 @@ public class BehaviourAI : MonoBehaviour
     bool switchingClip;
     //패턴을 했나? 발악 패턴만 
     public bool isDoPattern = false;
+    public float BossBarrier;
     bool pattern1Done;
 
     void Start()
@@ -61,6 +62,9 @@ public class BehaviourAI : MonoBehaviour
         patternHeight = OriginPosition.y + 6f;
 
         alertObject.SetActive(false);
+
+        // anfvncjkdnfksdanfvkjcxnvcklxz
+        //GameManager.Instance.WinAction += AlertWin;
     }
 
     void Update()
@@ -333,8 +337,7 @@ public class BehaviourAI : MonoBehaviour
         {
             HP.currentHp = 1;
             transform.position = OriginPosition;
-            //매개변수 필요 함
-            HP.BarrierSet();
+            HP.BarrierSet(BossBarrier);
             if (!switchingClip)
             {
                 //무적
@@ -405,6 +408,11 @@ public class BehaviourAI : MonoBehaviour
         GetComponent<Hp>().Defence = 0f;
         bossState = BossState.Locomotion;
         animator.SetTrigger("IdleWalk");
+    }
+
+    public void WinAction()
+    {
+
     }
 
     private void OnDrawGizmos()

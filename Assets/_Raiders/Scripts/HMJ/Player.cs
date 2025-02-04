@@ -36,6 +36,8 @@ public class Player : MonoBehaviour
     public float Power = 100; //공격력
     public float AddedPower = 0; //추가 공격력
 
+    public float PlayerBarrier;
+
     public bool IsDrainHp = false;
 
     private Vector3 targetPosition; //이동 목표
@@ -643,7 +645,7 @@ public class Player : MonoBehaviour
                     //현재 플레이어 상태를 UseR로 변경
                     CurrentState = PlayerState.UseE;
 
-                    PlayerHp.BarrierSet();
+                    PlayerHp.BarrierSet(PlayerBarrier);
 
                     //4초 뒤 쉴드량 0으로 초기화
                     PlayerHp.Invoke("BarrierReset", 4f);

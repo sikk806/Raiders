@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -15,6 +16,11 @@ public class GameManager : MonoBehaviour
     private float deathCount = 5;
     public float DeathCount { get { return deathCount; } set { deathCount = value; }}
 
+    private float playTime;
+    public float PlayTime { get { return playTime; } set { PlayTime = value; }}
+
+    public Action WinAction;
+
     private void Awake()
     {
         input = new InputManager();
@@ -30,6 +36,8 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         input.OnUpdate();
+        
+        // 시간 재는 코드 추가 필요 (보스 씬에 넘어가는 순간 체크 시작)
     }
 
     public void DeathCountDown()
@@ -39,12 +47,17 @@ public class GameManager : MonoBehaviour
         if (deathCount < 0 )
         {
             Debug.Log("GameOver");
+            // DeathCount가 0이 됐을 때 UDie UI 출력
+            // 코루틴으로 넘길 것 (3초정도)
+            Destroy(GameObject.FindWithTag("Player"));
+            SceneLoader.Instance.LoadNewScene("로비 씬으로 넘기기.");
         }
         else
         {
             Debug.Log("Resurrection after 5 sec, use popup and call Function (Player.Instance.Resurrection)");
         }
     }
+
     static void Init()
     {
         if (instance == null)
