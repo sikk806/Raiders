@@ -21,6 +21,9 @@ public class PatternSc : MonoBehaviour
     public float dissolveSpeed = 3f; // 초당 감소 속도
 
     public Hp hp;
+    public Hp PlayerHp;
+
+    public BehaviourAI Boss;
 
     //최대로 쌓을 수 있는 스택
     public float MaxSheidStack = 6;
@@ -33,8 +36,6 @@ public class PatternSc : MonoBehaviour
     private Color colorBlue = Color.blue; // 두 번째 색상 (파랑)
     private float timer = 0f;
     private float switchInterval = 5f; // 5초 간격
-
-    public GameObject boss;
     
     public float PatternMaxTime = 10f;
     
@@ -68,27 +69,39 @@ public class PatternSc : MonoBehaviour
             barrierPool.Add(obj1);
             barrierPool.Add(obj2);
         }
-        
+ 
         
     }
 
     private void OnEnable()
     {
         hp = GameObject.FindGameObjectWithTag("Boss1").GetComponent<Hp>();
+        PlayerHp= GameObject.FindGameObjectWithTag("Player").GetComponent<Hp>();
+        Boss = GameObject.FindGameObjectWithTag("Boss1").GetComponent<BehaviourAI>();
         hp.Defence = 0.2f;
     }
 
     void Update()
     {
-        // 타이머를 현재 프레임 시간만큼 증가
-        timer += Time.deltaTime;
-        //패턴 남은 시간
-        PatternMaxTime -= Time.deltaTime;
-   
-        
         if (!isCleared)
         {
-            StartPattern();
+            // 타이머를 현재 프레임 시간만큼 증가
+            timer += Time.deltaTime;
+            //패턴 남은 시간
+            PatternMaxTime -= Time.deltaTime;
+            StartPattern();// 패턴을 위한 기믹 시작
+            if (hp.Barrier <= 0 && PatternMaxTime > 0)
+            {
+                //베리어가 0보다 작아지면 죽기
+                PatternCleared();
+                DeactivateObjectPool();
+                Debug.Log("패턴 성공 기믹  if  구문 들어옴");
+            }else if (PatternMaxTime < 0)
+            {
+                Debug.Log("패턴 실패 기믹 else if  구문 들어옴");
+                PatternFailed();
+                DeactivateObjectPool();
+            }
         }
     }
     public void StartPattern()
@@ -115,30 +128,43 @@ public class PatternSc : MonoBehaviour
             timer = 0f;
         }
         
-        if (hp.Barrier <= 0)
-        {
+    }
+
+    void PatternCleared()
+    {
+        
             dissolveValue -= dissolveSpeed * Time.deltaTime;
             dissolveValue = Mathf.Max(dissolveValue, 0f); // 최소값 0으로 고정
             material.SetFloat("_Dissolve",dissolveValue);
-            
-            
-            
             //베리어 사라지는 로직
             if (dissolveValue <= 0)
             {
+                isCleared = true;
                 var behaviourAI = GameObject.FindGameObjectWithTag("Boss1").GetComponent<BehaviourAI>();
                 hp.Defence = 0f;
-                DeactivateObjectPool();
                 behaviourAI.OnAnimationFinished();
-                isCleared = true;
                 gameObject.SetActive(false);
             }
             Debug.Log("베리어다깨짐");
-        }
     }
 
-
-   
+    void PatternFailed()
+    {
+        /*
+         * 1.보스 hp를 풀피로 회복 
+         * 2.플레이어의 체력을 많은 데미지 주기
+         */
+        //1번
+        
+        hp.currentHp = hp.maxHp;
+        Debug.Log("보스 피회복");
+        //2번
+        PlayerHp.currentHp -= 50f;
+        Debug.Log("플레이어 데미지 주기");
+        Boss.GetComponent<SkillController>().SetfalseAll();
+        Boss.StandonAnimation();
+        Boss.OnAnimationFinished();
+    }
 
     /*
      * 0번지 red
@@ -175,12 +201,6 @@ public class PatternSc : MonoBehaviour
                 // 소환 전 prefab이 null인지 체크
                 if (Barrierprefabs != null)
                 {
-                    /*
-                     * 해야할일
-                     * 1.오브젝트 풀로 변경
-                     * 2.베리어 피가없을때 있던것들 다없애주기 
-                     */
-
                     var barrier = GetRandomBarrier(transform.position);
                     barrier.transform.position = new Vector3(newPosition.x,newPosition.y+1,newPosition.z); // 소환 위치 설정
                     

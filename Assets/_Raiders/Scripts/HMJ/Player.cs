@@ -110,7 +110,6 @@ public class Player : MonoBehaviour
 
         //스테이지 충돌 레이어 설정
         stage = LayerMask.GetMask("Stage");
-
     }
 
     IEnumerator MpNaturalRestoration()

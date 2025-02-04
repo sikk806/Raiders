@@ -7,6 +7,7 @@ public class SkillController : MonoBehaviour
     // GM에서 처리할 수 있도록 변경할 것.
     [SerializeField] SkillObjectPools SkillObjectPool;
 
+    
     IEnumerator GroundScratching()
     {
         yield return null;
@@ -14,13 +15,13 @@ public class SkillController : MonoBehaviour
         GS.transform.position = transform.position;
         GS.transform.position = new Vector3(GS.transform.position.x, 2f, GS.transform.position.z);
         GS.transform.rotation = new Quaternion(0f, transform.rotation.y, 0f, transform.rotation.w);
-        AudioMixerController.Instance.BossStartClip("GroundScratching");
+          AudioMixerController.Instance.BossStartClip("GroundScratching");
     }
 
     IEnumerator TargetSpell()
     {
         int cnt = 0;
-        AudioMixerController.Instance.BossStartClip("GroundScratching");
+          AudioMixerController.Instance.BossStartClip("GroundScratching");
         while (cnt < 5)
         {
             GameObject TS = SkillObjectPool.GetObject("TargetSpell");
@@ -34,7 +35,7 @@ public class SkillController : MonoBehaviour
     IEnumerator Explosion()
     {
         yield return null;
-        AudioMixerController.Instance.BossStartClip("GroundScratching");
+          AudioMixerController.Instance.BossStartClip("GroundScratching");
         GameObject EP = SkillObjectPool.GetObject("Explosion");
         EP.transform.position = new Vector3(transform.position.x, 1f, transform.position.z);
     }
@@ -42,7 +43,7 @@ public class SkillController : MonoBehaviour
     IEnumerator BloobBoom()
     {
         int cnt = 0;
-        AudioMixerController.Instance.BossStartClip("GroundScratching");
+          AudioMixerController.Instance.BossStartClip("GroundScratching");
         while (cnt < 20)
         {
             GameObject BB = SkillObjectPool.GetObject("BloodBoom");
@@ -61,6 +62,11 @@ public class SkillController : MonoBehaviour
     {
         GameObject BB = SkillObjectPool.GetObject("Barrier");
         BB.transform.position = new Vector3(transform.position.x, 1f, transform.position.z);
+    }
+
+    public void SetfalseAll()
+    {
+       SkillObjectPool.SetFalseAllObject();
     }
 
     public void StartEnragePattern()

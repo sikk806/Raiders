@@ -88,7 +88,7 @@ AudioMixerGroupController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Boss2
+  m_Name: Boss
   m_AudioMixer: {fileID: 24100000}
   m_GroupID: 1f8b5b40d4156794a85b369a0c1ca695
   m_Children:
@@ -98,7 +98,7 @@ AudioMixerGroupController:
   m_Send: 00000000000000000000000000000000
   m_Effects:
   - {fileID: 3977534322756531168}
-  m_UserColorIndex: 0
+  m_UserColorIndex: 2
   m_Mute: 0
   m_Solo: 0
   m_BypassEffects: 0
@@ -151,7 +151,7 @@ AudioMixerController:
   - guid: 2ce6fe748b2beb843a7c2eb284ba922c
     name: Boss1
   - guid: a71f9740d0ac04448866f6aa148bcbcc
-    name: Boss2
+    name: Boss
   - guid: 68cf08c9ded020843b19381977707764
     name: Click
   - guid: 6f09beef38be0d144b6718bb373465b6
@@ -219,6 +219,7 @@ AudioMixerSnapshotController:
   m_AudioMixer: {fileID: 24100000}
   m_SnapshotID: 0d825ab15a479e242a95a4e7d7cb370f
   m_FloatValues:
+    a71f9740d0ac04448866f6aa148bcbcc: 8.455504
     2ce6fe748b2beb843a7c2eb284ba922c: 0.22567981
     ce745765a0972a345a0d5dbf5ba4ee3e: 0.13552584
     b98fb8f63e6f95d4589026cf7f131994: 1
@@ -260,7 +261,7 @@ AudioMixerGroupController:
   m_Send: 00000000000000000000000000000000
   m_Effects:
   - {fileID: -4280269184990728467}
-  m_UserColorIndex: 0
+  m_UserColorIndex: 2
   m_Mute: 0
   m_Solo: 0
   m_BypassEffects: 0
