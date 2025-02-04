@@ -116,14 +116,10 @@ public class Hp : MonoBehaviour
         }
     }
 
-
-    /*
-     * 수정필요 매개변수 필요함
-     */
-    public void BarrierSet()
+    public void BarrierSet(float addBarrier)
     {
         //test로 값을 높힘
-        Barrier = 3000f;
+        Barrier = addBarrier;
         HpText.text = CurrentHp + "(+" + Barrier + ")" + "/" + MaxHp;
     }
 
