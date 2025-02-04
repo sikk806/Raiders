@@ -660,14 +660,14 @@ public class Player : MonoBehaviour
                     Destroy(e, 4f);
                 }
 
-                //R 스킬 사용 불가 상태라면
-                else if (!R.Instance.IsUsable)
+                //E 스킬 사용 불가 상태라면
+                else if (!E.Instance.IsUsable)
                 {
                     WarningMessage.Instance.SkillCooling();
                 }
 
                 //현재 Mp가 스킬 소모 Mp 미만이라면
-                else if (CurrentMp < R.Instance.UseMp)
+                else if (CurrentMp < E.Instance.UseMp)
                 {
                     WarningMessage.Instance.NoMp();
                 }

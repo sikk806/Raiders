@@ -19994,6 +19994,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 230410962449372670, guid: b3d34823c25acb249ad19cdf59f0bc65, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 244979954629529879, guid: b3d34823c25acb249ad19cdf59f0bc65, type: 3}
       propertyPath: m_Name
       value: NPC
@@ -20050,7 +20054,14 @@ PrefabInstance:
       propertyPath: messageText
       value: 
       objectReference: {fileID: 1137571113}
-    m_RemovedComponents: []
+    - target: {fileID: 8999052342000548416, guid: b3d34823c25acb249ad19cdf59f0bc65, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 8999052342000548416, guid: b3d34823c25acb249ad19cdf59f0bc65, type: 3}
+    - {fileID: 4459330943625159, guid: b3d34823c25acb249ad19cdf59f0bc65, type: 3}
+    - {fileID: 9133747202156733043, guid: b3d34823c25acb249ad19cdf59f0bc65, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
