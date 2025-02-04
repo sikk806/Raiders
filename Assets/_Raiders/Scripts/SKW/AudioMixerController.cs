@@ -17,30 +17,30 @@ public enum SceneType
 
 public class AudioMixerController : MonoBehaviour
 {
-    
+
     public static AudioMixerController Instance { get; private set; }
-    
-    
+
+
     [SerializeField] public AudioMixer audioMixer;
     [SerializeField] public Slider musicMasterSlider;
     [SerializeField] private Slider musicBoss1Slider;
     [SerializeField] private Slider musicBGMSlider;
-    
+
     [SerializeField] private AudioClip[] MainMenuClips;
     [SerializeField] private AudioClip[] PlayerTestClips;
+    [SerializeField] private AudioClip[] BossClips;
     //뱀파이어 클리스트 
     //뱀파이어 딕셔너리 
-    
+
     //메인메뉴 딕셔너리
     private Dictionary<string, AudioClip> mClipsDictionary;
-    //Boss1 딕셔너리
-    private Dictionary<string, AudioClip> b1ClipsDictionary;
-    //Boss2 딕셔너리
-    private Dictionary<string, AudioClip> b2ClipsDictionary;
+    //Boss 딕셔너리
+    private Dictionary<string, AudioClip> bClipsDictionary;
     //PlayerTerst 딕셔너리
     private Dictionary<string, AudioClip> pClipsDictionary;
     [SerializeField] AudioSource mAudioSource;
-    
+    [SerializeField] AudioSource bAudioSource;
+
     //값만 던지고 silder같은 할당은 로비씬에서만 해도 되지않을까?
     private void Awake()
     {
@@ -49,27 +49,29 @@ public class AudioMixerController : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-        
+
         // 인스턴스 설정
         Instance = this;
-        
+
         DontDestroyOnLoad(gameObject);
-        
+
         musicMasterSlider.onValueChanged.AddListener((value) => SetVolume(DefineMusicName.Master, value));
         musicBGMSlider.onValueChanged.AddListener(SetMusicVolume);
         musicBoss1Slider.onValueChanged.AddListener(SetBoss1Volume);
-        
+
         //메인 메뉴에 해당하는 사운드 딕셔너리
         //PLAYERTEST에 해당하는 딕셔너리 
         mClipsDictionary = new Dictionary<string, AudioClip>();
+        bClipsDictionary = new Dictionary<string, AudioClip>();
         pClipsDictionary = new Dictionary<string, AudioClip>();
-        AddClip(MainMenuClips,mClipsDictionary);
-        AddClip(PlayerTestClips,pClipsDictionary);
-        
+        AddClip(MainMenuClips, mClipsDictionary);
+        AddClip(PlayerTestClips, pClipsDictionary);
+        AddClip(BossClips, bClipsDictionary);
+
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-    public void AddClip(AudioClip[] clipName,Dictionary<string,AudioClip> clipDictionary)
+    public void AddClip(AudioClip[] clipName, Dictionary<string, AudioClip> clipDictionary)
     {
         foreach (AudioClip clip in clipName)
         {
@@ -82,8 +84,8 @@ public class AudioMixerController : MonoBehaviour
         // 이벤트 등록 해제
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
-    
-    
+
+
     private SceneType GetSceneType(string sceneName)
     {
         return sceneName switch
@@ -126,9 +128,9 @@ public class AudioMixerController : MonoBehaviour
 
 
 
-   
 
-    private AudioClip GetClip(Dictionary<string,AudioClip> dictionary, string clipName)
+
+    private AudioClip GetClip(Dictionary<string, AudioClip> dictionary, string clipName)
     {
         AudioClip clip = dictionary[clipName];
 
@@ -137,30 +139,38 @@ public class AudioMixerController : MonoBehaviour
 
         return clip;
     }
-    
-    public void StartClip(Dictionary<string,AudioClip> dictionary,string clipName)
+
+    public void StartClip(Dictionary<string, AudioClip> dictionary, string clipName)
     {
-        AudioClip clip = GetClip(dictionary,clipName);
+        AudioClip clip = GetClip(dictionary, clipName);
         if (clip == null) { return; }
         mAudioSource.clip = clip;
         mAudioSource.Play();
     }
-    
+
+    public void BossStartClip(string clipName)
+    {
+        AudioClip clip = GetClip(bClipsDictionary, clipName);
+        if (clip == null) { return; }
+        bAudioSource.clip = clip;
+        bAudioSource.Play();
+    }
+
     public void SetVolume(string musicname, float volume)
     {
         audioMixer.SetFloat(musicname, Mathf.Log10(volume) * 25);
         Debug.Log(musicname);
     }
-    
- 
+
+
     public void SetMusicVolume(float volume)
     {
         audioMixer.SetFloat("BGM", Mathf.Log10(volume) * 20);
     }
- 
+
     public void SetBoss1Volume(float volume)
     {
-        audioMixer.SetFloat("Boss1",  Mathf.Log10(volume) * 20);
+        audioMixer.SetFloat("Boss1", Mathf.Log10(volume) * 20);
     }
-    
+
 }
