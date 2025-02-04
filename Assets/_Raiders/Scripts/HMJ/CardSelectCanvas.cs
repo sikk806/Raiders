@@ -1,10 +1,8 @@
 using UnityEngine;
 
-public class SkillManager : MonoBehaviour
+public class CardSelectCanvas : MonoBehaviour
 {
-  public static SkillManager instance;
-
-    public float CoolExcel = 1;
+    static CardSelectCanvas instance;
 
     private void Start()
     {

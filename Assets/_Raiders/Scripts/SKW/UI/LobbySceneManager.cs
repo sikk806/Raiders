@@ -14,7 +14,7 @@ public class LobbySceneManager : MonoBehaviour
      */
     public void StartGame()
     {
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(1);
     }
 
     public void OpenOption()

@@ -85,6 +85,7 @@ public class UIManager : MonoBehaviour
         //메인씬 이동 후
         //타임스케일 정상화
         SceneManager.LoadScene(0);
+        Destroy(GameObject.FindWithTag("Player"));
         ResetTimeScale();
     }
 
