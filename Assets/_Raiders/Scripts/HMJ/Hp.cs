@@ -14,7 +14,6 @@ public class Hp : MonoBehaviour
     [SerializeField]
     private float MaxHp;
     public float maxHp { get { return MaxHp; } set { MaxHp = value; } }
-
     [SerializeField]
     float CurrentHp;
     public float currentHp { get { return CurrentHp; } set { CurrentHp = value; } }
@@ -59,6 +58,7 @@ public class Hp : MonoBehaviour
 
             Barrier -= damage;
             Barrier = Mathf.Clamp(Barrier, 0f, Mathf.Infinity);
+            HpText.text = CurrentHp + "(+" + Barrier + ")" + "/" + MaxHp;
 
             if (lastDamage >= 0f)
             {
@@ -66,7 +66,7 @@ public class Hp : MonoBehaviour
 
                 CurrentHp -= damage;
                 HpBar.fillAmount = CurrentHp / MaxHp;
-                HpText.text = CurrentHp + "/" + MaxHp;
+                HpText.text = CurrentHp + "(+" + Barrier + ")" + "/" + MaxHp;
 
                 CurrentHp = Mathf.Clamp(CurrentHp, 0, MaxHp);
 
@@ -91,10 +91,11 @@ public class Hp : MonoBehaviour
         else
         {
 
-            CurrentHp -= damage;
+            // CurrentHp -= damage;
+            CurrentHp = Mathf.Clamp(CurrentHp - damage, 0, MaxHp);
             HpBar.fillAmount = CurrentHp / MaxHp;
-            HpText.text = CurrentHp + "/" + MaxHp;
-            CurrentHp = Mathf.Clamp(CurrentHp, 0, MaxHp);
+            HpText.text = CurrentHp + "(+" + Barrier + ")" + "/" + MaxHp;
+            // CurrentHp = Mathf.Clamp(CurrentHp, 0, MaxHp);
 
             if (CurrentHp <= 0f)
             {

@@ -372,7 +372,7 @@ public class BehaviourAI : MonoBehaviour
 
     public void StandonAnimation()
     {
-        animator.SetTrigger("Crouching");
+        animator.SetTrigger("Standing");
         Debug.Log("틀어감");
     }
 
