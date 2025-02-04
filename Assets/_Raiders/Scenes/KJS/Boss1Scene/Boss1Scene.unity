@@ -6218,7 +6218,7 @@ MonoBehaviour:
   IsNoDamaged: 0
   Defence: 0
   MaxHp: 1000000
-  CurrentHp: 500001
+  CurrentHp: 20
   HpBar: {fileID: 1302316553}
   HpText: {fileID: 137605971}
 --- !u!1 &564408609
