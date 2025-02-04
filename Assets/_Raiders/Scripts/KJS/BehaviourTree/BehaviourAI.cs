@@ -24,11 +24,16 @@ public class BehaviourAI : MonoBehaviour
     BehaviourTreeRunner locomotionBT; // For Locomotion
     BehaviourTreeRunner attackBT; // For Attack
     Animator animator;
-
+    
+    Vector3 OriginPosition;
+    
     float movementSpeedRatio;
     int patternNumber;
     bool animFinish;
     bool switchingClip;
+    
+    //패턴을 했나? 발악 패턴만 
+    public bool isDoPattern = false;
 
     void Start()
     {
@@ -40,6 +45,8 @@ public class BehaviourAI : MonoBehaviour
         patternNumber = Random.Range(testSkillStart, testSkillEnd);
         animFinish = false;
         switchingClip = false;
+        
+        OriginPosition = transform.position;
     }
 
     void Update()
@@ -88,6 +95,9 @@ public class BehaviourAI : MonoBehaviour
                         new SelectorNode(
                             new List<INode>()
                             {
+                                //정식님 히든패턴
+                                //제가만 히든패턴
+                                new ActionNode(barrierPattern),
                                 new ActionNode(Attack0),
                                 new ActionNode(Attack1),
                                 new ActionNode(Attack2),
@@ -262,11 +272,46 @@ public class BehaviourAI : MonoBehaviour
         if (patternNumber == 5)
         {
             Debug.Log("Attack5");
+            
             return NodeState.Success;
         }
 
         return NodeState.Failure;
     }
+
+ 
+    //발악패턴
+    NodeState barrierPattern()
+    {
+        var HP = GetComponent<Hp>();
+        
+        
+        if (HP.currentHp <= 1 && !isDoPattern)
+        {
+            HP.currentHp = 1;
+            transform.position = OriginPosition;
+            //매개변수 필요 함
+            HP.BarrierSet();
+            if (!switchingClip)
+            {
+                //무적
+                HP.Defence = 1f;
+                HP.currentHp = 1;
+                
+                switchingClip = true;
+                
+                isDoPattern = true;
+                GetComponent<SkillController>().Barrier();
+                
+                //기믹끝나는시점
+                // HP.Defence = 0;
+                // HP.currentHp = 0;
+            }
+            return NodeState.Success;
+        }
+        return NodeState.Failure;
+    }
+
 
     // 애니메이션이 끝나는 순간 애니메이션 컨트롤러의 웨이트를 바꿔주기 위한 함수
     public void OnAnimationFinished()

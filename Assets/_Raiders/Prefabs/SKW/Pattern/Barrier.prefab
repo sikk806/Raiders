@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1792955714751109939}
   m_Layer: 7
   m_Name: Barrier
-  m_TagString: Untagged
+  m_TagString: Barrier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -121,9 +121,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 744a9426d71651546bb07853140d6cde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  barrierType: 0
   Barrierprefabs:
   - {fileID: 9192617763148241788, guid: 136c7ccdbe0494742a9611764ea81649, type: 3}
   - {fileID: 1770819240117370869, guid: 2e8181f13757b3d408077973ae1fdddf, type: 3}
-  Hp: 100
-  PatternMaxTime: 60
-  spwanCount: 5
+  dissolveSpeed: 1
+  hp: {fileID: 0}
+  MaxSheidStack: 6
+  DefaultSheidStack: 2
+  CurrentSheidStack: 0
+  PatternMaxTime: 10
+  spwanCount: 2

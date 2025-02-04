@@ -7,7 +7,11 @@ public class SkillObjectPools : MonoBehaviour
     public GameObject[] SkillSets;
 
     Dictionary<GameObject, bool> objs; // GameObject, bool [오브젝트 준비중인지 확인]
+    
+    public List<GameObject> BarrierPrefabs; // 배리어 프리팹 리스트
+    private List<GameObject> barrierPool = new List<GameObject>(); // 오브젝트 풀 (큐 대신 리스트)
 
+    
     void Awake()
     {
         //DontDestroyOnLoad(gameObject);
@@ -24,6 +28,9 @@ public class SkillObjectPools : MonoBehaviour
             ob.SetActive(false);
             objs.Add(ob, false);
         }
+
+        
+        
     }
 
     public GameObject GetObject(string patternName)
@@ -55,4 +62,8 @@ public class SkillObjectPools : MonoBehaviour
             }
         }
     }
+    
+
+    
+
 }

@@ -15,35 +15,67 @@ public class PatternSc : MonoBehaviour
     public BarrierType barrierType = BarrierType.Red;
     //테스트용 베리어 프리펩 
     public List<GameObject> Barrierprefabs;
+    private List<GameObject> barrierPool = new List<GameObject>(); // 오브젝트 풀 (큐 대신 리스트)
+    
+    private float dissolveValue = 4.0f; // 기본값 4
+    public float dissolveSpeed = 3f; // 초당 감소 속도
 
     public Hp hp;
 
     //최대로 쌓을 수 있는 스택
-    public ulong MaxSheidStack = 6;
+    public float MaxSheidStack = 6;
     //기본 스택
-    public ulong DefaultSheidStack = 2;
-    public ulong CurrentSheidStack;
+    public float DefaultSheidStack = 2;
+    public float CurrentSheidStack;
     
     private Material material;
     private Color colorRed = Color.red;  // 첫 번째 색상 (빨강)
     private Color colorBlue = Color.blue; // 두 번째 색상 (파랑)
     private float timer = 0f;
     private float switchInterval = 5f; // 5초 간격
+
+    public GameObject boss;
     
-    public float PatternMaxTime = 60f;
+    public float PatternMaxTime = 10f;
     
+    
+    
+    
+    
+    
+    bool isCleared = false;
     //소환
     public int spwanCount = 5;
+    
     
     void Start()
     {
         // Renderer에서 Material 가져오기
         material = GetComponent<Renderer>().material;
-
+        
+        CurrentSheidStack = DefaultSheidStack;
         // 초기 색상 설정
         material.SetColor("_EmissionColor", colorRed);
-        hp = GetComponent<Hp>();
-        CurrentSheidStack = DefaultSheidStack;
+        
+                
+        // 초기 오브젝트 풀 생성 (프리팹 리스트에서 랜덤하게 생성)
+        for (int i = 0; i < 5; i++) // 풀 크기 조절 가능
+        {
+            GameObject obj1 = Instantiate(Barrierprefabs[0]); // 첫 번째 배리어
+            GameObject obj2 = Instantiate(Barrierprefabs[1]); // 두 번째 배리어
+            obj1.SetActive(false);
+            obj2.SetActive(false);
+            barrierPool.Add(obj1);
+            barrierPool.Add(obj2);
+        }
+        
+        
+    }
+
+    private void OnEnable()
+    {
+        hp = GameObject.FindGameObjectWithTag("Boss1").GetComponent<Hp>();
+        hp.Defence = 0.2f;
     }
 
     void Update()
@@ -52,8 +84,15 @@ public class PatternSc : MonoBehaviour
         timer += Time.deltaTime;
         //패턴 남은 시간
         PatternMaxTime -= Time.deltaTime;
+   
         
-        
+        if (!isCleared)
+        {
+            StartPattern();
+        }
+    }
+    public void StartPattern()
+    {
         // 5초가 지나면 색상 전환 + 구체 생성
         if (timer >= switchInterval)
         {
@@ -75,30 +114,31 @@ public class PatternSc : MonoBehaviour
             // 타이머 초기화
             timer = 0f;
         }
-
-
-    }
-    
-    //패턴 성공 실패 체크함수
-    public bool CheckPatternSucceed()
-    {
-        //시간초가 다지나 갔을때 
-        if (PatternMaxTime < 0)
-        {
-            return false;
-        }
-        /*
-         * 패턴 파훼에 성공 했을때
-         * 예) 베리어의 피가 0 이 되었을때
-         */
-        // if (Hp < 0 )
-        // {
-        //     Debug.Log("패턴 성공");
-        // }
         
-        Debug.Log("두조건에 부합하지않은 버그 발생");
-        return false;
+        if (hp.Barrier <= 0)
+        {
+            dissolveValue -= dissolveSpeed * Time.deltaTime;
+            dissolveValue = Mathf.Max(dissolveValue, 0f); // 최소값 0으로 고정
+            material.SetFloat("_Dissolve",dissolveValue);
+            
+            
+            
+            //베리어 사라지는 로직
+            if (dissolveValue <= 0)
+            {
+                var behaviourAI = GameObject.FindGameObjectWithTag("Boss1").GetComponent<BehaviourAI>();
+                hp.Defence = 0f;
+                DeactivateObjectPool();
+                behaviourAI.OnAnimationFinished();
+                isCleared = true;
+                gameObject.SetActive(false);
+            }
+            Debug.Log("베리어다깨짐");
+        }
     }
+
+
+   
 
     /*
      * 0번지 red
@@ -135,8 +175,16 @@ public class PatternSc : MonoBehaviour
                 // 소환 전 prefab이 null인지 체크
                 if (Barrierprefabs != null)
                 {
-                    GameObject barrier = Instantiate(Barrierprefabs[Random.Range(0,Barrierprefabs.Count)], transform.position, Quaternion.identity);
-                    barrier.transform.position = newPosition; // 소환 위치 설정
+                    /*
+                     * 해야할일
+                     * 1.오브젝트 풀로 변경
+                     * 2.베리어 피가없을때 있던것들 다없애주기 
+                     */
+
+                    var barrier = GetRandomBarrier(transform.position);
+                    barrier.transform.position = new Vector3(newPosition.x,newPosition.y+1,newPosition.z); // 소환 위치 설정
+                    
+                    
                     spawnedPositions.Add(newPosition); // 소환된 위치 저장
                     currentCount++;
                 }
@@ -148,6 +196,31 @@ public class PatternSc : MonoBehaviour
             }
         }
     }
+    
+    public GameObject GetRandomBarrier(Vector3 position)
+    {
+        if (barrierPool.Count == 0) return null;
+
+        // 🔥 랜덤하게 하나 선택
+        int randomIndex = Random.Range(0, barrierPool.Count);
+        GameObject barrier = barrierPool[randomIndex];
+
+        
+        barrier.SetActive(true);
+        barrier.transform.position = position;
+        
+        return barrier;
+    }
+    
+    public void DeactivateObjectPool()
+    {
+        foreach (GameObject barrier in barrierPool)
+        {
+            barrier.SetActive(false); // 오브젝트 비활성화
+        }
+        Debug.Log("오브젝트 풀의 모든 오브젝트를 비활성화했습니다.");
+    }
+    
 
     private void OnTriggerEnter(Collider other)
     {
@@ -159,15 +232,23 @@ public class PatternSc : MonoBehaviour
             // 같은 색인지 확인
             if ((int)barrierType == indicator)
             {
-                if (CurrentSheidStack > MaxSheidStack)
-                {
-                    CurrentSheidStack = MaxSheidStack;
-                    Debug.Log("최대 스택 더이상 안올라감");
-                    return;
-                }
                 // 방어력 증가
                 CurrentSheidStack += 1;
                 hp.Defence += 0.1f;
+                if (hp.Defence >= 0.6f)
+                {
+                    hp.Defence = 0.6f;
+                    Debug.Log("더이상 오르지마");
+                }
+                
+                if (CurrentSheidStack >= MaxSheidStack)
+                {
+                    CurrentSheidStack = MaxSheidStack;
+                    Debug.Log("최대 스택 더이상 안올라감");
+                    
+                }
+                
+              
                 Debug.Log($"스택 증가! 현재 스택: {CurrentSheidStack}, 방어력: {hp.Defence}");
             }
             else
@@ -175,6 +256,17 @@ public class PatternSc : MonoBehaviour
                 // 방어력 감소
                 CurrentSheidStack -= 1;
                 hp.Defence = Mathf.Max(hp.Defence - 0.1f, 0f); // 방어력 음수 방지
+                if (CurrentSheidStack <= 0)
+                {
+                    CurrentSheidStack = 0;
+                    Debug.Log("최소 스택 더이상 안내려감");
+                    
+                }
+                if (hp.Defence <= 0f)
+                {
+                    hp.Defence = 0f;
+                    Debug.Log("더이상 내려가지마");
+                }
                 Debug.Log($"스택 감소! 현재 스택: {CurrentSheidStack}, 방어력: {hp.Defence}");
             }
         }

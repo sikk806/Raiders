@@ -50,4 +50,17 @@ public class SkillController : MonoBehaviour
 
         }
     }
+    
+    
+    //이게 보스 주위에있는베리어
+    public void Barrier()
+    {
+        GameObject BB = SkillObjectPool.GetObject("Barrier");
+        BB.transform.position = new Vector3(transform.position.x, 1f, transform.position.z);
+    }
+
+ 
+    
+    
+
 }
