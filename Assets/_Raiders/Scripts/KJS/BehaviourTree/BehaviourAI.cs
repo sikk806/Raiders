@@ -344,7 +344,7 @@ public class BehaviourAI : MonoBehaviour
                 
                 isDoPattern = true;
                 GetComponent<SkillController>().Barrier();
-                
+                animator.SetTrigger("Crouching");
                 //기믹끝나는시점
                 // HP.Defence = 0;
                 // HP.currentHp = 0;
@@ -364,6 +364,12 @@ public class BehaviourAI : MonoBehaviour
         animFinish = true;
         switchingClip = false;
         patternNumber = -1;
+    }
+
+    public void StandonAnimation()
+    {
+        animator.SetTrigger("Crouching");
+        Debug.Log("틀어감");
     }
 
     IEnumerator StartPattern()

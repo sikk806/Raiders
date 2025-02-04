@@ -23,7 +23,7 @@ public class AudioMixerController : MonoBehaviour
 
     [SerializeField] public AudioMixer audioMixer;
     [SerializeField] public Slider musicMasterSlider;
-    [SerializeField] private Slider musicBoss1Slider;
+    [SerializeField] private Slider musicBossSlider;
     [SerializeField] private Slider musicBGMSlider;
 
     [SerializeField] private AudioClip[] MainMenuClips;
@@ -57,7 +57,9 @@ public class AudioMixerController : MonoBehaviour
 
         musicMasterSlider.onValueChanged.AddListener((value) => SetVolume(DefineMusicName.Master, value));
         musicBGMSlider.onValueChanged.AddListener(SetMusicVolume);
-        musicBoss1Slider.onValueChanged.AddListener(SetBoss1Volume);
+        musicBossSlider.onValueChanged.AddListener(SetBoss1Volume);
+        
+        
 
         //메인 메뉴에 해당하는 사운드 딕셔너리
         //PLAYERTEST에 해당하는 딕셔너리 
@@ -170,7 +172,13 @@ public class AudioMixerController : MonoBehaviour
 
     public void SetBoss1Volume(float volume)
     {
-        audioMixer.SetFloat("Boss1", Mathf.Log10(volume) * 20);
+        audioMixer.SetFloat("Boss", Mathf.Log10(volume) * 20);
+    }
+    
+    public void SetBossVolume(string musicname,float volume)
+    {
+        audioMixer.SetFloat(musicname, Mathf.Log10(volume) * 20);
+        
     }
 
 }

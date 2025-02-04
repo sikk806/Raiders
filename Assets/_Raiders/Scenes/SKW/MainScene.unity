@@ -675,7 +675,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioMixer: {fileID: 24100000, guid: 266b6f61457e42c4db9f2b3330fe22c1, type: 2}
   musicMasterSlider: {fileID: 250230457}
-  musicBoss1Slider: {fileID: 271933418}
+  musicBossSlider: {fileID: 271933418}
   musicBGMSlider: {fileID: 1404509659}
   MainMenuClips:
   - {fileID: 8300000, guid: 421b07eba08c77743afead0f03159355, type: 3}
@@ -1118,7 +1118,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6673104330236964892, guid: 053e0704e1c7eb048afa46c3877e8ed9, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.754862
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6673104330236964892, guid: 053e0704e1c7eb048afa46c3877e8ed9, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1126,23 +1126,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6673104330236964892, guid: 053e0704e1c7eb048afa46c3877e8ed9, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6673104330236964892, guid: 053e0704e1c7eb048afa46c3877e8ed9, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6673104330236964892, guid: 053e0704e1c7eb048afa46c3877e8ed9, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6673104330236964892, guid: 053e0704e1c7eb048afa46c3877e8ed9, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -687.09863
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6673104330236964892, guid: 053e0704e1c7eb048afa46c3877e8ed9, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -512.6201
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6673104330236964892, guid: 053e0704e1c7eb048afa46c3877e8ed9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1468,6 +1468,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 238
       objectReference: {fileID: 0}
+    - target: {fileID: 1209829998286729010, guid: ba48a48e89382fe49a037cfd6f41e38e, type: 3}
+      propertyPath: m_Name
+      value: SliderBoss
+      objectReference: {fileID: 0}
     - target: {fileID: 1210337728407559544, guid: ba48a48e89382fe49a037cfd6f41e38e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1514,7 +1518,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2599394961703233103, guid: ba48a48e89382fe49a037cfd6f41e38e, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3203812404238517631, guid: ba48a48e89382fe49a037cfd6f41e38e, type: 3}
       propertyPath: m_AnchorMax.x
@@ -1534,6 +1538,10 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 124982ec2bea0da44ba430577b024c1e, type: 2}
     - target: {fileID: 3303896367004044721, guid: ba48a48e89382fe49a037cfd6f41e38e, type: 3}
       propertyPath: m_hasFontAssetChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3507075029557877043, guid: ba48a48e89382fe49a037cfd6f41e38e, type: 3}
+      propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3808149396390924918, guid: ba48a48e89382fe49a037cfd6f41e38e, type: 3}
@@ -1622,7 +1630,7 @@ PrefabInstance:
       objectReference: {fileID: 299967306}
     - target: {fileID: 4655741146704703487, guid: ba48a48e89382fe49a037cfd6f41e38e, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4702898610698979620, guid: ba48a48e89382fe49a037cfd6f41e38e, type: 3}
       propertyPath: m_AnchorMax.x
@@ -1664,6 +1672,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1595306375}
+    - target: {fileID: 5804956835739237078, guid: ba48a48e89382fe49a037cfd6f41e38e, type: 3}
+      propertyPath: m_text
+      value: Boss
+      objectReference: {fileID: 0}
     - target: {fileID: 5843912824899855531, guid: ba48a48e89382fe49a037cfd6f41e38e, type: 3}
       propertyPath: m_AnchorMax.x
       value: 1
