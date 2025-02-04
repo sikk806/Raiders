@@ -28,6 +28,9 @@ public class AudioMixerController : MonoBehaviour
     
     [SerializeField] private AudioClip[] MainMenuClips;
     [SerializeField] private AudioClip[] PlayerTestClips;
+    //뱀파이어 클리스트 
+    //뱀파이어 딕셔너리 
+    
     //메인메뉴 딕셔너리
     private Dictionary<string, AudioClip> mClipsDictionary;
     //Boss1 딕셔너리
@@ -62,6 +65,7 @@ public class AudioMixerController : MonoBehaviour
         pClipsDictionary = new Dictionary<string, AudioClip>();
         AddClip(MainMenuClips,mClipsDictionary);
         AddClip(PlayerTestClips,pClipsDictionary);
+        
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 

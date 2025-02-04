@@ -25,9 +25,9 @@ public class SphereSc : MonoBehaviour
         {
             // 목표 방향 계산
             Vector3 direction = (target.transform.position - transform.position).normalized;
-
+            Vector3 newPos = new Vector3(direction.x , 0, direction.z);
             // 이동 처리
-            transform.position += direction * moveSpeed * Time.deltaTime;
+            transform.position += newPos * moveSpeed * Time.deltaTime;
 
             // 목표를 바라보게 회전 (선택 사항)
             transform.rotation = Quaternion.LookRotation(direction);
@@ -38,6 +38,12 @@ public class SphereSc : MonoBehaviour
     {
         if (other.tag=="Barrier")
         {
+            Debug.Log(other.tag +"닿음");
+            gameObject.SetActive(false);
+        }
+        if (other.tag=="Player")
+        {
+            Debug.Log(other.tag +"닿음");
             gameObject.SetActive(false);
         }
     }
