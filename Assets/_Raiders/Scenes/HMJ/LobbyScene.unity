@@ -10610,7 +10610,7 @@ GameObject:
   - component: {fileID: 1127808686}
   m_Layer: 5
   m_Name: PlayerCanvas
-  m_TagString: Untagged
+  m_TagString: NotInTitle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13261,7 +13261,7 @@ GameObject:
   - component: {fileID: 1416771371}
   m_Layer: 0
   m_Name: CardSelectCanvas
-  m_TagString: Untagged
+  m_TagString: NotInTitle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13486,7 +13486,7 @@ GameObject:
   - component: {fileID: 1436095797}
   m_Layer: 0
   m_Name: SkillManager
-  m_TagString: Untagged
+  m_TagString: NotInTitle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16511,7 +16511,7 @@ GameObject:
   - component: {fileID: 1677008171}
   m_Layer: 0
   m_Name: InputManager
-  m_TagString: Untagged
+  m_TagString: NotInTitle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

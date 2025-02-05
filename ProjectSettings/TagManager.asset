@@ -12,6 +12,7 @@ TagManager:
   - Boss2
   - Barrier
   - Sphere
+  - NotInTitle
   layers:
   - Default
   - TransparentFX
