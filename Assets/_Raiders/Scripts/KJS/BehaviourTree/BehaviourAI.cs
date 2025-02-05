@@ -55,7 +55,7 @@ public class BehaviourAI : MonoBehaviour
         locomotionBT = new BehaviourTreeRunner(SettingFollowBT());
         attackBT = new BehaviourTreeRunner(SettingAttackBT());
 
-        animator = GetComponent<Animator>();
+         animator = GetComponent<Animator>();
 
         patternNumber = Random.Range(testSkillStart, testSkillEnd);
         animFinish = false;
@@ -378,7 +378,7 @@ public class BehaviourAI : MonoBehaviour
                 HP.currentHp = 1;
 
                 switchingClip = true;
-
+                
                 isDoPattern = true;
                 GetComponent<SkillController>().Barrier();
                 animator.SetTrigger("Crouching");
@@ -408,6 +408,10 @@ public class BehaviourAI : MonoBehaviour
     {
         animator.SetTrigger("Standing");
         Debug.Log("틀어감");
+    }
+    public void IdleWalk()
+    {  BossStates = BossState.Locomotion;
+       animator.SetTrigger("IdleWalk");
     }
 
     IEnumerator StartPattern()

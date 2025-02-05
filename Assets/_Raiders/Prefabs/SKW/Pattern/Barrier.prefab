@@ -127,8 +127,10 @@ MonoBehaviour:
   - {fileID: 1770819240117370869, guid: 2e8181f13757b3d408077973ae1fdddf, type: 3}
   dissolveSpeed: 1
   hp: {fileID: 0}
+  PlayerHp: {fileID: 0}
+  Boss: {fileID: 0}
   MaxSheidStack: 6
   DefaultSheidStack: 2
   CurrentSheidStack: 0
-  PatternMaxTime: 10
+  PatternMaxTime: 60
   spwanCount: 2
