@@ -9,20 +9,21 @@ using UnityEngine.UIElements;
 
 public class BehaviourAI : MonoBehaviour
 {
-    enum BossState
+    public enum BossState
     {
         Locomotion,
         Attack,
+        GimmikInit,
         Gimmik,
         Death,
         Clear
     }
-
-    public GameObject TargetPlayer;
+    
+    private BossState bossState;
+    public BossState BossStates { get { return bossState; } set { bossState = value; }}
 
     [SerializeField] float movementSpeed;
     [SerializeField] float searchBoundary; // 탐색 반경
-    [SerializeField] BossState bossState;
 
     [SerializeField] TMP_Text alertText;
     [SerializeField] GameObject alertObject;
@@ -39,11 +40,13 @@ public class BehaviourAI : MonoBehaviour
     float movementSpeedRatio;
     int patternNumber;
     bool animFinish;
+    bool pattern1Done;
     bool switchingClip;
+
     //패턴을 했나? 발악 패턴만 
     public bool isDoPattern = false;
     public float BossBarrier;
-    bool pattern1Done;
+    public GameObject TargetPlayer;
 
     void Start()
     {
@@ -73,10 +76,13 @@ public class BehaviourAI : MonoBehaviour
             locomotionBT.Operate();
         else if (bossState == BossState.Attack)
             attackBT.Operate();
-        else if (bossState == BossState.Gimmik) { }
+        else if (bossState == BossState.Gimmik)
+        {
+            
+        }
         else if (bossState == BossState.Death)
         {
-            // 시간 느리게...
+            
         }
     }
 
@@ -95,7 +101,13 @@ public class BehaviourAI : MonoBehaviour
                         new ActionNode(OperateAttackBT)
                     }
                 ),
-                new ActionNode(FollowPlayer)
+                new SequenceNode(
+                    new List<INode>()
+                    {
+                        new ActionNode(CheckPlayGimmik),
+                        new ActionNode(FollowPlayer)
+                    }
+                ),
             }
         );
 
@@ -170,6 +182,23 @@ public class BehaviourAI : MonoBehaviour
     {
         movementSpeedRatio = Mathf.Lerp(movementSpeedRatio, 0, movementSpeed * Time.deltaTime);
         animator.SetFloat("MovementSpeed", movementSpeedRatio);
+        return NodeState.Success;
+    }
+
+    // 기믹 시작해야하는 타이밍인지 체크
+    NodeState CheckPlayGimmik()
+    {
+        float HP = GetComponent<Hp>().currentHp;
+        float MaxHP = GetComponent<Hp>().maxHp;
+
+        if ((HP / MaxHP * 100 < 50 && !pattern1Done) || (HP <= 1 && !isDoPattern))
+        {
+            switchingClip = false;
+            bossState = BossState.Attack;
+
+            return NodeState.Failure;
+        }
+
         return NodeState.Success;
     }
 
@@ -322,7 +351,7 @@ public class BehaviourAI : MonoBehaviour
         if (patternNumber == 5)
         {
             Debug.Log("Attack5");
-            
+
             return NodeState.Success;
         }
         return NodeState.Failure;
@@ -331,8 +360,8 @@ public class BehaviourAI : MonoBehaviour
     NodeState barrierPattern()
     {
         var HP = GetComponent<Hp>();
-        
-        
+
+
         if (HP.currentHp <= 1 && !isDoPattern)
         {
             HP.currentHp = 1;
@@ -346,9 +375,9 @@ public class BehaviourAI : MonoBehaviour
                 //무적
                 HP.Defence = 1f;
                 HP.currentHp = 1;
-                
+
                 switchingClip = true;
-                
+
                 isDoPattern = true;
                 GetComponent<SkillController>().Barrier();
                 animator.SetTrigger("Crouching");
@@ -356,6 +385,7 @@ public class BehaviourAI : MonoBehaviour
                 // HP.Defence = 0;
                 // HP.currentHp = 0;
             }
+            bossState = BossState.Gimmik;
             return NodeState.Success;
         }
         return NodeState.Failure;

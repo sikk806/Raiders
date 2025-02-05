@@ -136,7 +136,10 @@ public class Hp : MonoBehaviour
         if (GetComponent<BehaviourAI>().isDoPattern)
         {
             GetComponent<Animator>().SetTrigger("Death");
+            GetComponent<BehaviourAI>().BossStates = BehaviourAI.BossState.Death;
             Player.Instance.GetComponent<Hp>().Defence = 1f;
+            StartCoroutine("TimeReset");
+            Time.timeScale = 0.25f;
         }
         else
         {
@@ -173,10 +176,9 @@ public class Hp : MonoBehaviour
 
         Player.Instance.animator.SetTrigger("Death");
 
-
-
     }
 
+    // Resurrection으로 넘어가는 곳이 어디인지 확인 -> Deathcount 줄어 든 후 부활시켜야 함. 
     public void Resurrection()
     {
         IsNoDamaged = false;
@@ -206,5 +208,13 @@ public class Hp : MonoBehaviour
         MaxHp *= amount;
         CurrentHp = MaxHp;
         HpText.text = CurrentHp + "/" + MaxHp;
+    }
+
+    IEnumerator TimeReset()
+    {
+        GameManager.Instance.WinTheGame();
+        // 0.25로 timescale을 변경한 상태에서 1f 가 4초가 될지, 1초일지 체크해봐야함.
+        yield return new WaitForSeconds(1f);
+        Time.timeScale = 1f;
     }
 }
