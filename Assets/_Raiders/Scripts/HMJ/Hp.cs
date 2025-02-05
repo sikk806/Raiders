@@ -192,7 +192,7 @@ public class Hp : MonoBehaviour
 
         Player.Instance.BringBackControl();
 
-        MaxHp = 100f; //Temp
+        MaxHp = 1000f; //Temp
 
         Player.Instance.MaxMp = 1000f; //Temp
 

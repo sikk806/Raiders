@@ -44,8 +44,8 @@ public class NPC : MonoBehaviour
 
         if (CardSelect.instance.cardSelectCnt == 0 && messageBox.activeSelf)
         {
-            messageBox.SetActive(false);
             Player.Instance.BringBackControl();
+            messageBox.SetActive(false);
 
         }
     }
