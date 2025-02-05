@@ -13,7 +13,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] TMP_Text DieText;
     [SerializeField] GameObject revUI;
     [SerializeField] TMP_Text countDown;
-
     InputManager input;
     public static InputManager Input { get { return Instance.input; } }
     SkillManager skill;
@@ -104,8 +103,14 @@ public class GameManager : MonoBehaviour
         uDieUI.SetActive(false);
         UIImage.color = new Color(UIImage.color.r, UIImage.color.g, UIImage.color.b, 0f);
         Destroy(GameObject.FindWithTag("Player"));
+        GameObject[] objects = GameObject.FindGameObjectsWithTag("NotInTitle");
+        foreach (GameObject obj in objects)
+        {
+            Destroy(obj);
+        }
         DeathCount = 5;
         SceneLoader.Instance.LoadNewScene("LobbyScene");
+        Destroy(gameObject);
     }
 
     public void WinTheGame()
@@ -137,8 +142,14 @@ public class GameManager : MonoBehaviour
         uDieUI.SetActive(false);
         UIImage.color = new Color(UIImage.color.r, UIImage.color.g, UIImage.color.b, 0f);
         Destroy(GameObject.FindWithTag("Player"));
+        GameObject[] objects = GameObject.FindGameObjectsWithTag("NotInTitle");
+        foreach (GameObject obj in objects)
+        {
+            Destroy(obj);
+        }
         DeathCount = 5;
         SceneLoader.Instance.LoadNewScene("MainScene");
+        Destroy(gameObject);
     }
 
     IEnumerator RevPlayer()
