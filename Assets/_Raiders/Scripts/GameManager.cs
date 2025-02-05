@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
     // 2025-01-23 static 제거
     public SkillManager Skill { get { return Instance.skill; } }
 
-    private float deathCount = 1;
+    private float deathCount = 5;
     public float DeathCount { get { return deathCount; } set { deathCount = value; } }
 
     private float playTime = 240f;
