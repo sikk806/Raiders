@@ -19,10 +19,10 @@ public class GameManager : MonoBehaviour
     // 2025-01-23 static 제거
     public SkillManager Skill { get { return Instance.skill; } }
 
-    private float deathCount = 0;
+    private float deathCount = 1;
     public float DeathCount { get { return deathCount; } set { deathCount = value; } }
 
-    private float playTime;
+    private float playTime = 60f;
     public float PlayTime { get { return playTime; } set { PlayTime = value; } }
 
     public Action WinAction;
@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour
     {
         deathCount--;
 
-        if (deathCount < 0)
+        if (deathCount <= 0)
         {
             Debug.Log("GameOver");
             // DeathCount가 0이 됐을 때 UDie UI 출력
@@ -65,6 +65,19 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void NegaitveGameTime()
+    {
+        playTime -= Time.deltaTime;
+    }
+
+    public string makeTime()
+    {
+        int hours = (int)(playTime / 3600); // 시간 계산
+        int minutes = (int)(playTime % 3600) / 60; // 분 계산
+        int seconds = (int)(playTime % 60); // 초 계산
+        
+        return string.Format("{0:D2}:{1:D2}:{2:D2}", hours, minutes, seconds);
+    }
     static void Init()
     {
         if (instance == null)
