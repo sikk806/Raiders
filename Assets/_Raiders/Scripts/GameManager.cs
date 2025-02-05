@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] GameObject uDieUI;
     [SerializeField] TMP_Text DieText;
+    [SerializeField] GameObject revUI;
+    [SerializeField] TMP_Text countDown;
 
     InputManager input;
     public static InputManager Input { get { return Instance.input; } }
@@ -18,7 +20,7 @@ public class GameManager : MonoBehaviour
     // 2025-01-23 static 제거
     public SkillManager Skill { get { return Instance.skill; } }
 
-    private float deathCount = 1;
+    private float deathCount = 5;
     public float DeathCount { get { return deathCount; } set { deathCount = value; } }
 
     private float playTime;
@@ -56,7 +58,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Resurrection after 5 sec, use popup and call Function (Player.Instance.Resurrection)");
+            StartCoroutine("RevPlayer");
         }
     }
 
@@ -74,10 +76,12 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(go);
             instance = go.GetComponent<GameManager>();
         }
+
     }
 
     IEnumerator UDie()
     {
+        Debug.Log("Die");
         DieText.text = "유  다  희";
         DieText.color = Color.red;
         DieText.color = new Color(DieText.color.r, DieText.color.g, DieText.color.b, 0f);
@@ -135,5 +139,22 @@ public class GameManager : MonoBehaviour
         Destroy(GameObject.FindWithTag("Player"));
         DeathCount = 5;
         SceneLoader.Instance.LoadNewScene("MainScene");
+    }
+
+    IEnumerator RevPlayer()
+    {
+        revUI.SetActive(true);
+        float revTime = 5f;
+        Slider slider = revUI.GetComponent<Slider>();
+        slider.value = 1f;
+        while(revTime > 0.1f)
+        {
+            revTime -= Time.deltaTime;
+            slider.value = revTime / 5f;
+            countDown.text = Math.Round(revTime) + "초 후 부활합니다.";
+            yield return null;
+        }
+        revUI.SetActive(false);
+        Player.Instance.GetComponent<Hp>().Resurrection();
     }
 }

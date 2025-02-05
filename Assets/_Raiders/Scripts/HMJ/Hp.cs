@@ -185,7 +185,6 @@ public class Hp : MonoBehaviour
 
     }
 
-    // Resurrection으로 넘어가는 곳이 어디인지 확인 -> Deathcount 줄어 든 후 부활시켜야 함. 
     public void Resurrection()
     {
         IsNoDamaged = false;

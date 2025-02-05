@@ -243,7 +243,8 @@ public class BehaviourAI : MonoBehaviour
         float MaxHP = GetComponent<Hp>().maxHp;
 
         if (HP / MaxHP * 100 < 50 && !pattern1Done)
-        {
+        {   
+            animator.ResetTrigger("IdleWalk");
             if (!switchingClip)
             {
                 alertText.text = "곧 마기방출이 시작됩니다.\n폭발에 대비하세요.";
@@ -360,10 +361,9 @@ public class BehaviourAI : MonoBehaviour
     NodeState barrierPattern()
     {
         var HP = GetComponent<Hp>();
-
-
         if (HP.currentHp <= 1 && !isDoPattern)
         {
+            animator.ResetTrigger("IdleWalk");
             HP.currentHp = 1;
             transform.position = OriginPosition;
             HP.BarrierSet(BossBarrier);
