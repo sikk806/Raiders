@@ -3055,6 +3055,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BossCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 7313007487932026348, guid: 59cccd204daac54438d330d9fc83cb31, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 445755a3d7da44e4e8f05ec8a8482e68, type: 3}
     - target: {fileID: 9113306065544737723, guid: 59cccd204daac54438d330d9fc83cb31, type: 3}
       propertyPath: m_IsActive
       value: 1
