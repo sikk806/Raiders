@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +6,7 @@ public class WShot : MonoBehaviour
 {
     private BoxCollider collider;
     private List<Hp> enemiesInRange = new List<Hp>(); // 범위 내 몬스터 목록
+    Vector3 vector3 = new Vector3(0, 2.5f, 1);
     private void Start()
     {
         collider = GetComponent<BoxCollider>();
@@ -44,6 +45,7 @@ public class WShot : MonoBehaviour
         {
             Player.Instance.DrainHp();
             enemy.TakeDamage(W.CalculatingDamage()); // 데미지 적용
+            Damage.Instance.ShowDamage((int)W.CalculatingDamage(), enemy.transform.position+vector3);
             yield return new WaitForSeconds(1f); // 지정된 간격으로 데미지
         }
     }

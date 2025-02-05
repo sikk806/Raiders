@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -40,7 +41,14 @@ public class R : MonoBehaviour
             //쿨타임 음수 방지 처리
             CoolTime = Mathf.Clamp(CoolTime, 0, Mathf.Infinity);
 
-            RCoolTime.text = ((int)CoolTime).ToString();
+            if (CoolTime >= 1f)
+            {
+                RCoolTime.text = ((int)CoolTime).ToString();
+            }
+            else
+            {
+                RCoolTime.text = Math.Round(CoolTime, 1).ToString();
+            }
             RCool.fillAmount = CoolTime / 60;
 
             //쿨타임 0 이하면

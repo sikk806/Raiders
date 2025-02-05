@@ -10,6 +10,7 @@ using static UnityEngine.UIElements.UxmlAttributeDescription;
 using JetBrains.Annotations;
 using Unity.AppUI.UI;
 using static UnityEngine.GridBrushBase;
+using System;
 
 public enum PlayerState //플레이어 상태
 {
@@ -48,8 +49,6 @@ public class Player : MonoBehaviour
 
 
     public float StopTime; //경직 시간
-   
-    public float NoDamageTime = 5f; //무적 시간
     private float movementSpeedRatio = 0;
 
 
@@ -192,7 +191,15 @@ public class Player : MonoBehaviour
             //쿨타임 음수 방지 처리
             RollingCoolTime = Mathf.Clamp(RollingCoolTime, 0, Mathf.Infinity);
 
-            RollCoolText.text = ((int)RollingCoolTime).ToString();
+            if (RollingCoolTime >= 1f)
+            {
+                RollCoolText.text = ((int)RollingCoolTime).ToString();
+            }
+            else
+            {
+                RollCoolText.text = Math.Round(RollingCoolTime, 1).ToString();
+            }
+
             RollingCool.fillAmount = RollingCoolTime / 3;
         }
         else if (RollingCoolTime <= 0)
@@ -548,7 +555,7 @@ public class Player : MonoBehaviour
                     RollingCool.fillAmount = 1;
 
                     //무적 부여
-                    StartCoroutine(PlayerHp.NoDamage(NoDamageTime));
+                    StartCoroutine(PlayerHp.NoDamage(RollingTime));
 
                     //현재 플레이어 상태를 Roll로 변경
                     CurrentState = PlayerState.Roll;
@@ -724,7 +731,7 @@ public class Player : MonoBehaviour
                     CurrentState = PlayerState.UseR;
 
                     //4초간 무적 부여 (TEMP)
-                    PlayerHp.NoDamage(4f);
+                    StartCoroutine(PlayerHp.NoDamage(4f));
 
                     //R 애니메이션 트리거 설정 
                     animator.SetTrigger("R");
