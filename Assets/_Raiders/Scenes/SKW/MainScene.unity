@@ -1318,6 +1318,7 @@ MonoBehaviour:
   MainMenuClips:
   - {fileID: 8300000, guid: 421b07eba08c77743afead0f03159355, type: 3}
   - {fileID: 8300000, guid: 4921fd97d2402d949bec11d44476875b, type: 3}
+  - {fileID: 8300000, guid: 34f94bd35ea46ed4199062f3117e3dab, type: 3}
   PlayerClips:
   - {fileID: 8300000, guid: bcedef64cfd789749b42221d8aa1858f, type: 3}
   - {fileID: 8300000, guid: 32b68e29aac0a1b41ba2e7cd8c4ee381, type: 3}
@@ -1327,7 +1328,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d67a3a2a1f3eade42a8587816c460db7, type: 3}
   - {fileID: 8300000, guid: 1e6e2583dfd1e704fab4b8b22ff3b27f, type: 3}
   BossClips:
-  - {fileID: 8300000, guid: dd3fa2d8ad0c8a243acf21237ae27811, type: 3}
+  - {fileID: 8300000, guid: 6c1fee10d482c0c4e86ed0c7f51cd6a4, type: 3}
+  - {fileID: 8300000, guid: 6e9170c9adf167842a25248299ae50bd, type: 3}
+  - {fileID: 8300000, guid: e7d97d9a020dcdf48ac1fc210949cefb, type: 3}
+  - {fileID: 8300000, guid: 09d9a9927ec38e24fbdb0e46965c67f4, type: 3}
+  - {fileID: 8300000, guid: 6fc3afa1c31638e4598b13bbd34a2a56, type: 3}
+  - {fileID: 8300000, guid: 8055344bfdffab2448fe68052266e578, type: 3}
   mAudioSource: {fileID: 1454577141}
   bAudioSource: {fileID: 1454577144}
   pAudioSource: {fileID: 1454577145}

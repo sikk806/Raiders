@@ -13,39 +13,28 @@ public class GameManager : MonoBehaviour
     [SerializeField] TMP_Text DieText;
     [SerializeField] GameObject revUI;
     [SerializeField] TMP_Text countDown;
-
     InputManager input;
     public static InputManager Input { get { return Instance.input; } }
     SkillManager skill;
     // 2025-01-23 static 제거
     public SkillManager Skill { get { return Instance.skill; } }
 
-    //데스카운트 확인
-    private float deathCount = 1;
+    private float deathCount = 0;
     public float DeathCount { get { return deathCount; } set { deathCount = value; } }
-    //플레이타임
-    private float playTime = 60f;
+
+    private float playTime;
     public float PlayTime { get { return playTime; } set { PlayTime = value; } }
 
     public Action WinAction;
+
+    bool checkClear;
 
     private void Awake()
     {
         input = new InputManager();
         skill = FindAnyObjectByType<SkillManager>();
-    }
-    public void NegaitveGameTime()
-    {
-        playTime -= Time.deltaTime;
-    }
 
-    public string makeTime()
-    {
-        int hours = (int)(playTime / 3600); // 시간 계산
-        int minutes = (int)(playTime % 3600) / 60; // 분 계산
-        int seconds = (int)(playTime % 60); // 초 계산
-        
-       return string.Format("{0:D2}:{1:D2}:{2:D2}", hours, minutes, seconds);
+        checkClear = false;
     }
 
     void Start()
@@ -64,11 +53,11 @@ public class GameManager : MonoBehaviour
     {
         deathCount--;
 
-        if (deathCount <= 0)
+        if (deathCount < 0)
         {
             Debug.Log("GameOver");
             // DeathCount가 0이 됐을 때 UDie UI 출력
-            UDie();
+            StartCoroutine("UDie");
         }
         else
         {
@@ -90,23 +79,26 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(go);
             instance = go.GetComponent<GameManager>();
         }
+
     }
 
     IEnumerator UDie()
     {
-        Debug.Log("Die");
         DieText.text = "유  다  희";
         DieText.color = Color.red;
-        DieText.color = new Color(DieText.color.r, DieText.color.g, DieText.color.b, 0f);
+        DieText.color = new Color(DieText.color.r, DieText.color.g, DieText.color.b, 1f);
         DieText.fontSize = 60f;
         uDieUI.SetActive(true);
 
         Image UIImage = uDieUI.GetComponent<Image>();
 
-        while(UIImage.color.a <= 0.4f)
+        float Timer = 0f;
+
+        while (Timer < 2f)
         {
-            UIImage.color = new Color(UIImage.color.r, UIImage.color.g, UIImage.color.b, UIImage.color.a + 0.02f);
-            DieText.color = new Color(DieText.color.r, DieText.color.g, DieText.color.b, 0.05f);
+            Timer += Time.deltaTime;
+            UIImage.color = new Color(UIImage.color.r, UIImage.color.g, UIImage.color.b, UIImage.color.a + 0.02f * Time.deltaTime);
+            DieText.color = new Color(DieText.color.r, DieText.color.g, DieText.color.b, DieText.color.a + 0.05f * Time.deltaTime);
             DieText.fontSize += 1.5f;
             yield return null;
         }
@@ -117,30 +109,41 @@ public class GameManager : MonoBehaviour
         uDieUI.SetActive(false);
         UIImage.color = new Color(UIImage.color.r, UIImage.color.g, UIImage.color.b, 0f);
         Destroy(GameObject.FindWithTag("Player"));
+        GameObject[] objects = GameObject.FindGameObjectsWithTag("NotInTitle");
+        foreach (GameObject obj in objects)
+        {
+            Destroy(obj);
+        }
         DeathCount = 5;
         SceneLoader.Instance.LoadNewScene("LobbyScene");
+        Destroy(gameObject);
     }
 
     public void WinTheGame()
     {
-        StartCoroutine("WinGame");
+        if(!checkClear) StartCoroutine("WinGame");
     }
 
     IEnumerator WinGame()
     {
+        checkClear = true;
+        uDieUI.SetActive(true);
         DieText.text = "ㅅ..승리.....";
         DieText.color = Color.blue;
+        Image UIImage = uDieUI.GetComponent<Image>();
+        UIImage.color = new Color(UIImage.color.r, UIImage.color.g, UIImage.color.b, 0f);
         DieText.color = new Color(DieText.color.r, DieText.color.g, DieText.color.b, 0f);
         DieText.fontSize = 60f;
-        uDieUI.SetActive(true);
 
-        Image UIImage = uDieUI.GetComponent<Image>();
 
-        while(UIImage.color.a <= 0.4f)
+        float Timer = 0f;
+
+        while (Timer < 1f)
         {
-            UIImage.color = new Color(UIImage.color.r, UIImage.color.g, UIImage.color.b, UIImage.color.a + 0.02f);
-            DieText.color = new Color(DieText.color.r, DieText.color.g, DieText.color.b, 0.05f);
-            DieText.fontSize += 1.5f;
+            Timer += Time.deltaTime;
+            UIImage.color = new Color(UIImage.color.r, UIImage.color.g, UIImage.color.b, UIImage.color.a + 0.002f);
+            DieText.color = new Color(DieText.color.r, DieText.color.g, DieText.color.b, DieText.color.a + 0.005f);
+            DieText.fontSize += 1.5f * Time.deltaTime;
             yield return null;
         }
 
@@ -150,8 +153,14 @@ public class GameManager : MonoBehaviour
         uDieUI.SetActive(false);
         UIImage.color = new Color(UIImage.color.r, UIImage.color.g, UIImage.color.b, 0f);
         Destroy(GameObject.FindWithTag("Player"));
+        GameObject[] objects = GameObject.FindGameObjectsWithTag("NotInTitle");
+        foreach (GameObject obj in objects)
+        {
+            Destroy(obj);
+        }
         DeathCount = 5;
         SceneLoader.Instance.LoadNewScene("MainScene");
+        Destroy(gameObject);
     }
 
     IEnumerator RevPlayer()
@@ -160,7 +169,7 @@ public class GameManager : MonoBehaviour
         float revTime = 5f;
         Slider slider = revUI.GetComponent<Slider>();
         slider.value = 1f;
-        while(revTime > 0.1f)
+        while (revTime > 0.1f)
         {
             revTime -= Time.deltaTime;
             slider.value = revTime / 5f;

@@ -20,13 +20,13 @@ public class Beam : MonoBehaviour
         decalMaterial = new Material(projector.material);
         projector.material = decalMaterial;
         decalMaterial.SetFloat("_DecalRad", 1f);
+        DamagePerTick = 0;
     }
 
     void OnEnable()
     {
         StartCoroutine("Deactive");
         decalMaterial.SetFloat("_DecalRad", 1f);
-        boxCollider.enabled = false;
     }
 
     void OnDisable()
@@ -40,19 +40,19 @@ public class Beam : MonoBehaviour
         
         yield return new WaitForSeconds(0.5f);
         decal.SetActive(false);
-
+        AudioMixerController.Instance.BossStartClip("Enrage");
         foreach (var particle in particles)
         {
             particle.SetActive(true);
         }
-        boxCollider.enabled = true;
+        DamagePerTick = 1;
         yield return new WaitForSeconds(1.25f);
         foreach (var particle in particles)
         {
             particle.SetActive(false);
         }
         gameObject.SetActive(false);
-        boxCollider.enabled = false;
+        DamagePerTick = 0;
     }
 
     private void OnTriggerStay(Collider other)

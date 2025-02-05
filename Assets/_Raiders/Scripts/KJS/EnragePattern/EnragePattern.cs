@@ -196,6 +196,7 @@ public class EnragePattern : MonoBehaviour
             decalMaterial.SetFloat("_DecalRad", 0.01f);
             decal.SetActive(false);
             impact.SetActive(true);
+            AudioMixerController.Instance.BossStartClip("Impact");
             if (!IsSafe)
             {
                 // 데미지가 들어오고
