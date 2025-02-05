@@ -99,7 +99,7 @@ public class GameManager : MonoBehaviour
             Timer += Time.deltaTime;
             UIImage.color = new Color(UIImage.color.r, UIImage.color.g, UIImage.color.b, UIImage.color.a + 0.02f * Time.deltaTime);
             DieText.color = new Color(DieText.color.r, DieText.color.g, DieText.color.b, DieText.color.a + 0.05f * Time.deltaTime);
-            DieText.fontSize += 1.5f * Time.deltaTime;
+            DieText.fontSize += 1.5f;
             yield return null;
         }
 

@@ -110,15 +110,17 @@ public class AudioMixerController : MonoBehaviour
         {
             case SceneType.MainScene:
                 mAudioSource.Stop();
-                StartClip(mClipsDictionary, "Funky Chill 2 loop");
+                StartClip(mClipsDictionary, DefineMusicName.Main);
                 break;
 
             case SceneType.LobbyScene:
-                Debug.Log("소리 넣을꺼 확인");
+                mAudioSource.Stop();
+                StartClip(mClipsDictionary, DefineMusicName.Lobby);
+                mAudioSource.loop = true;
                 break;
             case SceneType.Boss1Scene:
                 mAudioSource.Stop();
-                StartClip(mClipsDictionary, "FA_Win_Jingle_Loop");
+                StartClip(mClipsDictionary, DefineMusicName.Boss);
                 mAudioSource.loop = true;
                 // 다른 씬에 대한 처리
                 break;

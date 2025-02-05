@@ -23,8 +23,10 @@ public class SceneLoader : MonoBehaviour
         "이걸 도전해 보신다구요? 대단하시네요.",
         "자, 마우스를 잡고 왼쪽 버튼을 눌러보세요. 이게 클릭이랍니다.",
         "어.. 음.. 네.. 열심히 잡아보세요..!",
-        "뿡. 앗.. 실수ㅎ",
-        "분수대 근처에서 상호작용 키를 누르면 패시브를 얻을 수 있어요!\n그런데 패시브 없이 싸울 수 없나요...? 저런..."
+        "(뿡.) 앗.. 실수ㅎ",
+        "분수대 근처에서 상호작용 키를 누르면 패시브를 얻을 수 있어요!\n그런데 패시브 없이 싸울 수 없나요...? 저런...",
+        "이렇게 물불 안 가리는 녀석은 내 스타일이 아닌데.",
+        "응원합니다! (진심X)"
     };
 
     void Awake()
@@ -102,7 +104,7 @@ public class SceneLoader : MonoBehaviour
 
         ProgressBar.value = 0f;
         Percentage.text = "0%";
-        Description.text = descriptions[Random.Range(0, 6)];
+        Description.text = descriptions[Random.Range(0, 8)];
         Color color = FadeCanvas.color;
         for (float t = 0; t <= fadeDuration; t += Time.deltaTime)
         {

@@ -1306,6 +1306,7 @@ MonoBehaviour:
   MainMenuClips:
   - {fileID: 8300000, guid: 421b07eba08c77743afead0f03159355, type: 3}
   - {fileID: 8300000, guid: 4921fd97d2402d949bec11d44476875b, type: 3}
+  - {fileID: 8300000, guid: 34f94bd35ea46ed4199062f3117e3dab, type: 3}
   PlayerClips:
   - {fileID: 8300000, guid: bcedef64cfd789749b42221d8aa1858f, type: 3}
   - {fileID: 8300000, guid: 32b68e29aac0a1b41ba2e7cd8c4ee381, type: 3}
