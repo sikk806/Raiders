@@ -31,6 +31,8 @@ public class BehaviourAI : MonoBehaviour
     [SerializeField] int testSkillStart;
     [SerializeField] int testSkillEnd;
 
+    [SerializeField] private GameObject barrierStack;
+
     Animator animator;
     BehaviourTreeRunner locomotionBT; // For Locomotion
     BehaviourTreeRunner attackBT; // For Attack
@@ -47,6 +49,9 @@ public class BehaviourAI : MonoBehaviour
     public bool isDoPattern = false;
     public float BossBarrier;
     public GameObject TargetPlayer;
+
+    public GameObject Barrier;
+    
 
     void Start()
     {
@@ -379,12 +384,16 @@ public class BehaviourAI : MonoBehaviour
                 switchingClip = true;
 
                 isDoPattern = true;
-                GetComponent<SkillController>().Barrier();
+                //베리어 생성
+                var a =GetComponent<SkillController>().Barrier();
+                Barrier = a;
+                barrierStack.SetActive(true);
                 animator.SetTrigger("Crouching");
                 //기믹끝나는시점
                 // HP.Defence = 0;
                 // HP.currentHp = 0;
             }
+            
             bossState = BossState.Gimmik;
             return NodeState.Success;
         }
