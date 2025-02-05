@@ -141,6 +141,7 @@ public class Hp : MonoBehaviour
         if (GetComponent<BehaviourAI>().isDoPattern)
         {
             GetComponent<Animator>().SetTrigger("Death");
+            GetComponent<Animator>().speed = 0.25f;
             GetComponent<BehaviourAI>().BossStates = BehaviourAI.BossState.Death;
             Player.Instance.GetComponent<Hp>().Defence = 1f;
             StartCoroutine("TimeReset");
