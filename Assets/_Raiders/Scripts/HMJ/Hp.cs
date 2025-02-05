@@ -66,7 +66,7 @@ public class Hp : MonoBehaviour
 
             Barrier -= damage;
             Barrier = Mathf.Clamp(Barrier, 0f, Mathf.Infinity);
-            HpText.text = (int)CurrentHp + "(+" + Barrier + ")" + "/" + MaxHp;
+            HpText.text = (int)CurrentHp + "(+" + (int)Barrier + ")" + "/" + MaxHp;
 
             if (lastDamage >= 0f)
             {
@@ -74,7 +74,7 @@ public class Hp : MonoBehaviour
 
                 CurrentHp -= damage;
                 HpBar.fillAmount = CurrentHp / MaxHp;
-                HpText.text = (int)CurrentHp + "(+" + Barrier + ")" + "/" + MaxHp;
+                HpText.text = (int)CurrentHp + "(+" + (int)Barrier + ")" + "/" + MaxHp;
 
                 CurrentHp = Mathf.Clamp(CurrentHp, 0, MaxHp);
 
@@ -100,7 +100,7 @@ public class Hp : MonoBehaviour
         {           
             CurrentHp = Mathf.Clamp(CurrentHp - damage, 0, MaxHp);
             HpBar.fillAmount = CurrentHp / MaxHp;
-            HpText.text = (int)CurrentHp + "(+" + Barrier + ")" + "/" + MaxHp;
+            HpText.text = (int)CurrentHp + "(+" + (int)Barrier + ")" + "/" + MaxHp;
 
             if (CurrentHp <= 0f)
             {
@@ -126,13 +126,13 @@ public class Hp : MonoBehaviour
     {
         //test로 값을 높힘
         Barrier = addBarrier;
-        HpText.text = (int)CurrentHp + "(+" + Barrier + ")" + "/" + MaxHp;
+        HpText.text = (int)CurrentHp + "(+" + (int)Barrier + ")" + "/" + MaxHp;
     }
 
     public void BarrierReset()
     {
         Barrier = 0f;
-        HpText.text = (int)CurrentHp + "(+" + Barrier + ")" + "/" + MaxHp;
+        HpText.text = (int)CurrentHp + "(+" + (int)Barrier + ")" + "/" + MaxHp;
     }
 
     public void Boss1Die()
@@ -188,9 +188,9 @@ public class Hp : MonoBehaviour
     {
         IsNoDamaged = false;
 
-        StartCoroutine(NoDamage(2.5f));
-
         Player.Instance.BringBackControl();
+
+        StartCoroutine(NoDamage(2.5f));
 
         MaxHp = 1000f; //Temp
 
@@ -198,7 +198,7 @@ public class Hp : MonoBehaviour
 
         CurrentHp = MaxHp;
         HpBar.fillAmount = CurrentHp / MaxHp;
-        HpText.text = (int)CurrentHp + "(+" + Barrier + ")" + "/" + MaxHp;
+        HpText.text = (int)CurrentHp + "(+" + (int)Barrier + ")" + "/" + MaxHp;
 
         Player.Instance.CurrentMp = Player.Instance.MaxMp;
         Player.Instance.MpBar.fillAmount = Player.Instance.CurrentMp / Player.Instance.MaxMp;
@@ -212,7 +212,7 @@ public class Hp : MonoBehaviour
     {
         MaxHp *= amount;
         CurrentHp = MaxHp;
-        HpText.text = (int)CurrentHp + "(+" + Barrier + ")" + "/" + MaxHp;
+        HpText.text = (int)CurrentHp + "(+" + (int)Barrier + ")" + "/" + MaxHp;
     }
 
     IEnumerator TimeReset()

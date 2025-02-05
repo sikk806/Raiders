@@ -40,6 +40,7 @@ public class Player : MonoBehaviour
     public float PlayerBarrier = 150;
 
     public bool IsDrainHp = false;
+    public bool OneLife = false;
 
     private Vector3 targetPosition; //이동 목표
     private LayerMask stage; //지면 레이어마스크

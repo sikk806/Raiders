@@ -182,7 +182,7 @@ public class EnragePattern : MonoBehaviour
         yield return new WaitForSeconds(3f);
 
         int cnt = 0;
-        while (cnt < 4)
+        while (cnt < 3)
         {
             decal.SetActive(true);
             currentTime = 0;

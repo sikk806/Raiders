@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Net.Mail;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +11,7 @@ public class BuffDebuff : MonoBehaviour
     [SerializeField] Transform passiveParent;
     [SerializeField] GameObject statusEffectUI;
     [SerializeField] GameObject passiveEffectUI;
+    [SerializeField] TextMeshProUGUI atkText;
     Image statusUI;
 
     float originPower;
@@ -49,6 +51,7 @@ public class BuffDebuff : MonoBehaviour
     {
         amountPowerUp = GetComponent<Player>().Power * amount;
         GetComponent<Player>().AddedPower += amountPowerUp;
+        atkText.text = $"ATK:{(int)Player.Instance.Power} (+(int){Player.Instance.AddedPower})";
         StartCoroutine("DeactivePowerUp", buffTime);
     }
 
@@ -56,6 +59,7 @@ public class BuffDebuff : MonoBehaviour
     {
         yield return new WaitForSeconds(buffTime);
         GetComponent<Player>().AddedPower -= amountPowerUp;
+        atkText.text = $"ATK:{(int)Player.Instance.Power} (+(int){Player.Instance.AddedPower})";
     }
 
     // Skill Cool Down Section
@@ -126,6 +130,7 @@ public class BuffDebuff : MonoBehaviour
         originPower = GetComponent<Player>().Power;
         GetComponent<Player>().Power *= 1.3f;
         GetComponent<Hp>().Defence = 0.3f;
+        atkText.text = $"ATK:{(int)Player.Instance.Power} (+(int){Player.Instance.AddedPower})";
     }
 
     // 일생일사 - 부활 1회로 변경하고 기본 공격력 n% 증가
@@ -136,6 +141,8 @@ public class BuffDebuff : MonoBehaviour
         GameManager.Instance.DeathCount = 1;
         originPower = GetComponent<Player>().Power;
         GetComponent<Player>().Power *= 1.5f;
+        Player.Instance.OneLife = true;
+        atkText.text = $"ATK:{(int)Player.Instance.Power} (+(int){Player.Instance.AddedPower})";
     }
 
     // 흡혈 - 타격 시 체력 회복
@@ -162,6 +169,7 @@ public class BuffDebuff : MonoBehaviour
     {
         originPower = GetComponent<Player>().Power;
         GetComponent<Player>().Power *= 1.1f;
+        atkText.text = $"ATK:{(int)Player.Instance.Power} (+(int){Player.Instance.AddedPower})";
     }
 
     // 이속 증가
@@ -189,7 +197,7 @@ public class BuffDebuff : MonoBehaviour
     // 1회 부활 추가
     public void OneMore()
     {
-        if (!GetComponent<Player>().IsDrainHp)
+        if (!GetComponent<Player>().OneLife)
         {
             GameManager.Instance.DeathCount++;
         }

@@ -4129,7 +4129,7 @@ GameObject:
   - component: {fileID: 406559530}
   - component: {fileID: 406559529}
   m_Layer: 0
-  m_Name: Num
+  m_Name: AtkText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14234,7 +14234,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9c1637b0fd574948ba7d6f0c77a5e99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  atkText: {fileID: 0}
+  atkText: {fileID: 406559529}
 --- !u!1001 &1495070393
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15326,6 +15326,10 @@ PrefabInstance:
       propertyPath: PlayerBarrier
       value: 150
       objectReference: {fileID: 0}
+    - target: {fileID: 1615058756330260283, guid: b70768d832f23824b80d8374e9f4a6dd, type: 3}
+      propertyPath: atkText
+      value: 
+      objectReference: {fileID: 406559529}
     - target: {fileID: 1615058756330260283, guid: b70768d832f23824b80d8374e9f4a6dd, type: 3}
       propertyPath: buffParent
       value: 
