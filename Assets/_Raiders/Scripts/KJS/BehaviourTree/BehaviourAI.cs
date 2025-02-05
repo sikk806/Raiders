@@ -369,6 +369,9 @@ public class BehaviourAI : MonoBehaviour
             HP.BarrierSet(BossBarrier);
             if (!switchingClip)
             {
+                alertText.text = "악마가 힘을 모으고 있어요.저지해야될 방법을 찾아야돼요";
+                alertObject.SetActive(true);
+                StartCoroutine("AlertOff");
                 //무적
                 HP.Defence = 1f;
                 HP.currentHp = 1;
