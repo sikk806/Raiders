@@ -7,9 +7,18 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    
+    public enum UIState
+    {
+        Default,
+        PauseIng
+        
+    }
+    public UIState uiState = UIState.Default;
     public static UIManager Instance { get; private set; }
     public GameObject PauseMenu;
     public bool IsOpen = false;
+    public bool isOptionOpen = false;//옵션이 열려있는가?
     public GameObject OptionsMenu;
     
     
@@ -33,7 +42,16 @@ public class UIManager : MonoBehaviour
 
         // 현재 씬 안에 로드된 모든 객체(Canvas) 확인 setacitv false true건 찾는다.
     }
-    
+
+    public void OpenOptionTrue()
+    {
+         isOptionOpen =true;
+    }
+    public void OpenOptionFalse()
+    {
+         isOptionOpen = false;
+    }
+
     private void Update()
     {
         PauseGame();
@@ -95,22 +113,37 @@ public class UIManager : MonoBehaviour
     {
         Scene currentScene = SceneManager.GetActiveScene();
         
-        if (currentScene.name == "UIScene")
+        if (currentScene.name == "MainScene")
         {
             return;
         }
+
+        if (isOptionOpen)
+        {
+            return;
+        }
+        
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             
             if (IsOpen)
             {
                 ClosePauseMenu();
+                uiState = UIState.Default;
             }
             else if (!IsOpen)
             {
+                
                 ShowPauseMenu();
+                uiState = UIState.PauseIng;
             }
         }
+    }
+
+    public void Countinue()
+    {
+        uiState = UIState.Default;
+        ClosePauseMenu();
     }
 
     public void ShowPauseMenu()
@@ -119,6 +152,7 @@ public class UIManager : MonoBehaviour
         PauseMenu.SetActive(true); 
         Time.timeScale = 0;
     }
+    
     public void ClosePauseMenu()
     {
         IsOpen = false;

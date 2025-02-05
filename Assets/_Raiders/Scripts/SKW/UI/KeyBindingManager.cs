@@ -11,6 +11,7 @@ public enum KeyAction
     E,
     R,
     Space,
+    F,
     KEYCOUNT
 }
 
@@ -27,7 +28,7 @@ public class KeyBindingManager : MonoBehaviour
     public Action<string> OnDuplicateKeyAlert;
     //기보니 정의
     private KeyCode[] defaultKeys = new KeyCode[]
-        { KeyCode.Q, KeyCode.W, KeyCode.E, KeyCode.R,KeyCode.Space, };
+        { KeyCode.Q, KeyCode.W, KeyCode.E, KeyCode.R,KeyCode.Space,KeyCode.F };
 
     private void Awake()
     {
