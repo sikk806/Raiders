@@ -695,6 +695,8 @@ public class Player : MonoBehaviour
 
                     //E 인스턴스 4초 뒤 삭제 (TEMP)
                     Destroy(e, 4f);
+
+                    StartCoroutine(MonitorEInstance(e));
                 }
 
                 //E 스킬 사용 불가 상태라면
@@ -768,4 +770,22 @@ public class Player : MonoBehaviour
             GetComponent<Hp>().HpHeal(1f);
         }
     }
+
+    IEnumerator MonitorEInstance(GameObject eInstance)
+    {
+        Debug.Log("MonitorEInstance 코루틴 시작!");
+
+        while (eInstance != null)
+        {
+
+            if (PlayerHp.Barrier <= 0)
+            {
+                Destroy(eInstance);
+                yield break;
+            }
+
+            yield return null;
+        }
+    }
+
 }
