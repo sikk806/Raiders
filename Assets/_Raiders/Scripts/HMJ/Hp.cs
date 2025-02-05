@@ -22,6 +22,8 @@ public class Hp : MonoBehaviour
     Image HpBar;
     [SerializeField]
     TextMeshProUGUI HpText;
+    [SerializeField]
+    GameObject HpHealEffect;
 
     private void Start()
     {
@@ -42,9 +44,15 @@ public class Hp : MonoBehaviour
         CurrentHp += heal;
         CurrentHp = Mathf.Clamp(CurrentHp, 0f, MaxHp);
         HpBar.fillAmount = CurrentHp / MaxHp;
-        HpText.text = CurrentHp + "/" + MaxHp;
-
+        HpText.text = CurrentHp + "(+" + Barrier + ")" + "/" + MaxHp;
+        if (HpHealEffect != null)
+        {
+            HpHealEffect.SetActive(true);
+            Invoke("HpHealEffectEnd", 0.55f);
+        }
     }
+
+    void HpHealEffectEnd() { HpHealEffect.SetActive(false); }
 
     public void TakeDamage(float damage)
     {
@@ -90,12 +98,9 @@ public class Hp : MonoBehaviour
         }
         else
         {
-
-            // CurrentHp -= damage;
             CurrentHp = Mathf.Clamp(CurrentHp - damage, 0, MaxHp);
             HpBar.fillAmount = CurrentHp / MaxHp;
             HpText.text = CurrentHp + "(+" + Barrier + ")" + "/" + MaxHp;
-            // CurrentHp = Mathf.Clamp(CurrentHp, 0, MaxHp);
 
             if (CurrentHp <= 0f)
             {
