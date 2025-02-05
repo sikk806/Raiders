@@ -508,12 +508,15 @@ public class Player : MonoBehaviour
         //[Roll]
         if (Input.GetKeyDown(KeySetting.keys[KeyAction.Space]))
         {
-            //사운드 실행 구문
-            AudioMixerController.Instance.PlayerStartClip(DefineMusicName.Rolling);
+         
             
             if(!IsRolling && RollingCoolTime <= 0)
-            { 
-            //마우스 위치 구하기
+            {
+                
+                //사운드 실행 구문
+                AudioMixerController.Instance.PlayerStartClip(DefineMusicName.Rolling);
+                
+                //마우스 위치 구하기
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
@@ -528,11 +531,10 @@ public class Player : MonoBehaviour
 
                     // 바라볼 위치 지정 (y 값만 현재 플레이어의 y로 고정)
                     Vector3 lookDirection = new Vector3(targetPosition.x, transform.position.y, targetPosition.z);
-
-
+                    
                     //지정한 위치를 바라봄
                     transform.LookAt(lookDirection);
-
+                    
                     //구르기 상태 활성화
                     IsRolling = true;
 
@@ -561,14 +563,16 @@ public class Player : MonoBehaviour
         //[Use Q]
         if (Input.GetKeyDown(KeySetting.keys[KeyAction.Q]))
         {
-            //사운드 실행 구문
-            AudioMixerController.Instance.PlayerStartClip(DefineMusicName.Q);
+            
             //현재 플레이어 상태가 Idle 또는 Move라면
             if (CurrentState == PlayerState.Idle || CurrentState == PlayerState.Move)
             {
+                
                 //Q 사용 가능이며, 현재 Mp가 스킬 소모 Mp 이상이라면
                 if (Q.Instance.IsUsable && CurrentMp >= Q.Instance.UseMp)
                 {
+                    //사운드 실행 구문
+                    AudioMixerController.Instance.PlayerStartClip(DefineMusicName.Q);
                     //Q 스킬 사용
                     Q.Instance.UseSkill();
 
@@ -605,15 +609,15 @@ public class Player : MonoBehaviour
         //[UseW]
         if (Input.GetKeyDown(KeySetting.keys[KeyAction.W]))
         {
-            //사운드 실행 구문
-            AudioMixerController.Instance.PlayerStartClip(DefineMusicName.W);
+        
             //현재 플레이어 상태가 Idle 또는 Move라면
             if (CurrentState == PlayerState.Idle || CurrentState == PlayerState.Move)
             {
                 //W 사용 가능이며, 현재 Mp가 스킬 소모 Mp 이상이라면
                 if (W.Instance.IsUsable && CurrentMp >= W.Instance.UseMp)
                 {
-
+                    //사운드 실행 구문
+                    AudioMixerController.Instance.PlayerStartClip(DefineMusicName.W);
                     //W 스킬 사용
                     W.Instance.UseSkill();
 
@@ -656,14 +660,15 @@ public class Player : MonoBehaviour
         //[UseE]
         if (Input.GetKeyDown(KeySetting.keys[KeyAction.E]))
         {
-            //사운드 실행 구문
-            AudioMixerController.Instance.PlayerStartClip(DefineMusicName.E);
+         
             //현재 플레이어 상태가 Idle 또는 Move라면
             if (CurrentState == PlayerState.Idle || CurrentState == PlayerState.Move)
             {
                 //E 사용 가능이며, 현재 Mp가 스킬 소모 Mp 이상이라면
                 if (E.Instance.IsUsable && CurrentMp >= E.Instance.UseMp)
                 {
+                    //사운드 실행 구문
+                    AudioMixerController.Instance.PlayerStartClip(DefineMusicName.E);
                     //E 스킬 사용
                     E.Instance.UseSkill();
 
@@ -703,14 +708,15 @@ public class Player : MonoBehaviour
         //[UseR]
         if (Input.GetKeyDown(KeySetting.keys[KeyAction.R]))
         {
-            //사운드 실행 구문
-            AudioMixerController.Instance.PlayerStartClip(DefineMusicName.R);
+         
             //현재 플레이어 상태가 Idle 또는 Move라면
             if (CurrentState == PlayerState.Idle || CurrentState == PlayerState.Move)
             {
                 //R 사용 가능이며, 현재 Mp가 스킬 소모 Mp 이상이라면
                 if (R.Instance.IsUsable && CurrentMp >= R.Instance.UseMp)
                 {
+                    //사운드 실행 구문
+                    AudioMixerController.Instance.PlayerStartClip(DefineMusicName.R);
                     //R 스킬 사용
                     R.Instance.UseSkill();
 

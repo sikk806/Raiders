@@ -25,6 +25,7 @@ public class AudioMixerController : MonoBehaviour
     [SerializeField] public Slider musicMasterSlider;
     [SerializeField] private Slider musicBossSlider;
     [SerializeField] private Slider musicBGMSlider;
+    [SerializeField] private Slider musicPlayerSlider;
 
     [SerializeField] private AudioClip[] MainMenuClips;
     [SerializeField] private AudioClip[] PlayerClips;
@@ -42,6 +43,7 @@ public class AudioMixerController : MonoBehaviour
     [SerializeField] AudioSource bAudioSource;
     [SerializeField] AudioSource pAudioSource;
 
+    
     //값만 던지고 silder같은 할당은 로비씬에서만 해도 되지않을까?
     private void Awake()
     {
@@ -59,9 +61,9 @@ public class AudioMixerController : MonoBehaviour
         musicMasterSlider.onValueChanged.AddListener((value) => SetVolume(DefineMusicName.Master, value));
         musicBGMSlider.onValueChanged.AddListener(SetMusicVolume);
         musicBossSlider.onValueChanged.AddListener(SetBoss1Volume);
+        musicPlayerSlider.onValueChanged.AddListener(SetPlayerVolume);
         
         
-
         //메인 메뉴에 해당하는 사운드 딕셔너리
         //PLAYERTEST에 해당하는 딕셔너리 
         mClipsDictionary = new Dictionary<string, AudioClip>();
@@ -188,6 +190,10 @@ public class AudioMixerController : MonoBehaviour
     public void SetBoss1Volume(float volume)
     {
         audioMixer.SetFloat("Boss", Mathf.Log10(volume) * 20);
+    }
+    public void SetPlayerVolume(float volume)
+    {
+        audioMixer.SetFloat("Character", Mathf.Log10(volume) * 20);
     }
     
     public void SetBossVolume(string musicname,float volume)

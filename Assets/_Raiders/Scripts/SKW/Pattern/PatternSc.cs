@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -38,11 +39,6 @@ public class PatternSc : MonoBehaviour
     private float switchInterval = 5f; // 5초 간격
     
     public float PatternMaxTime = 10f;
-    
-    
-    
-    
-    
     
     bool isCleared = false;
     //소환
