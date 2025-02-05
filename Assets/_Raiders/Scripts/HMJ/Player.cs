@@ -217,11 +217,11 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            //사운드 실행 구문 
-            AudioMixerController.Instance.PlayerStartClip(DefineMusicName.Potion);
             
             if (CurrentState != PlayerState.Null && Potion.Instance.HpPotion > 0f)
             {
+                //사운드 실행 구문 
+                AudioMixerController.Instance.PlayerStartClip(DefineMusicName.Potion);
                 PlayerHp.HpHeal(Potion.Instance.HpHeal);
                 Potion.Instance.HpPotion--;
                 Potion.Instance.HpPotionText.text = (Potion.Instance.HpPotion).ToString();
@@ -234,11 +234,11 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            //사운드 실행 구문 
-            AudioMixerController.Instance.PlayerStartClip(DefineMusicName.Potion);
             
             if (CurrentState != PlayerState.Null && Potion.Instance.MpPotion > 0f)
             {
+                //사운드 실행 구문 
+                AudioMixerController.Instance.PlayerStartClip(DefineMusicName.Potion);
                 MpHeal(Potion.Instance.MpHeal);
                 Potion.Instance.MpPotion--;
                 Potion.Instance.MpPotionText.text = (Potion.Instance.MpPotion).ToString();

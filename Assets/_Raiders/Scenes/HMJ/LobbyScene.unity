@@ -20096,7 +20096,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2ec74547b8e5ad43be4dcf0bffbf604, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HpHeal: 50
+  HpHeal: 500
   MpHeal: 500
   HpPotion: 5
   MpPotion: 5
