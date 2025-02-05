@@ -19801,7 +19801,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   boomTime: 1
   destroyTime: 3
-  damage: 1
+  damage: 100
   particles:
   - {fileID: 6565914430298699783}
   - {fileID: 2291306880691332416}

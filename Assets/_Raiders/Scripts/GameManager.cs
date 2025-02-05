@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     private float deathCount = 1;
     public float DeathCount { get { return deathCount; } set { deathCount = value; } }
 
-    private float playTime = 60f;
+    private float playTime = 240f;
     public float PlayTime { get { return playTime; } set { PlayTime = value; } }
 
     public Action WinAction;
@@ -97,7 +97,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator UDie()
     {
-        DieText.text = "유  다  희";
+        DieText.text = "못 깼죠? ㅋ";
         DieText.color = Color.red;
         DieText.color = new Color(DieText.color.r, DieText.color.g, DieText.color.b, 1f);
         DieText.fontSize = 60f;
@@ -112,7 +112,7 @@ public class GameManager : MonoBehaviour
             Timer += Time.deltaTime;
             UIImage.color = new Color(UIImage.color.r, UIImage.color.g, UIImage.color.b, UIImage.color.a + 0.02f * Time.deltaTime);
             DieText.color = new Color(DieText.color.r, DieText.color.g, DieText.color.b, DieText.color.a + 0.05f * Time.deltaTime);
-            DieText.fontSize += 1.5f;
+            DieText.fontSize += 1f;
             yield return null;
         }
 
@@ -129,7 +129,6 @@ public class GameManager : MonoBehaviour
         }
         DeathCount = 5;
         SceneLoader.Instance.LoadNewScene("LobbyScene");
-        Destroy(gameObject);
     }
 
     public void WinTheGame()
@@ -173,7 +172,6 @@ public class GameManager : MonoBehaviour
         }
         DeathCount = 5;
         SceneLoader.Instance.LoadNewScene("MainScene");
-        Destroy(gameObject);
     }
 
     IEnumerator RevPlayer()

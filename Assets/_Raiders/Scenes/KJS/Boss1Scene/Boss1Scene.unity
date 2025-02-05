@@ -4160,7 +4160,7 @@ PrefabInstance:
       objectReference: {fileID: 1666173710}
     - target: {fileID: 6369568999167924914, guid: 139672734810fb240956b076eb3721ea, type: 3}
       propertyPath: BossBarrier
-      value: 500
+      value: 15000
       objectReference: {fileID: 0}
     - target: {fileID: 6369568999167924914, guid: 139672734810fb240956b076eb3721ea, type: 3}
       propertyPath: alertObject

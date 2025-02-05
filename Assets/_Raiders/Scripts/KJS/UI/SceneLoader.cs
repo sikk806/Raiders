@@ -26,7 +26,10 @@ public class SceneLoader : MonoBehaviour
         "(뿡.) 앗.. 실수ㅎ",
         "분수대 근처에서 상호작용 키를 누르면 패시브를 얻을 수 있어요!\n그런데 패시브 없이 싸울 수 없나요...? 저런...",
         "이렇게 물불 안 가리는 녀석은 내 스타일이 아닌데.",
-        "응원합니다! (진심X)"
+        "응원합니다! (진심X)",
+        "RPG 만들지 마세요... -김정식-",
+        "구르기 무적 시간은 0.617초입니다! -하민정-",
+        "배리어 색깔을 잘 보셔야 합니다. -송경원-"
     };
 
     void Awake()
@@ -46,7 +49,6 @@ public class SceneLoader : MonoBehaviour
         if (FadeCanvas == null) return; // 안전 체크
         FadeCanvas.color = new Color(0, 0, 0, 1); // 시작 시 완전 검은 화면
         ProgressBar.gameObject.SetActive(false);
-        StartCoroutine(FadeIn());
     }
 
     public void LoadNewScene(string sceneName)
@@ -104,7 +106,7 @@ public class SceneLoader : MonoBehaviour
 
         ProgressBar.value = 0f;
         Percentage.text = "0%";
-        Description.text = descriptions[Random.Range(0, 8)];
+        Description.text = descriptions[Random.Range(0, 11)];
         Color color = FadeCanvas.color;
         for (float t = 0; t <= fadeDuration; t += Time.deltaTime)
         {

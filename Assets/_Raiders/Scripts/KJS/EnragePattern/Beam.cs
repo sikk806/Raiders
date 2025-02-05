@@ -45,7 +45,7 @@ public class Beam : MonoBehaviour
         {
             particle.SetActive(true);
         }
-        DamagePerTick = 1;
+        DamagePerTick = 10;
         yield return new WaitForSeconds(1.25f);
         foreach (var particle in particles)
         {

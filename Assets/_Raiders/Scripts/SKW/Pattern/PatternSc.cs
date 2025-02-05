@@ -153,6 +153,7 @@ public class PatternSc : MonoBehaviour
         
         hp.currentHp = hp.maxHp;
         Debug.Log("보스 피회복");
+        Boss.BossStates = BehaviourAI.BossState.Locomotion;
         //2번
         PlayerHp.currentHp -= 50f;
         Debug.Log("플레이어 데미지 주기");

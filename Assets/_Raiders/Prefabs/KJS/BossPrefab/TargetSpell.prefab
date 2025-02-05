@@ -14829,8 +14829,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destroyTime: 6
-  damage: 0
-  damageTerm: 0.5
+  damage: 50
+  damageTerm: 0.3
 --- !u!136 &6805044437641112240
 CapsuleCollider:
   m_ObjectHideFlags: 0

@@ -122,7 +122,7 @@ public class Player : MonoBehaviour
             yield return new WaitForSeconds(1f);
             if (CurrentMp < MaxMp)
             {
-                CurrentMp += 1f * ManaExcel;
+                CurrentMp += 10f * ManaExcel;
                 CurrentMp = Mathf.Clamp(CurrentMp, 0f, MaxMp);
                 MpBar.fillAmount = CurrentMp / MaxMp;
                 MpText.text = CurrentMp + "/" + MaxMp;
