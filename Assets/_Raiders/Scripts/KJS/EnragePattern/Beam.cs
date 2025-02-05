@@ -40,7 +40,7 @@ public class Beam : MonoBehaviour
         
         yield return new WaitForSeconds(0.5f);
         decal.SetActive(false);
-
+        AudioMixerController.Instance.BossStartClip("Enrage");
         foreach (var particle in particles)
         {
             particle.SetActive(true);

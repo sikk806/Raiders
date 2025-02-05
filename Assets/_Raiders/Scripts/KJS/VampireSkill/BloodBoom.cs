@@ -55,7 +55,7 @@ public class BloodBoom : MonoBehaviour
         {
             doOnce = true;
             GetComponent<SphereCollider>().enabled = true;
-
+            AudioMixerController.Instance.BossStartClip("BloodBoom");
             decal.SetActive(false);
             foreach (var particle in particles)
             {

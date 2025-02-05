@@ -156,7 +156,11 @@ public class AudioMixerController : MonoBehaviour
         AudioClip clip = GetClip(bClipsDictionary, clipName);
         if (clip == null) { return; }
         bAudioSource.clip = clip;
-        bAudioSource.Play();
+        if(clipName == "BloodBoom" || clipName == "TargetPattern")
+        {
+            bAudioSource.PlayOneShot(clip);
+        }
+        else bAudioSource.Play();
     }
     
     public void PlayerStartClip(string clipName)
