@@ -61,10 +61,6 @@ public class SceneLoader : MonoBehaviour
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
         asyncLoad.allowSceneActivation = false;
 
-
-        ProgressBar.value = 0f;
-        Percentage.text = "0%";
-
         while (asyncLoad.progress < 0.9f)
         {
             ProgressBar.value = asyncLoad.progress;
@@ -104,6 +100,8 @@ public class SceneLoader : MonoBehaviour
     {
         if (FadeCanvas == null) yield break; // 안전 체크
 
+        ProgressBar.value = 0f;
+        Percentage.text = "0%";
         Description.text = descriptions[Random.Range(0, 6)];
         Color color = FadeCanvas.color;
         for (float t = 0; t <= fadeDuration; t += Time.deltaTime)
