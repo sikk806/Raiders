@@ -74,6 +74,8 @@ public class Player : MonoBehaviour
     private GameObject rPrefab; //R 스킬 프리팹
     [SerializeField]
     private GameObject attackPosition; //공격 나가는 위치
+    [SerializeField]
+    private GameObject mpHealEffect; 
 
     public Animator animator;
     private InputManager inputManager;
@@ -156,7 +158,14 @@ public class Player : MonoBehaviour
         CurrentMp = Mathf.Clamp(CurrentMp, 0f, MaxMp);
         MpBar.fillAmount = CurrentMp/MaxMp;
         MpText.text = CurrentMp + "/" + MaxMp;
+        if (mpHealEffect != null)
+        {
+            mpHealEffect.SetActive(true);
+            Invoke("MpHealEffectEnd", 0.55f);
+        }
+
     }
+    void MpHealEffectEnd() { mpHealEffect.SetActive(false); }
 
     public void TakeControl() //캐릭터 조종 불가 처리
     {
