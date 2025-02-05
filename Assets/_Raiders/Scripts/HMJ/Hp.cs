@@ -90,12 +90,9 @@ public class Hp : MonoBehaviour
         }
         else
         {
-
-            // CurrentHp -= damage;
             CurrentHp = Mathf.Clamp(CurrentHp - damage, 0, MaxHp);
             HpBar.fillAmount = CurrentHp / MaxHp;
             HpText.text = CurrentHp + "(+" + Barrier + ")" + "/" + MaxHp;
-            // CurrentHp = Mathf.Clamp(CurrentHp, 0, MaxHp);
 
             if (CurrentHp <= 0f)
             {
@@ -178,7 +175,6 @@ public class Hp : MonoBehaviour
 
     }
 
-    // Resurrection으로 넘어가는 곳이 어디인지 확인 -> Deathcount 줄어 든 후 부활시켜야 함. 
     public void Resurrection()
     {
         IsNoDamaged = false;

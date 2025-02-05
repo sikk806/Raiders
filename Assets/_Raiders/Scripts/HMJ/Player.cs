@@ -49,7 +49,7 @@ public class Player : MonoBehaviour
 
     public float StopTime; //경직 시간
    
-    public float NoDamageTime = 1f; //무적 시간
+    public float NoDamageTime = 5f; //무적 시간
     private float movementSpeedRatio = 0;
 
 
