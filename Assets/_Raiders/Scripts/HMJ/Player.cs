@@ -201,6 +201,9 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
+            //사운드 실행 구문 
+            AudioMixerController.Instance.PlayerStartClip(DefineMusicName.Potion);
+            
             if (CurrentState != PlayerState.Null && Potion.Instance.HpPotion > 0f)
             {
                 PlayerHp.HpHeal(Potion.Instance.HpHeal);
@@ -215,6 +218,9 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
+            //사운드 실행 구문 
+            AudioMixerController.Instance.PlayerStartClip(DefineMusicName.Potion);
+            
             if (CurrentState != PlayerState.Null && Potion.Instance.MpPotion > 0f)
             {
                 MpHeal(Potion.Instance.MpHeal);
@@ -451,6 +457,7 @@ public class Player : MonoBehaviour
         //좌클릭 했을 때, 평타 사용 가능이면
         if (Input.GetMouseButtonDown(0) && AutoAttack.IsUsable)
         {
+            AudioMixerController.Instance.PlayerStartClip(DefineMusicName.AutoAttack);
             //현재 플레이어 상태가 Idle 또는 Move라면
             if (CurrentState == PlayerState.Idle || CurrentState == PlayerState.Move)
             {
@@ -492,6 +499,9 @@ public class Player : MonoBehaviour
         //[Roll]
         if (Input.GetKeyDown(KeySetting.keys[KeyAction.Space]))
         {
+            //사운드 실행 구문
+            AudioMixerController.Instance.PlayerStartClip(DefineMusicName.Rolling);
+            
             if(!IsRolling && RollingCoolTime <= 0)
             { 
             //마우스 위치 구하기
@@ -542,6 +552,8 @@ public class Player : MonoBehaviour
         //[Use Q]
         if (Input.GetKeyDown(KeySetting.keys[KeyAction.Q]))
         {
+            //사운드 실행 구문
+            AudioMixerController.Instance.PlayerStartClip(DefineMusicName.Q);
             //현재 플레이어 상태가 Idle 또는 Move라면
             if (CurrentState == PlayerState.Idle || CurrentState == PlayerState.Move)
             {
@@ -584,6 +596,8 @@ public class Player : MonoBehaviour
         //[UseW]
         if (Input.GetKeyDown(KeySetting.keys[KeyAction.W]))
         {
+            //사운드 실행 구문
+            AudioMixerController.Instance.PlayerStartClip(DefineMusicName.W);
             //현재 플레이어 상태가 Idle 또는 Move라면
             if (CurrentState == PlayerState.Idle || CurrentState == PlayerState.Move)
             {
@@ -633,6 +647,8 @@ public class Player : MonoBehaviour
         //[UseE]
         if (Input.GetKeyDown(KeySetting.keys[KeyAction.E]))
         {
+            //사운드 실행 구문
+            AudioMixerController.Instance.PlayerStartClip(DefineMusicName.E);
             //현재 플레이어 상태가 Idle 또는 Move라면
             if (CurrentState == PlayerState.Idle || CurrentState == PlayerState.Move)
             {
@@ -678,6 +694,8 @@ public class Player : MonoBehaviour
         //[UseR]
         if (Input.GetKeyDown(KeySetting.keys[KeyAction.R]))
         {
+            //사운드 실행 구문
+            AudioMixerController.Instance.PlayerStartClip(DefineMusicName.R);
             //현재 플레이어 상태가 Idle 또는 Move라면
             if (CurrentState == PlayerState.Idle || CurrentState == PlayerState.Move)
             {

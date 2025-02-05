@@ -27,7 +27,7 @@ public class AudioMixerController : MonoBehaviour
     [SerializeField] private Slider musicBGMSlider;
 
     [SerializeField] private AudioClip[] MainMenuClips;
-    [SerializeField] private AudioClip[] PlayerTestClips;
+    [SerializeField] private AudioClip[] PlayerClips;
     [SerializeField] private AudioClip[] BossClips;
     //뱀파이어 클리스트 
     //뱀파이어 딕셔너리 
@@ -40,6 +40,7 @@ public class AudioMixerController : MonoBehaviour
     private Dictionary<string, AudioClip> pClipsDictionary;
     [SerializeField] AudioSource mAudioSource;
     [SerializeField] AudioSource bAudioSource;
+    [SerializeField] AudioSource pAudioSource;
 
     //값만 던지고 silder같은 할당은 로비씬에서만 해도 되지않을까?
     private void Awake()
@@ -67,7 +68,7 @@ public class AudioMixerController : MonoBehaviour
         bClipsDictionary = new Dictionary<string, AudioClip>();
         pClipsDictionary = new Dictionary<string, AudioClip>();
         AddClip(MainMenuClips, mClipsDictionary);
-        AddClip(PlayerTestClips, pClipsDictionary);
+        AddClip(PlayerClips, pClipsDictionary);
         AddClip(BossClips, bClipsDictionary);
 
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -117,7 +118,7 @@ public class AudioMixerController : MonoBehaviour
                 break;
             case SceneType.Boss1Scene:
                 mAudioSource.Stop();
-                StartClip(pClipsDictionary, "FA_Win_Jingle_Loop");
+                StartClip(mClipsDictionary, "FA_Win_Jingle_Loop");
                 mAudioSource.loop = true;
                 // 다른 씬에 대한 처리
                 break;
@@ -157,7 +158,15 @@ public class AudioMixerController : MonoBehaviour
         bAudioSource.clip = clip;
         bAudioSource.Play();
     }
-
+    
+    public void PlayerStartClip(string clipName)
+    {
+        AudioClip clip = GetClip(pClipsDictionary, clipName);
+        if (clip == null) { return; }
+        pAudioSource.clip = clip;
+        pAudioSource.Play();
+    }
+    
     public void SetVolume(string musicname, float volume)
     {
         audioMixer.SetFloat(musicname, Mathf.Log10(volume) * 25);

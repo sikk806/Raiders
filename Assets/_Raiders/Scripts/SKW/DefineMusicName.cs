@@ -6,4 +6,14 @@ public class DefineMusicName : MonoBehaviour
   public const string BGM  = "BGM";
   public const string Boss1  = "Boss1";
   public const string Boss  = "Boss";
+  
+  //스킬 사용
+  public const string Q  = "QSound";
+  public const string W  = "WSound";
+  public const string E  = "ESound";
+  public const string R  = "RSound";
+  public const string Rolling  = "RollingSound";
+  public const string Potion  = "PotionSound"; 
+  public const string AutoAttack  = "AutoAttackSound"; 
+  
 }
