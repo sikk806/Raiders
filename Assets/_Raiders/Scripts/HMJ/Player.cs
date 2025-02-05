@@ -10,6 +10,7 @@ using static UnityEngine.UIElements.UxmlAttributeDescription;
 using JetBrains.Annotations;
 using Unity.AppUI.UI;
 using static UnityEngine.GridBrushBase;
+using System;
 
 public enum PlayerState //플레이어 상태
 {
@@ -192,7 +193,15 @@ public class Player : MonoBehaviour
             //쿨타임 음수 방지 처리
             RollingCoolTime = Mathf.Clamp(RollingCoolTime, 0, Mathf.Infinity);
 
-            RollCoolText.text = ((int)RollingCoolTime).ToString();
+            if (RollingCoolTime >= 1f)
+            {
+                RollCoolText.text = ((int)RollingCoolTime).ToString();
+            }
+            else
+            {
+                RollCoolText.text = Math.Round(RollingCoolTime, 1).ToString();
+            }
+
             RollingCool.fillAmount = RollingCoolTime / 3;
         }
         else if (RollingCoolTime <= 0)

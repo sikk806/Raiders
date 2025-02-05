@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -40,7 +41,14 @@ public class W : MonoBehaviour
             //쿨타임 음수 방지 처리
             CoolTime = Mathf.Clamp(CoolTime, 0, Mathf.Infinity);
 
-            WCoolTime.text = ((int)CoolTime).ToString();
+            if (CoolTime >= 1f)
+            {
+                WCoolTime.text = ((int)CoolTime).ToString();
+            }
+            else
+            {
+                WCoolTime.text = Math.Round(CoolTime, 1).ToString();
+            }
             WCool.fillAmount = CoolTime / 10;
 
             //쿨타임 0 이하면

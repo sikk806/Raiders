@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -41,7 +42,14 @@ public class Q : MonoBehaviour
             //쿨타임 음수 방지 처리
             CoolTime = Mathf.Clamp(CoolTime, 0, Mathf.Infinity);
 
-            QCoolTime.text = ((int)CoolTime).ToString();
+            if (CoolTime >= 1f)
+            {
+                QCoolTime.text = ((int)CoolTime).ToString();
+            }
+            else
+            {
+                QCoolTime.text = Math.Round(CoolTime,1).ToString();
+            }
             QCool.fillAmount = CoolTime/3;
 
             //쿨타임 0 이하면
