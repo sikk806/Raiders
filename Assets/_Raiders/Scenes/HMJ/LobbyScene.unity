@@ -15322,6 +15322,10 @@ PrefabInstance:
       propertyPath: RollCoolText
       value: 
       objectReference: {fileID: 702681495}
+    - target: {fileID: 945013876654104369, guid: b70768d832f23824b80d8374e9f4a6dd, type: 3}
+      propertyPath: PlayerBarrier
+      value: 150
+      objectReference: {fileID: 0}
     - target: {fileID: 1615058756330260283, guid: b70768d832f23824b80d8374e9f4a6dd, type: 3}
       propertyPath: buffParent
       value: 
