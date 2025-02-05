@@ -37,7 +37,7 @@ public class Player : MonoBehaviour
     public float Power = 100; //공격력
     public float AddedPower = 0; //추가 공격력
 
-    public float PlayerBarrier;
+    public float PlayerBarrier = 150;
 
     public bool IsDrainHp = false;
 
@@ -461,7 +461,7 @@ public class Player : MonoBehaviour
                     targetPosition = hit.point;
 
                     //목표 위치를 바라봄
-                    transform.LookAt(targetPosition);
+                    transform.LookAt(new Vector3(targetPosition.x,transform.position.y,targetPosition.z));
 
                     //현재 플레이어 상태를 Move로 변경
                     CurrentState = PlayerState.Move;
