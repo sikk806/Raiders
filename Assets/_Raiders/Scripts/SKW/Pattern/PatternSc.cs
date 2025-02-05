@@ -136,11 +136,9 @@ public class PatternSc : MonoBehaviour
             {
                 isCleared = true;
                 var behaviourAI = GameObject.FindGameObjectWithTag("Boss1").GetComponent<BehaviourAI>();
-                hp.Defence = 0f;
                 gameObject.SetActive(false);
                 behaviourAI.OnAnimationFinished();
             }
-            Debug.Log("베리어다깨짐");
     }
 
     void PatternFailed()
@@ -152,15 +150,21 @@ public class PatternSc : MonoBehaviour
         //1번
         
         hp.currentHp = hp.maxHp;
+        hp.BarrierReset();
         Debug.Log("보스 피회복");
-        Boss.BossStates = BehaviourAI.BossState.Locomotion;
+        Boss.StandonAnimation();
+   
+        
+        
+        
         //2번
-        PlayerHp.currentHp -= 50f;
+        PlayerHp.TakeDamage(500);
         Debug.Log("플레이어 데미지 주기");
         Boss.GetComponent<SkillController>().SetfalseAll();
-        Boss.StandonAnimation();
         Boss.OnAnimationFinished();
     }
+
+
 
     /*
      * 0번지 red

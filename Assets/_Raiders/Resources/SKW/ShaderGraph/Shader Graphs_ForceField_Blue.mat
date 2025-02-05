@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Shader Graphs_ForceField_Blue
-  m_Shader: {fileID: -6465566751694194690, guid: 35dd9d167515cfa48b0d2daa0161b158, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: ee802f5576374bc4f83326d0da0eaf33, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -16,7 +16,7 @@ Material:
   m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 3017
+  m_CustomRenderQueue: 3028
   stringTagMap: {}
   disabledShaderPasses:
   - MOTIONVECTORS
@@ -56,7 +56,7 @@ Material:
     - _GradiantY: 100
     - _NoiseScale: 4
     - _QueueControl: 0
-    - _QueueOffset: 17
+    - _QueueOffset: 28
     - _Test: 1
     m_Colors:
     - _DIssolveColor: {r: 1, g: 1, b: 1, a: 1}

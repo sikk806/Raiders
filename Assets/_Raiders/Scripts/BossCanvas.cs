@@ -6,14 +6,19 @@ public class BossCanvas : MonoBehaviour
     public TextMeshProUGUI TxtDeathCount;
     public TextMeshProUGUI TxtTimer;
     public TextMeshProUGUI TxtStackCount;
+    public TextMeshProUGUI PatternTimer;
     public GameObject BuffPanel;
     
     public PatternSc _patternSc;
+    public GameObject Barrirer;
 
     void Start()
     {
+        BuffPanel.SetActive(false);
         TxtDeathCount.text = "Death Count: " + GameManager.Instance.DeathCount;
         TxtTimer.text = "Timer: " + GameManager.Instance.PlayTime;
+        _patternSc = SkillObjectPools.Instance.GetBarrierObject("Barrier").GetComponent<PatternSc>();
+        Barrirer = SkillObjectPools.Instance.GetBarrierObject("Barrier");
     }
 
     void Update()
@@ -22,12 +27,11 @@ public class BossCanvas : MonoBehaviour
         GameManager.Instance.NegaitveGameTime();
         TxtTimer.text = "Timer: " + GameManager.Instance.makeTime();
         
-        if (BuffPanel.activeSelf)
+        if (Barrirer.activeSelf)
         {
-            _patternSc = SkillObjectPools.Instance.GetBarrierObject("Barrier").GetComponent<PatternSc>();
             ShowBuffPanel();
+            
         }
-        
     }
 
     public void ShowBuffPanel()
@@ -37,6 +41,7 @@ public class BossCanvas : MonoBehaviour
 
         if (_patternSc != null)
         {
+            PatternTimer.text = Mathf.FloorToInt(_patternSc.PatternMaxTime).ToString();
             UpdateStackCount();
         }
     }
