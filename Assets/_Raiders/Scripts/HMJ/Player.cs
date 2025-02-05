@@ -49,8 +49,6 @@ public class Player : MonoBehaviour
 
 
     public float StopTime; //경직 시간
-   
-    public float NoDamageTime = 5f; //무적 시간
     private float movementSpeedRatio = 0;
 
 
@@ -555,7 +553,7 @@ public class Player : MonoBehaviour
                     RollingCool.fillAmount = 1;
 
                     //무적 부여
-                    StartCoroutine(PlayerHp.NoDamage(NoDamageTime));
+                    StartCoroutine(PlayerHp.NoDamage(RollingTime));
 
                     //현재 플레이어 상태를 Roll로 변경
                     CurrentState = PlayerState.Roll;
@@ -727,7 +725,7 @@ public class Player : MonoBehaviour
                     CurrentState = PlayerState.UseR;
 
                     //4초간 무적 부여 (TEMP)
-                    PlayerHp.NoDamage(4f);
+                    StartCoroutine(PlayerHp.NoDamage(4f));
 
                     //R 애니메이션 트리거 설정 
                     animator.SetTrigger("R");

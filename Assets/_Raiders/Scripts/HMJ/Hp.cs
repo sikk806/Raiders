@@ -188,7 +188,7 @@ public class Hp : MonoBehaviour
     {
         IsNoDamaged = false;
 
-        StartCoroutine(NoDamage(Player.Instance.NoDamageTime));
+        StartCoroutine(NoDamage(2.5f));
 
         Player.Instance.BringBackControl();
 
