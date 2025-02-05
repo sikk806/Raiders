@@ -97,9 +97,7 @@ public class Hp : MonoBehaviour
 
         }
         else
-        {
-
-           
+        {           
             CurrentHp = Mathf.Clamp(CurrentHp - damage, 0, MaxHp);
             HpBar.fillAmount = CurrentHp / MaxHp;
             HpText.text = CurrentHp + "(+" + Barrier + ")" + "/" + MaxHp;
