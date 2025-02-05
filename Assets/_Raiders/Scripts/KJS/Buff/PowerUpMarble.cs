@@ -14,7 +14,7 @@ public class PowerUpMarble : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            //other.GetComponent<BuffDebuff>().PowerUp(amountPower, 5f);
+            other.GetComponent<BuffDebuff>().PowerUp(amountPower, 5f);
             other.GetComponent<BuffDebuff>().EffectOn(gameObject);
             StopAllCoroutines();
             gameObject.SetActive(false);

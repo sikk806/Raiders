@@ -19,7 +19,7 @@ public class MarbleObjectPool : MonoBehaviour
     void Start()
     {
         objs = new List<GameObject>();
-        transform.position = Vector3.zero + Vector3.up * 1;
+        transform.position = Vector3.zero + Vector3.up * 1.5f;
         foreach (var marble in Marbles)
         {
             GameObject ob = Instantiate(marble, transform);
