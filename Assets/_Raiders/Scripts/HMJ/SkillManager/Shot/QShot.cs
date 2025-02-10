@@ -1,6 +1,4 @@
-using System.Threading;
 using UnityEngine;
-using UnityEngine.Purchasing;
 
 public class QShot : MonoBehaviour
 {

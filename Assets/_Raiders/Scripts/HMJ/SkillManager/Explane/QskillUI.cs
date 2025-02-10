@@ -1,6 +1,4 @@
-using System;
 using TMPro;
-using UnityEditor.Networking.PlayerConnection;
 using UnityEngine;
 
 public class QskillUI : MonoBehaviour

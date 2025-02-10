@@ -510,6 +510,7 @@ public class Player : MonoBehaviour
 
         }
     }
+    
 
     void OnKeyboard() //키보드 입력 처리
     {

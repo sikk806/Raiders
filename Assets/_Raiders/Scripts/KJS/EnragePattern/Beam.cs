@@ -1,5 +1,5 @@
+using System;
 using System.Collections;
-using UnityEditor.Rendering.Universal;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
@@ -26,7 +26,14 @@ public class Beam : MonoBehaviour
     void OnEnable()
     {
         StartCoroutine("Deactive");
-        decalMaterial.SetFloat("_DecalRad", 1f);
+        try
+        {
+            decalMaterial.SetFloat("_DecalRad", 1f);
+        }
+        catch (Exception e)
+        {
+
+        }
     }
 
     void OnDisable()
@@ -37,7 +44,7 @@ public class Beam : MonoBehaviour
     IEnumerator Deactive()
     {
         decal.SetActive(true);
-        
+
         yield return new WaitForSeconds(0.5f);
         decal.SetActive(false);
         AudioMixerController.Instance.BossStartClip("Enrage");

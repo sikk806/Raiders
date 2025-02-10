@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using UnityEditor.Animations;
-using UnityEngine;
 
 // Check All Childs. If it has failure child, it failure.
 public class SequenceNode : INode
