@@ -7,7 +7,7 @@
 몬스터를 빨리 처치하지 않는다면 죽음😵 만이 기다리고 있습니다.
 
 👇 다운로드는 여기👇 
-https://drive.google.com/file/d/18GoVSak7KiAnHahmbKBTT6D5rKqbMFWM/view?usp=drive_link
+<br/>https://drive.google.com/file/d/18GoVSak7KiAnHahmbKBTT6D5rKqbMFWM/view?usp=drive_link
 
 **조작 방법**
 |액션|동작 방법|
